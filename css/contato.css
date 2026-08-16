@@ -1,0 +1,111 @@
+/* ==========================================================================
+   CONTATO.CSS
+   Estilos específicos da página Contato (contato.html). O componente
+   .contact-card já vem pronto de global.css — aqui só entra o layout das
+   seções (hero, grid dos 2 cards, bloco "fale com a gente").
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   HERO
+   Mais enxuto que o da Home — texto centralizado, sem imagem, já que
+   esta página deve permanecer simples e objetiva (briefing, seção 30).
+   -------------------------------------------------------------------- */
+
+.contact-hero__inner {
+  max-width: 640px;
+  margin-inline: auto;
+  text-align: center;
+  padding-block: var(--space-6) var(--space-4);
+}
+
+.contact-hero__lead {
+  font-size: var(--text-lead);
+  margin-top: var(--space-4);
+}
+
+/* --------------------------------------------------------------------------
+   CARDS DE CONTATO
+   -------------------------------------------------------------------- */
+
+.contact-cards {
+  padding-bottom: var(--space-9);
+}
+
+.contact-cards__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-6);
+}
+
+/* --------------------------------------------------------------------------
+   FALE COM A GENTE
+   Duas colunas: foto ilustrativa + texto/horário de atendimento.
+   -------------------------------------------------------------------- */
+
+.about-support__inner {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: var(--space-8);
+  align-items: center;
+}
+
+.schedule-box {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+  padding: var(--space-5);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.schedule-box__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-primary-soft);
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+.schedule-box__icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.schedule-box__title {
+  font-size: var(--text-h4);
+  margin-bottom: var(--space-1);
+}
+
+.schedule-box__text {
+  font-size: var(--text-small);
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVIDADE — TABLET (768–1199px)
+   -------------------------------------------------------------------- */
+
+@media (max-width: 1199px) {
+  .about-support__inner {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVIDADE — MOBILE (<768px)
+   -------------------------------------------------------------------- */
+
+@media (max-width: 767px) {
+  .contact-cards__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .schedule-box {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

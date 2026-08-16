@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Elegance Box | Marmitas Congeladas Gourmet</title>
+  <meta name="description"
+    content="Marmitas congeladas gourmet, prontas em minutos. Monte seu combo e peça pelo WhatsApp." />
+
+  <!-- Ícone da aba do navegador: SVG embutido (quadrado verde da marca
+         com o glifo da caixa), evita precisar de um arquivo favicon.ico à parte -->
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%232F4438'/%3E%3Cpath d='M5 8.5l7-4 7 4-7 4-7-4Z' fill='none' stroke='%23F7F4EA' stroke-width='1.6' stroke-linejoin='round'/%3E%3Cpath d='M5 8.5v7l7 4 7-4v-7' fill='none' stroke='%23F7F4EA' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E" />
+
+  <!-- Fontes do projeto: Fraunces (títulos) + Inter (corpo/UI) — ver
+         css/variables.css para a definição de --font-display/--font-body -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+
+  <!-- Ordem importa: reset > variáveis > estilos globais > estilos
+         específicos da Home -->
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/home.css" />
+</head>
+
+<body>
+  <!-- Link de acessibilidade: só aparece quando recebe foco via Tab,
+         permitindo pular o header repetido e ir direto para o conteúdo -->
+  <a class="skip-link" href="#main-content">Pular para o conteúdo</a>
+
+  <!-- ==================================================================
+         HEADER GLOBAL
+         Cabeçalho fixo (sticky) com logo, navegação, ícones de contato,
+         CTA de pedido e o botão do menu mobile. Este bloco é idêntico nas
+         3 páginas do site (index.html / cardapio.html / contato.html); o
+         link ativo é aplicado via JS em main.js (EB.nav.highlightActiveLink).
+         ================================================================== -->
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <!-- Marca: ícone + nome, sempre linkando para a Home -->
+      <a href="index.html" class="logo">
+        <span class="logo__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M3 8l9-5 9 5-9 5-9-5Z" />
+            <path d="M3 8v8l9 5 9-5V8" />
+            <path d="M12 13v8" />
+          </svg>
+        </span>
+        <span class="logo__text">Elegance Box</span>
+      </a>
+
+      <!-- Navegação principal (visível a partir do desktop; escondida em
+             tablet/mobile via media query em global.css) -->
+      <nav class="site-nav" aria-label="Navegação principal">
+        <ul class="site-nav__list">
+          <li><a href="index.html" class="nav-link" data-nav-link>Home</a></li>
+          <li><a href="cardapio.html" class="nav-link" data-nav-link>Cardápio</a></li>
+          <li><a href="contato.html" class="nav-link" data-nav-link>Contato</a></li>
+        </ul>
+      </nav>
+
+      <!-- Ícones sociais + CTA de pedido (desktop) -->
+      <div class="site-header__actions">
+        <a class="icon-btn" href="https://wa.me/55992990564" target="_blank" rel="noopener" title="Falar no WhatsApp"
+          aria-label="Falar no WhatsApp" data-wa-cta
+          data-wa-message="Olá! Gostaria de fazer um pedido de marmitas Elegance Box.">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path
+              d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20Zm4.4-5.8c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1s-.6.8-.7.9-.3.2-.5.1a6.5 6.5 0 0 1-3.2-2.8c-.2-.4.2-.4.6-1.2.1-.2 0-.4 0-.5s-.5-1.2-.7-1.6-.4-.4-.5-.4h-.5a.9.9 0 0 0-.6.3 2.7 2.7 0 0 0-.8 2 4.7 4.7 0 0 0 1 2.5 10.6 10.6 0 0 0 4.4 3.9c1.6.6 2.2.7 2.7.6a2.3 2.3 0 0 0 1.5-1.1 1.9 1.9 0 0 0 .1-1.1c-.1-.1-.2-.2-.4-.3Z" />
+          </svg>
+        </a>
+        <a class="icon-btn" href="https://www.instagram.com/eboxcestas?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==&igsi=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener"
+          title="Ver Instagram" aria-label="Ver Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="5" />
+            <circle cx="12" cy="12" r="4" />
+            <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+          </svg>
+        </a>
+        <a class="btn btn--primary" href="https://wa.me/55992990564" target="_blank" rel="noopener" data-wa-cta
+          data-wa-message="Olá! Gostaria de fazer um pedido de marmitas Elegance Box.">
+          Peça agora
+        </a>
+      </div>
+
+      <!-- Botão hambúrguer: só visível em tablet/mobile. aria-expanded é
+             atualizado via JS (EB.menu, em main.js) conforme o menu abre/fecha -->
+      <button type="button" class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Abrir menu"
+        aria-expanded="false" aria-controls="mobileMenu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          aria-hidden="true">
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- ================================================================
+           HERO
+           Primeira seção visível da Home: título de impacto, texto de
+           apoio, dois CTAs (WhatsApp direto + ver cardápio) e uma foto
+           grande da marmita em destaque (placeholder até a foto real).
+           ================================================================ -->
+    <section class="hero">
+      <div class="container hero__inner">
+        <div class="hero__content">
+          <span class="hero__eyebrow">Marmitas congeladas para facilitar sua rotina</span>
+          <h1 class="hero__title">Comida de verdade, pronta para o seu dia.</h1>
+          <p class="hero__lead">
+            Unimos a praticidade do congelamento ao sabor afetivo da comida caseira. Ingredientes
+            frescos, preparados com carinho para garantir nutrição e prazer em cada garfada.
+          </p>
+          <div class="hero__actions">
+            <a class="btn btn--primary btn--lg" href="https://wa.me/55992990564" target="_blank" rel="noopener"
+              data-wa-cta data-wa-message="Olá! Gostaria de fazer um pedido de marmitas Elegance Box.">
+              Peça agora
+            </a>
+            <a class="btn btn--outline btn--lg" href="cardapio.html">Ver cardápio</a>
+          </div>
+        </div>
+        <div class="hero__media">
+          <div class="media-placeholder media-placeholder--hero">
+            <span class="media-placeholder__label">Foto: Marmita Elegance Box em destaque</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+           BENEFÍCIOS
+           4 cards curtos reforçando os principais diferenciais da marca,
+           logo após o Hero — reduz a "distância" entre o interesse do
+           usuário e o entendimento do porquê escolher a Elegance Box.
+           ================================================================ -->
+    <section class="section benefits">
+      <div class="container">
+        <div class="section-header section-header--center">
+          <span class="section-header__eyebrow">Diferenciais Elegance Box</span>
+          <h2 class="section-header__title">Por que escolher nossas marmitas?</h2>
+        </div>
+
+        <div class="benefits__grid">
+          <article class="benefit-card">
+            <span class="benefit-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+                stroke-linejoin="round">
+                <polygon points="13 2 4 14 11 14 10 22 20 9 13 9 13 2" />
+              </svg>
+            </span>
+            <h3 class="benefit-card__title">Praticidade</h3>
+            <p class="benefit-card__text">Tenha uma refeição pronta em poucos minutos, sem abrir mão do sabor caseiro.
+            </p>
+          </article>
+
+          <article class="benefit-card">
+            <span class="benefit-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M5 21c8 0 14-6 14-14V4h-3C8 4 3 9 3 17v4Z" />
+                <path d="M5 21c3-6 7-10 13-13" />
+              </svg>
+            </span>
+            <h3 class="benefit-card__title">Qualidade</h3>
+            <p class="benefit-card__text">Ingredientes selecionados e preparo cuidadoso em cada etapa da produção.</p>
+          </article>
+
+          <article class="benefit-card">
+            <span class="benefit-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                <line x1="12" y1="2" x2="12" y2="22" />
+                <line x1="4.5" y1="6" x2="19.5" y2="18" />
+                <line x1="19.5" y1="6" x2="4.5" y2="18" />
+              </svg>
+            </span>
+            <h3 class="benefit-card__title">Congelamento</h3>
+            <p class="benefit-card__text">Congelamento que preserva sabor, textura e nutrientes.</p>
+          </article>
+
+          <article class="benefit-card">
+            <span class="benefit-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+                stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7" rx="1.5" />
+                <rect x="14" y="3" width="7" height="7" rx="1.5" />
+                <rect x="3" y="14" width="7" height="7" rx="1.5" />
+                <rect x="14" y="14" width="7" height="7" rx="1.5" />
+              </svg>
+            </span>
+            <h3 class="benefit-card__title">Variedade</h3>
+            <p class="benefit-card__text">Opções variadas para diferentes gostos, rotinas e objetivos.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+           ONDE ATENDEMOS
+           Explica a região de cobertura e os prazos de preparo/entrega.
+           O bloco ilustrativo à esquerda é decorativo (não uma foto real),
+           por isso é construído com CSS/SVG em vez de media-placeholder.
+           ================================================================ -->
+    <section class="section section--alt coverage">
+      <div class="container coverage__inner">
+        <div class="coverage__map">
+          <!-- Mapa real da região atendida, via embed público do Google
+               Maps (não exige chave de API nem cadastro). Para trocar a
+               região exibida, basta editar o texto depois de "q=" na URL
+               abaixo. -->
+          <iframe
+            class="coverage__map-frame"
+            src="https://maps.google.com/maps?q=Regi%C3%A3o%20Metropolitana%20de%20Belo%20Horizonte%2C%20MG&z=10&output=embed"
+            title="Mapa da região metropolitana de Belo Horizonte, área atendida pela Elegance Box"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+          <span class="coverage__pin" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M12 21s-7-6.5-7-11.5A7 7 0 0 1 19 9.5C19 14.5 12 21 12 21Z" />
+              <circle cx="12" cy="9.5" r="2.5" />
+            </svg>
+          </span>
+        </div>
+
+        <div class="coverage__content">
+          <div class="section-header">
+            <span class="section-header__eyebrow">Área de Cobertura</span>
+            <h2 class="section-header__title">Onde atendemos?</h2>
+            <p class="section-header__subtitle">
+              Preparamos cada pedido sob demanda garantindo o máximo de frescor no congelamento e entregamos
+              direto na sua casa ou no seu trabalho.
+            </p>
+          </div>
+
+          <!-- Placeholder: região a confirmar com o cliente antes da publicação -->
+          <p class="coverage__region">
+            <strong>Região atendida:</strong> região metropolitana de Belo Horizonte.
+          </p>
+
+          <div class="coverage__info-grid">
+            <div class="coverage__info-item">
+              <span class="coverage__info-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="9" />
+                  <polyline points="12 7 12 12 16 14" />
+                </svg>
+              </span>
+              <div>
+                <h3 class="coverage__info-title">Tempo de preparo</h3>
+                <p class="coverage__info-text">Seu pedido é preparado em até 12 horas após a confirmação.</p>
+              </div>
+            </div>
+
+            <div class="coverage__info-item">
+              <span class="coverage__info-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M12 21s-7-6.5-7-11.5A7 7 0 0 1 19 9.5C19 14.5 12 21 12 21Z" />
+                  <circle cx="12" cy="9.5" r="2.5" />
+                </svg>
+              </span>
+              <div>
+                <h3 class="coverage__info-title">Entrega</h3>
+                <p class="coverage__info-text">Após o preparo, a entrega ocorre em até 6 horas na sua região.</p>
+              </div>
+            </div>
+
+            <div class="coverage__info-item">
+              <span class="coverage__info-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M21 12a8 8 0 0 1-8 8H6l-3 3 .8-4.2A8 8 0 1 1 21 12Z" />
+                </svg>
+              </span>
+              <div>
+                <h3 class="coverage__info-title">Atendimento</h3>
+                <p class="coverage__info-text">Pedidos e dúvidas são atendidos diretamente pelo <a
+                    href="URL_AQUI">WhatsApp</a>.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+           COMO FUNCIONA
+           4 passos numerados explicando o processo de compra, para reduzir
+           qualquer dúvida do usuário sobre "como eu compro isso".
+           ================================================================ -->
+    <section class="section how-it-works">
+      <div class="container">
+        <div class="section-header section-header--center">
+          <span class="section-header__eyebrow">Processo Simples</span>
+          <h2 class="section-header__title">Como funciona o pedido?</h2>
+        </div>
+
+        <div class="steps-grid">
+          <article class="step-card">
+            <span class="step-card__number" aria-hidden="true">01</span>
+            <span class="step-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+                stroke-linejoin="round">
+                <circle cx="12" cy="12" r="8" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            </span>
+            <h3 class="step-card__title">Escolha suas marmitas</h3>
+            <p class="step-card__text">Navegue pelo cardápio e escolha as marmitas que mais combinam com você.</p>
+          </article>
+
+          <article class="step-card">
+            <span class="step-card__number" aria-hidden="true">02</span>
+            <span class="step-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M3 8l9-5 9 5-9 5-9-5Z" />
+                <path d="M3 8v8l9 5 9-5V8" />
+                <path d="M12 13v8" />
+              </svg>
+            </span>
+            <h3 class="step-card__title">Monte um combo</h3>
+            <p class="step-card__text">Escolha um combo pronto ou monte (sem quantidade minima), do jeito que preferir.
+            </p>
+          </article>
+
+          <article class="step-card">
+            <span class="step-card__number" aria-hidden="true">03</span>
+            <span class="step-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M21 12a8 8 0 0 1-8 8H6l-3 3 .8-4.2A8 8 0 1 1 21 12Z" />
+              </svg>
+            </span>
+            <h3 class="step-card__title">Peça pelo WhatsApp</h3>
+            <p class="step-card__text">Envie seu pedido com poucos cliques, direto pelo WhatsApp.</p>
+          </article>
+
+          <article class="step-card">
+            <span class="step-card__number" aria-hidden="true">04</span>
+            <span class="step-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M3 11l9-8 9 8" />
+                <path d="M5 10v10h14V10" />
+              </svg>
+            </span>
+            <h3 class="step-card__title">Receba em casa</h3>
+            <p class="step-card__text">Suas marmitas chegam congeladas, prontas para guardar no freezer.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+           SOBRE A MARCA
+           História da Elegance Box + indicadores numéricos + CTA para o
+           cardápio. Foto ilustrativa em placeholder.
+           ================================================================ -->
+    <section class="section section--alt about">
+      <div class="container about__inner">
+        <div class="about__media">
+          <div class="media-placeholder media-placeholder--square">
+            <span class="media-placeholder__label">Foto: Chef Débora Coelho preparando as marmitas</span>
+          </div>
+        </div>
+
+        <div class="about__content">
+          <div class="section-header">
+            <span class="section-header__eyebrow">Nossa História</span>
+            <h2 class="section-header__title">Feito com carinho para alimentar seu bem-estar.</h2>
+            <p class="section-header__subtitle">
+              Depois de mais de 10 anos à frente de um buffet gourmet, a chef Débora Coelho decidiu levar a mesma
+              qualidade e cuidado para o dia a dia de quem não tem tempo a perder. A Elegance Box nasceu para unir o
+              sabor da comida feita em casa à praticidade do congelamento, cada marmita é preparada com
+              ingredientes selecionados e a mesma atenção de um prato de buffet, pronta para o seu freezer.
+            </p>
+          </div>
+
+          <div class="about__stats">
+            <div class="about__stat">
+              <span class="about__stat-number">24+</span>
+              <span class="about__stat-label">Opções de marmitas</span>
+            </div>
+            <div class="about__stat">
+              <span class="about__stat-number">10</span>
+              <span class="about__stat-label">Anos de experiência</span>
+            </div>
+          </div>
+
+          <a class="btn btn--primary" href="cardapio.html">Conheça nosso cardápio</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+           COMO PREPARAR
+           Explica visualmente o passo a passo de preparo (retirar do
+           freezer, aquecer, aguardar, servir).
+           ================================================================ -->
+    <section class="section how-to-prepare">
+      <div class="container">
+        <div class="section-header section-header--center">
+          <span class="section-header__eyebrow">Preparo Rápido</span>
+          <h2 class="section-header__title">Como preparar sua marmita?</h2>
+        </div>
+
+        <div class="steps-grid">
+          <article class="step-card">
+            <span class="step-card__number" aria-hidden="true">1</span>
+            <span class="step-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                <line x1="12" y1="2" x2="12" y2="22" />
+                <line x1="4.5" y1="6" x2="19.5" y2="18" />
+                <line x1="19.5" y1="6" x2="4.5" y2="18" />
+              </svg>
+            </span>
+            <h3 class="step-card__title">Retire do freezer</h3>
+            <p class="step-card__text">Retire a marmita do freezer antes de aquecer.</p>
+          </article>
+
+          <article class="step-card">
+            <span class="step-card__number" aria-hidden="true">2</span>
+            <span class="step-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path
+                  d="M12 22c4 0 6-3 6-6.5 0-3-2-4.5-3-7 0 2-1.5 3-1.5 3C13 8 12 6 12 3c-2 3-5 6-5 10a5 5 0 0 0 5 5.5c-1.5-1-2-3-1-5 .5 1.5 2 2 2 3.5S12 22 12 22Z" />
+              </svg>
+            </span>
+            <h3 class="step-card__title">Aqueça</h3>
+            <p class="step-card__text">Aqueça no micro-ondas ou descongele (se não estiver congelada).</p>
+          </article>
+
+          <article class="step-card">
+            <span class="step-card__number" aria-hidden="true">3</span>
+            <span class="step-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                stroke-linejoin="round">
+                <circle cx="12" cy="12" r="9" />
+                <polyline points="12 7 12 12 16 14" />
+              </svg>
+            </span>
+            <h3 class="step-card__title">Aguarde o tempo indicado</h3>
+            <p class="step-card__text">O tempo pode variar conforme a marmitam, confira a indicação na embalagem.</p>
+          </article>
+
+          <article class="step-card">
+            <span class="step-card__number" aria-hidden="true">4</span>
+            <span class="step-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <polyline points="20 6 10 17 4 11" />
+              </svg>
+            </span>
+            <h3 class="step-card__title">Pronto!</h3>
+            <p class="step-card__text">Sua refeição está pronta para ser servida e aproveitada.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+           DESTAQUE DO CARDÁPIO
+           3 marmitas em destaque, renderizadas via JS a partir da mesma
+           lista de produtos usada na página Cardápio (ver js/home.js) —
+           assim um preço/descrição só precisa ser atualizado em um lugar.
+           ================================================================ -->
+    <section class="section section--alt featured-products">
+      <div class="container">
+        <div class="section-header section-header--with-action">
+          <div>
+            <span class="section-header__eyebrow">Mais Pedidas</span>
+            <h2 class="section-header__title">Conheça algumas das nossas opções</h2>
+          </div>
+          <a class="btn btn--outline" href="cardapio.html">Ver cardápio completo</a>
+        </div>
+
+        <!-- Preenchido dinamicamente por home.js -->
+        <div class="featured-products__grid" id="featuredProductsGrid"></div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+           CTA FINAL
+           Última seção antes do footer, com o maior contraste visual da
+           página (fundo verde escuro) para maximizar a conversão para o
+           WhatsApp antes do usuário sair da Home.
+           ================================================================ -->
+    <section class="section section--dark final-cta">
+      <div class="container final-cta__inner">
+        <span class="final-cta__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 21s-7.5-4.9-10.1-9.4C.4 8.6 1.7 5 5 4a5 5 0 0 1 7 1.6A5 5 0 0 1 19 4c3.3 1 4.6 4.6 3.1 7.6C19.5 16.1 12 21 12 21Z" />
+          </svg>
+        </span>
+        <h2>Pronto para facilitar sua rotina?</h2>
+        <p>
+          Monte seu combo com as suas opções favoritas, envie diretamente pelo WhatsApp e receba refeições
+          deliciosas prontas para o seu freezer.
+        </p>
+        <a class="btn btn--primary btn--lg" href="https://wa.me/55992990564" target="_blank" rel="noopener"
+          data-wa-cta data-wa-message="Olá! Gostaria de fazer um pedido de marmitas Elegance Box.">
+          Fazer pedido pelo WhatsApp
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================================================================
+         FOOTER GLOBAL
+         Presente em todas as páginas: marca, navegação, contato, CTA de
+         pedido e a barra inferior com direitos autorais.
+         ================================================================== -->
+  <footer class="site-footer">
+    <div class="container site-footer__grid">
+      <!-- Bloco 1: marca -->
+      <div class="footer-block">
+        <a href="index.html" class="logo">
+          <span class="logo__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M3 8l9-5 9 5-9 5-9-5Z" />
+              <path d="M3 8v8l9 5 9-5V8" />
+              <path d="M12 13v8" />
+            </svg>
+          </span>
+          <span class="logo__text">Elegance Box</span>
+        </a>
+        <p class="footer-block__description">
+          Unindo o sabor da comida caseira à praticidade do congelamento inteligente, para nutrir sua rotina de
+          forma simples e saborosa.
+        </p>
+      </div>
+
+      <!-- Bloco 2: navegação -->
+      <div class="footer-block">
+        <h3 class="footer-block__title">Navegação</h3>
+        <ul class="footer-block__list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="cardapio.html">Cardápio</a></li>
+          <li><a href="contato.html">Contato</a></li>
+        </ul>
+      </div>
+
+      <!-- Bloco 3: contato -->
+      <div class="footer-block">
+        <h3 class="footer-block__title">Contato</h3>
+        <ul class="footer-block__list">
+          <li>
+            <a href="https://wa.me/55992990564" target="_blank" rel="noopener" data-wa-cta
+              data-wa-message="Olá! Gostaria de fazer um pedido de marmitas Elegance Box.">WhatsApp: (31) 99299-0564</a>
+          </li>
+          <li><a href="https://www.instagram.com/eboxcestas?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==&igsi=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener">Instagram:
+              @eboxcestas</a></li>
+          <li>Seg. a Sex., das 9h às 19h</li>
+        </ul>
+      </div>
+
+      <!-- Bloco 4: pedido -->
+      <div class="footer-block">
+        <h3 class="footer-block__title">Pedido Prático</h3>
+        <p class="footer-block__text">Clique abaixo e fale agora com a nossa equipe pelo WhatsApp.</p>
+        <a class="btn btn--primary" href="https://wa.me/55992990564" target="_blank" rel="noopener" data-wa-cta
+          data-wa-message="Olá! Gostaria de fazer um pedido de marmitas Elegance Box.">
+          Peça agora via WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <!-- Barra inferior: direitos autorais + links legais placeholder -->
+    <div class="container site-footer__bottom">
+      <span>&copy; <span id="currentYear">2026</span> Elegance Box. Todos os direitos reservados.</span>
+      <div class="site-footer__bottom-links">
+        <a href="#">Política de Privacidade</a>
+        <a href="#">Termos de Uso</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================================================================
+         MENU MOBILE
+         Painel fullscreen exibido ao clicar no botão hambúrguer do
+         header, em telas de tablet/mobile. Controlado por EB.menu (main.js).
+         ================================================================== -->
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <div class="mobile-menu__header">
+      <a href="index.html" class="logo">
+        <span class="logo__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M3 8l9-5 9 5-9 5-9-5Z" />
+            <path d="M3 8v8l9 5 9-5V8" />
+            <path d="M12 13v8" />
+          </svg>
+        </span>
+        <span class="logo__text">Elegance Box</span>
+      </a>
+      <button type="button" class="icon-btn mobile-menu__close" id="mobileMenuClose" aria-label="Fechar menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          aria-hidden="true">
+          <line x1="5" y1="5" x2="19" y2="19" />
+          <line x1="19" y1="5" x2="5" y2="19" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="mobile-menu__body">
+      <nav class="mobile-menu__nav" aria-label="Navegação mobile">
+        <a href="index.html" class="nav-link" data-nav-link>Home</a>
+        <a href="cardapio.html" class="nav-link" data-nav-link>Cardápio</a>
+        <a href="contato.html" class="nav-link" data-nav-link>Contato</a>
+      </nav>
+
+      <hr class="mobile-menu__divider" />
+
+      <div class="mobile-menu__actions">
+        <a class="btn btn--primary btn--block" href="https://wa.me/55992990564" target="_blank" rel="noopener"
+          data-wa-cta data-wa-message="Olá! Gostaria de fazer um pedido de marmitas Elegance Box.">
+          Peça agora
+        </a>
+        <div class="mobile-menu__socials">
+          <a class="icon-btn" href="https://wa.me/55992990564" target="_blank" rel="noopener"
+            aria-label="Falar no WhatsApp" data-wa-cta
+            data-wa-message="Olá! Gostaria de fazer um pedido de marmitas Elegance Box.">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path
+                d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20Zm4.4-5.8c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1s-.6.8-.7.9-.3.2-.5.1a6.5 6.5 0 0 1-3.2-2.8c-.2-.4.2-.4.6-1.2.1-.2 0-.4 0-.5s-.5-1.2-.7-1.6-.4-.4-.5-.4h-.5a.9.9 0 0 0-.6.3 2.7 2.7 0 0 0-.8 2 4.7 4.7 0 0 0 1 2.5 10.6 10.6 0 0 0 4.4 3.9c1.6.6 2.2.7 2.7.6a2.3 2.3 0 0 0 1.5-1.1 1.9 1.9 0 0 0 .1-1.1c-.1-.1-.2-.2-.4-.3Z" />
+            </svg>
+          </a>
+          <a class="icon-btn" href="https://www.instagram.com/eboxcestas?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==&igsi=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener"
+            aria-label="Ver Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="5" />
+              <circle cx="12" cy="12" r="4" />
+              <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts: data.js precisa carregar antes de main.js/home.js, pois
+         ambos leem EB.data -->
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/home.js"></script>
+</body>
+
+</html>

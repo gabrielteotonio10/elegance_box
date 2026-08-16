@@ -1,0 +1,1372 @@
+# PROJETO — SITE DE VENDA DE MARMITAS CONGELADAS
+
+## 1. OBJETIVO DO PROJETO
+
+Criar o layout completo de um site profissional, moderno, responsivo e comercial para uma marca de **marmitas congeladas**.
+
+O principal objetivo do site é permitir que o usuário:
+
+* Conheça a marca;
+* Entenda como funcionam as marmitas congeladas;
+* Consulte o cardápio;
+* Visualize informações detalhadas e nutricionais de cada marmita;
+* Monte ou escolha combos;
+* Simule o preço de um combo personalizado;
+* Envie o pedido diretamente pelo WhatsApp;
+* Encontre facilmente os canais de contato da empresa.
+
+O site deve transmitir principalmente:
+
+* Qualidade;
+* Praticidade;
+* Alimentação saborosa;
+* Organização;
+* Confiança;
+* Higiene;
+* Profissionalismo;
+* Facilidade para fazer pedidos.
+
+O site NÃO deve parecer um e-commerce genérico. A experiência deve ser mais próxima de uma marca moderna de alimentação saudável/congelada, com forte apelo visual para os pratos e uma navegação extremamente simples.
+
+---
+
+# 2. ESTRUTURA GERAL DO SITE
+
+O site terá três páginas principais:
+
+1. HOME
+2. CARDÁPIO
+3. CONTATO
+
+Além dessas páginas, devem existir componentes e estados complementares:
+
+* Modal de detalhes da marmita;
+* Modal/listagem de detalhes dos combos;
+* Modal de montagem de combo personalizado;
+* Estados de quantidade dos produtos;
+* Botões de pedido;
+* Estados de hover;
+* Estados de botão pressionado;
+* Estados de carregamento, quando aplicável;
+* Mensagens de confirmação;
+* Navegação responsiva;
+* Menu mobile;
+* Footer global;
+* Header global.
+
+Criar o projeto utilizando componentes reutilizáveis para facilitar posteriormente a implementação em HTML, CSS e JavaScript.
+
+---
+
+# 3. DIREÇÃO VISUAL
+
+Criar uma identidade visual moderna e profissional relacionada ao segmento de alimentação.
+
+A aparência deve transmitir:
+
+* Comida gostosa;
+* Frescor;
+* Praticidade;
+* Saúde;
+* Qualidade;
+* Confiabilidade.
+
+Evitar uma aparência excessivamente corporativa ou tecnológica.
+
+Evitar também excesso de elementos, gradientes exagerados, sombras muito fortes ou excesso de cores.
+
+Priorizar:
+
+* Layout limpo;
+* Espaçamento generoso;
+* Tipografia moderna;
+* Fotografias grandes e apetitosas das marmitas;
+* Bordas levemente arredondadas;
+* Cards modernos;
+* Ícones simples;
+* Botões com alto contraste;
+* Hierarquia visual clara.
+
+A fotografia das marmitas deve ser um dos elementos visuais mais importantes do site.
+
+---
+
+# 4. SISTEMA DE DESIGN
+
+Criar um pequeno Design System dentro do arquivo do Figma.
+
+## Cores
+
+Criar:
+
+* Cor primária;
+* Cor secundária;
+* Cor de destaque para CTA;
+* Cor de fundo principal;
+* Cor de fundo secundário;
+* Cor de texto principal;
+* Cor de texto secundário;
+* Cor de borda;
+* Cor de sucesso;
+* Cor de alerta.
+
+A paleta deve remeter a alimentação e qualidade, mas manter aparência sofisticada.
+
+Evitar utilizar muitas cores simultaneamente.
+
+Criar variáveis/tokens de cor.
+
+---
+
+## Tipografia
+
+Utilizar uma fonte moderna e altamente legível.
+
+Criar estilos para:
+
+* Display / Hero;
+* H1;
+* H2;
+* H3;
+* H4;
+* Texto grande;
+* Texto normal;
+* Texto pequeno;
+* Caption;
+* Botões;
+* Navegação;
+* Preços;
+* Badges.
+
+Garantir contraste suficiente entre texto e fundo.
+
+---
+
+# 5. GRID E RESPONSIVIDADE
+
+O layout principal deve ser inicialmente desenvolvido para desktop.
+
+Não utilizar largura de conteúdo ocupando 100% da tela.
+
+Criar um container centralizado com largura máxima aproximada de:
+
+* Desktop: 1200–1280px.
+
+O conteúdo deve permanecer centralizado em telas maiores.
+
+Utilizar margens laterais adequadas.
+
+Criar breakpoints para:
+
+### Desktop
+
+A partir de aproximadamente 1200px.
+
+### Tablet
+
+Aproximadamente 768px até 1199px.
+
+### Mobile
+
+Abaixo de aproximadamente 768px.
+
+O layout deve ser realmente responsivo e não simplesmente uma versão desktop reduzida.
+
+---
+
+# 6. HEADER GLOBAL
+
+Criar um header profissional presente em todas as páginas.
+
+## Estrutura desktop
+
+O header deve conter:
+
+### Área da marca
+
+À esquerda:
+
+* Logo da empresa;
+* Nome da marca ao lado da logo.
+
+A logo deve ter tamanho suficiente para ser facilmente reconhecida, mas sem dominar o header.
+
+### Área de navegação
+
+No centro ou próxima à direita:
+
+* Home;
+* Cardápio;
+* Contato.
+
+A página atual deve possuir um estado visual claramente diferente.
+
+### Área de contato
+
+No lado direito:
+
+* Ícone do WhatsApp;
+* Ícone do Instagram.
+
+Os ícones devem ser clicáveis.
+
+Criar tooltip/estado hover quando apropriado.
+
+### CTA
+
+Adicionar um botão de destaque:
+
+"Peça agora"
+
+Esse botão deve levar diretamente para o WhatsApp.
+
+---
+
+# 7. HEADER MOBILE
+
+No mobile, substituir a navegação completa por:
+
+* Logo;
+* Nome da marca, se houver espaço;
+* Ícone de menu hamburger.
+
+Ao clicar no hamburger, abrir um menu lateral ou dropdown contendo:
+
+* Home;
+* Cardápio;
+* Contato;
+* Instagram;
+* WhatsApp;
+* Botão "Peça agora".
+
+O menu deve possuir animação simples e elegante.
+
+---
+
+# 8. FOOTER GLOBAL
+
+Criar um footer padrão presente em todas as páginas.
+
+Dividir o footer em blocos.
+
+## Bloco 1 — Marca
+
+* Logo;
+* Nome da marca;
+* Pequena descrição da empresa.
+
+## Bloco 2 — Navegação
+
+* Home;
+* Cardápio;
+* Contato.
+
+## Bloco 3 — Contato
+
+* WhatsApp;
+* Instagram;
+* Horário de atendimento, caso aplicável.
+
+## Bloco 4 — Pedido
+
+Adicionar CTA:
+
+"Peça agora pelo WhatsApp"
+
+## Rodapé inferior
+
+Adicionar:
+
+"© [ANO] [NOME DA MARCA]. Todos os direitos reservados."
+
+Também reservar espaço para:
+
+* Política de privacidade;
+* Termos de uso, caso sejam necessários.
+
+No mobile, organizar os blocos verticalmente.
+
+---
+
+# 9. PÁGINA HOME
+
+A Home deve funcionar como uma página de apresentação e conversão.
+
+O usuário deve entender rapidamente:
+
+1. O que a empresa vende;
+2. Qual é o diferencial;
+3. Onde atende;
+4. Como funciona;
+5. Como comprar.
+
+---
+
+# 10. HOME — HERO / INTRODUÇÃO
+
+Criar uma seção Hero de alto impacto logo abaixo do header.
+
+Layout desktop dividido aproximadamente em duas colunas.
+
+## Coluna esquerda
+
+Adicionar:
+
+### Pequeno destaque
+
+Exemplo:
+
+"Marmitas congeladas feitas para facilitar sua rotina"
+
+### Título principal
+
+Criar um título forte, curto e comercial.
+
+Exemplo:
+
+"Comida de verdade, pronta para o seu dia."
+
+### Texto
+
+Pequena descrição explicando:
+
+* O que são as marmitas;
+* Para quem são;
+* Principal benefício.
+
+### CTA principal
+
+Botão:
+
+"Peça agora"
+
+Deve direcionar para o WhatsApp.
+
+### CTA secundário
+
+Botão ou link:
+
+"Ver cardápio"
+
+Deve direcionar para a página Cardápio.
+
+---
+
+## Coluna direita
+
+Utilizar uma fotografia grande e profissional de uma marmita.
+
+A imagem deve:
+
+* Mostrar comida apetitosamente;
+* Ter boa iluminação;
+* Possuir aparência realista;
+* Destacar os alimentos;
+* Possuir composição profissional.
+
+Pode utilizar elementos decorativos discretos relacionados à marca.
+
+---
+
+# 11. HOME — BENEFÍCIOS
+
+Adicionar uma pequena seção logo após o Hero destacando os principais benefícios.
+
+Criar aproximadamente 3 ou 4 cards:
+
+### Praticidade
+
+"Tenha uma refeição pronta em poucos minutos."
+
+### Qualidade
+
+"Ingredientes selecionados e preparo cuidadoso."
+
+### Congelamento
+
+"Praticidade sem abrir mão do sabor."
+
+### Variedade
+
+"Opções para diferentes gostos e necessidades."
+
+Utilizar ícones simples.
+
+---
+
+# 12. HOME — ÁREA DE ATENDIMENTO E ENTREGA
+
+Criar seção informativa sobre onde a empresa atende e como funciona a entrega.
+
+Título:
+
+"Onde atendemos?"
+
+Informar claramente:
+
+* Regiões atendidas;
+* Cidade/região;
+* Possibilidade de retirada, se existir;
+* Entrega.
+
+Criar um componente visual semelhante a um pequeno mapa ilustrativo ou bloco geográfico.
+
+Ao lado, criar informações sobre prazo.
+
+Exemplo:
+
+### Tempo de preparo
+
+"Seu pedido é preparado em aproximadamente X horas."
+
+### Entrega
+
+"Após o preparo, a entrega ocorre em aproximadamente X horas."
+
+### Atendimento
+
+"Pedidos realizados pelo WhatsApp."
+
+Não inventar dados reais. Utilizar placeholders para informações que ainda não foram definidas.
+
+---
+
+# 13. HOME — COMO FUNCIONA
+
+Criar uma seção explicando o processo de compra em 3 ou 4 passos.
+
+### 01
+
+Escolha suas marmitas.
+
+### 02
+
+Escolha um combo ou monte o seu.
+
+### 03
+
+Envie o pedido pelo WhatsApp.
+
+### 04
+
+Receba suas marmitas.
+
+Representar cada etapa com número, ícone e pequena descrição.
+
+Essa seção deve reduzir a dúvida do usuário sobre como comprar.
+
+---
+
+# 14. HOME — SOBRE A MARCA
+
+Criar uma seção "Sobre nós".
+
+Layout com:
+
+* Fotografia;
+* Texto;
+* Pequenos elementos de identidade visual.
+
+O texto deve explicar:
+
+* História da marca;
+* Propósito;
+* Diferencial;
+* Qualidade;
+* Forma de preparo;
+* Por que escolher a marca.
+
+Ao lado ou abaixo, criar um CTA:
+
+"Conheça nosso cardápio"
+
+Esse botão leva para Cardápio.
+
+Adicionar alguns indicadores visuais caso existam dados reais, por exemplo:
+
+* X opções de marmitas;
+* X anos de experiência;
+* X pedidos realizados.
+
+Utilizar placeholders caso os números ainda não estejam definidos.
+
+---
+
+# 15. HOME — COMO PREPARAR
+
+Criar seção:
+
+"Como preparar sua marmita?"
+
+Mostrar visualmente o processo.
+
+Exemplo:
+
+### 1. Retire do congelador
+
+Explique quando retirar.
+
+### 2. Aqueça
+
+Mostrar o método de aquecimento.
+
+### 3. Aguarde o tempo indicado
+
+Mostrar que o tempo pode variar conforme a marmita.
+
+### 4. Pronto!
+
+Refeição pronta para consumir.
+
+Utilizar imagens ou ilustrações pequenas.
+
+Importante:
+
+Não inventar tempos ou instruções específicas. Utilizar placeholders até que as instruções reais sejam fornecidas.
+
+---
+
+# 16. HOME — DESTAQUE DO CARDÁPIO
+
+Adicionar uma seção mostrando algumas das principais marmitas.
+
+Título:
+
+"Conheça algumas das nossas opções"
+
+Mostrar aproximadamente 3 ou 4 marmitas em cards.
+
+Cada card deve conter:
+
+* Foto;
+* Nome;
+* Pequena descrição;
+* Informação nutricional resumida, se disponível;
+* Preço, se aplicável;
+* Botão "Ver mais";
+* Botão "Pedir".
+
+Adicionar CTA abaixo:
+
+"Ver cardápio completo"
+
+---
+
+# 17. HOME — CTA FINAL
+
+Antes do footer, criar uma seção de conversão forte.
+
+Título:
+
+"Pronto para pedir?"
+
+Texto curto:
+
+"Escolha suas marmitas, monte seu combo e faça seu pedido pelo WhatsApp."
+
+Botão grande:
+
+"Peça agora pelo WhatsApp"
+
+Essa deve ser uma das seções visualmente mais destacadas da Home.
+
+---
+
+# 18. PÁGINA CARDÁPIO
+
+A página Cardápio será uma das páginas mais importantes do site.
+
+Ela deve permitir que o usuário navegue facilmente entre:
+
+* Marmitas individuais;
+* Combos prontos;
+* Combo personalizado.
+
+---
+
+# 19. CARDÁPIO — CABEÇALHO
+
+Criar uma introdução curta:
+
+Título:
+
+"Nosso cardápio"
+
+Texto:
+
+"Escolha suas marmitas favoritas ou monte um combo do seu jeito."
+
+Adicionar filtros/categorias caso façam sentido.
+
+Possíveis categorias:
+
+* Todas;
+* Carnes;
+* Frango;
+* Peixes;
+* Vegetarianas;
+* Mais vendidas;
+* Novidades.
+
+Essas categorias devem ser visualmente simples.
+
+---
+
+# 20. CARDÁPIO — MARMITAS
+
+Criar uma grade de produtos.
+
+Desktop:
+
+3 cards por linha, podendo utilizar 4 dependendo da quantidade de informações.
+
+Tablet:
+
+2 cards por linha.
+
+Mobile:
+
+1 card por linha.
+
+Cada marmita deve possuir um card completo.
+
+## Card da marmita
+
+### Parte superior
+
+Fotografia grande da marmita.
+
+Adicionar badges quando aplicável:
+
+* "Mais vendida";
+* "Novidade";
+* "Mais pedida";
+* "Vegetariana";
+* etc.
+
+Não utilizar todos ao mesmo tempo.
+
+### Corpo
+
+Nome da marmita.
+
+Descrição curta.
+
+Exemplo:
+
+"Frango grelhado, arroz integral, feijão e legumes."
+
+Adicionar informações rápidas:
+
+* Peso;
+* Calorias;
+* Proteína, caso disponíveis.
+
+### Preço
+
+Preço em destaque.
+
+Caso exista preço promocional:
+
+Preço antigo riscado + preço atual.
+
+### Botões
+
+Botão principal:
+
+"Pedir agora"
+
+Botão secundário:
+
+"Ver mais"
+
+---
+
+# 21. MODAL / DETALHES DA MARMITA
+
+Ao clicar em "Ver mais", abrir um modal grande.
+
+No desktop:
+
+Modal centralizado ocupando aproximadamente 70–80% da largura disponível.
+
+No mobile:
+
+Modal ocupar praticamente toda a tela.
+
+## Conteúdo
+
+### Imagem
+
+Fotografia grande da marmita.
+
+### Informações
+
+* Nome;
+* Descrição completa;
+* Ingredientes;
+* Peso;
+* Conservação;
+* Modo de preparo;
+* Validade, caso aplicável;
+* Informações nutricionais.
+
+### Tabela nutricional
+
+Criar uma tabela organizada contendo placeholders para:
+
+* Porção;
+* Valor energético;
+* Carboidratos;
+* Proteínas;
+* Gorduras totais;
+* Gorduras saturadas;
+* Fibra alimentar;
+* Sódio.
+
+Não inventar valores.
+
+### Preço
+
+Destacar o preço.
+
+### CTA
+
+Botão:
+
+"Peça esta marmita"
+
+Direcionar para WhatsApp.
+
+### Fechar
+
+Adicionar X no canto superior direito.
+
+Permitir fechar clicando fora do modal.
+
+---
+
+# 22. CARDÁPIO — COMBOS
+
+Após as marmitas, criar uma seção:
+
+"Combos"
+
+Subtítulo:
+
+"Mais praticidade e economia para sua rotina."
+
+Criar 4 opções:
+
+1. Combo 1;
+2. Combo 2;
+3. Combo 3;
+4. Monte seu combo.
+
+---
+
+# 23. CARDS DE COMBOS PRONTOS
+
+Os três combos prontos devem possuir visual mais chamativo que as marmitas individuais.
+
+Cada combo deve apresentar:
+
+* Nome;
+* Quantidade total de marmitas;
+* Foto;
+* Lista resumida das marmitas incluídas;
+* Quantidade de cada marmita;
+* Preço individual estimado;
+* Preço do combo;
+* Economia/desconto.
+
+O desconto deve ser um dos elementos visuais de destaque.
+
+Exemplo visual:
+
+"Você economiza R$ XX"
+
+ou
+
+"X% OFF"
+
+O preço final deve possuir destaque maior.
+
+CTA principal:
+
+"Quero este combo"
+
+CTA secundário:
+
+"Ver itens"
+
+---
+
+# 24. DETALHES DO COMBO
+
+Ao clicar em "Ver itens" ou área equivalente, abrir modal.
+
+Mostrar uma lista completa:
+
+### Marmita 1
+
+Nome + pequena imagem + quantidade.
+
+### Marmita 2
+
+Nome + pequena imagem + quantidade.
+
+### Marmita 3
+
+Nome + pequena imagem + quantidade.
+
+Etc.
+
+Cada item da lista deve ser clicável.
+
+Ao clicar em uma marmita:
+
+Abrir os detalhes daquela marmita.
+
+Permitir voltar para os detalhes do combo.
+
+Mostrar:
+
+* Quantidade;
+* Preço do combo;
+* Economia;
+* CTA "Pedir combo".
+
+---
+
+# 25. COMBO PERSONALIZADO
+
+Criar um card especial:
+
+"Monte seu combo"
+
+Texto:
+
+"Escolha suas marmitas favoritas e monte um combo do seu jeito."
+
+Botão:
+
+"Simular preço"
+
+---
+
+# 26. MODAL — MONTE SEU COMBO
+
+Ao clicar em "Simular preço", abrir um modal grande.
+
+Título:
+
+"Monte seu combo"
+
+Texto:
+
+"Escolha quantas unidades de cada marmita você deseja."
+
+Listar todas as marmitas disponíveis.
+
+Cada item deve possuir:
+
+* Foto pequena;
+* Nome;
+* Pequena descrição;
+* Preço unitário;
+* Controle de quantidade.
+
+Controle:
+
+[-] 0 [+]
+
+O botão "+" aumenta a quantidade.
+
+O botão "-" diminui a quantidade.
+
+Não permitir quantidade negativa.
+
+---
+
+# 27. RESUMO DO COMBO PERSONALIZADO
+
+Manter uma área fixa dentro do modal contendo:
+
+### Seu combo
+
+Lista dos produtos selecionados.
+
+Exemplo:
+
+Frango com arroz — 2 unidades
+
+Carne com legumes — 3 unidades
+
+Peixe — 1 unidade
+
+### Quantidade total
+
+"6 marmitas"
+
+### Preço
+
+"R$ XX,XX"
+
+Caso exista regra de desconto:
+
+Mostrar automaticamente:
+
+"Desconto do combo: R$ XX"
+
+"Você economizou XX%"
+
+"Total: R$ XX,XX"
+
+O preço deve ser atualizado dinamicamente conforme a quantidade.
+
+---
+
+# 28. BOTÃO DO COMBO PERSONALIZADO
+
+No final do modal:
+
+Botão grande:
+
+"Enviar pedido pelo WhatsApp"
+
+Ao clicar, o sistema deverá posteriormente gerar uma mensagem estruturada para o WhatsApp contendo:
+
+* Nome do cliente, caso solicitado;
+* Marmitas escolhidas;
+* Quantidade de cada uma;
+* Quantidade total;
+* Valor simulado;
+* Combo escolhido.
+
+No layout, mostrar claramente que o pedido será finalizado pelo WhatsApp.
+
+Adicionar botão:
+
+"Continuar escolhendo"
+
+---
+
+# 29. BOTÕES DE PEDIDO
+
+Todos os produtos e combos devem possuir um CTA relacionado ao pedido.
+
+Padronizar os textos:
+
+* "Pedir agora"
+* "Quero este combo"
+* "Enviar pedido"
+* "Peça pelo WhatsApp"
+
+Evitar utilizar vários textos diferentes para a mesma ação sem necessidade.
+
+O WhatsApp deve ser o principal canal de conversão.
+
+---
+
+# 30. PÁGINA CONTATO
+
+Criar uma página simples, elegante e objetiva.
+
+Não sobrecarregar essa página.
+
+## Hero
+
+Título:
+
+"Entre em contato"
+
+Texto curto:
+
+"Estamos prontos para ajudar você a escolher suas marmitas."
+
+---
+
+# 31. CONTATO — INFORMAÇÕES
+
+Criar cards de contato.
+
+### WhatsApp
+
+Ícone do WhatsApp.
+
+Número:
+
+[WHATSAPP]
+
+Botão:
+
+"Conversar no WhatsApp"
+
+### Instagram
+
+Ícone do Instagram.
+
+@perfil
+
+Botão:
+
+"Ver Instagram"
+
+---
+
+# 32. CONTATO — SOBRE A MARCA
+
+Adicionar uma pequena seção:
+
+"Fale com a gente"
+
+Pequena descrição sobre a empresa e atendimento.
+
+Adicionar horário de atendimento:
+
+[HORÁRIO DE ATENDIMENTO]
+
+---
+
+# 33. CONTATO — CTA
+
+Adicionar CTA final:
+
+"Quer fazer seu pedido?"
+
+Botão:
+
+"Peça agora pelo WhatsApp"
+
+---
+
+# 34. UX — PRINCÍPIOS IMPORTANTES
+
+O design deve seguir princípios modernos de UX.
+
+## Clareza
+
+O usuário deve saber imediatamente:
+
+* O que a empresa vende;
+* Onde encontrar o cardápio;
+* Como fazer um pedido.
+
+## Conversão
+
+O botão de pedido deve estar disponível em pontos estratégicos.
+
+## Hierarquia
+
+Priorizar visualmente:
+
+1. Produto;
+2. Benefício;
+3. Preço;
+4. CTA.
+
+## Pouca fricção
+
+Não criar cadastro obrigatório.
+
+Não criar checkout complexo.
+
+O objetivo é direcionar o usuário para o WhatsApp.
+
+---
+
+# 35. MICROINTERAÇÕES
+
+Criar estados para:
+
+* Hover;
+* Focus;
+* Active;
+* Disabled;
+* Loading.
+
+Botões devem possuir pequenas transições.
+
+Cards podem apresentar uma pequena elevação ao passar o mouse.
+
+Imagens podem possuir zoom muito discreto.
+
+Não utilizar animações exageradas.
+
+---
+
+# 36. ACESSIBILIDADE
+
+Garantir:
+
+* Contraste adequado;
+* Texto legível;
+* Áreas de clique suficientemente grandes;
+* Ícones acompanhados de texto quando necessário;
+* Estados de foco;
+* Botões claramente identificáveis;
+* Não depender apenas de cor para transmitir informação.
+
+---
+
+# 37. RESPONSIVIDADE
+
+Criar versões completas:
+
+## Desktop
+
+* Header horizontal;
+* Grid de produtos;
+* Modais grandes;
+* Combos em cards horizontais/verticais conforme necessário.
+
+## Tablet
+
+* Header adaptado;
+* Grid de 2 produtos;
+* Seções reorganizadas;
+* Modais ajustados.
+
+## Mobile
+
+* Menu hamburger;
+* Cards de produto em uma coluna;
+* Botões com largura adequada;
+* Fotos maiores;
+* Textos reorganizados;
+* Modais ocupando quase toda a tela;
+* Combo personalizado com resumo fixo na parte inferior quando possível.
+
+---
+
+# 38. COMPONENTIZAÇÃO NO FIGMA
+
+Criar componentes reutilizáveis:
+
+* Header;
+* Footer;
+* Button;
+* Icon Button;
+* Navigation Item;
+* Product Card;
+* Combo Card;
+* Badge;
+* Price;
+* Nutrition Table;
+* Product Modal;
+* Combo Modal;
+* Quantity Selector;
+* WhatsApp CTA;
+* Contact Card;
+* Section Header;
+* Step Card;
+* Benefit Card.
+
+Criar variantes quando necessário.
+
+Exemplo:
+
+Button:
+
+* Primary;
+* Secondary;
+* Outline;
+* Disabled;
+* Loading.
+
+Product Card:
+
+* Default;
+* Featured;
+* Promotional.
+
+---
+
+# 39. AUTO LAYOUT
+
+Utilizar Auto Layout no Figma sempre que possível.
+
+Todos os componentes devem ser estruturados de maneira que:
+
+* Textos maiores não quebrem o layout;
+* Cards possam crescer;
+* Botões mantenham dimensões adequadas;
+* Listas possam receber novos itens;
+* Conteúdo possa ser substituído posteriormente.
+
+Evitar posicionamento absoluto desnecessário.
+
+---
+
+# 40. PROTOTIPAÇÃO
+
+Criar protótipo navegável demonstrando:
+
+### Header
+
+Home → Home
+
+Cardápio → Cardápio
+
+Contato → Contato
+
+Logo → Home
+
+WhatsApp → WhatsApp
+
+Instagram → Instagram
+
+### Home
+
+"Ver cardápio" → Cardápio
+
+"Peça agora" → WhatsApp
+
+### Cardápio
+
+"Ver mais" → Modal da marmita
+
+"Pedir agora" → WhatsApp
+
+"Ver itens" → Modal do combo
+
+"Monte seu combo" → Modal de seleção
+
+### Combo personalizado
+
+"+" → aumenta quantidade
+
+"-" → diminui quantidade
+
+"Enviar pedido" → WhatsApp
+
+### Contato
+
+WhatsApp → WhatsApp
+
+Instagram → Instagram
+
+---
+
+# 41. ESTRUTURA DE FRAMES NO FIGMA
+
+Organizar o arquivo de maneira profissional.
+
+Criar páginas:
+
+01 — Design System
+
+02 — Components
+
+03 — Home
+
+04 — Cardápio
+
+05 — Contato
+
+06 — Modals & States
+
+07 — Prototype / User Flow
+
+Dentro de cada página, manter os frames organizados.
+
+Criar versões:
+
+* Desktop;
+* Tablet;
+* Mobile.
+
+---
+
+# 42. PLACEHOLDERS
+
+Como algumas informações reais ainda não foram fornecidas, utilizar placeholders claramente identificados para:
+
+* Nome da marca;
+* Logo;
+* Fotos;
+* Preços;
+* Endereço;
+* Regiões atendidas;
+* WhatsApp;
+* Instagram;
+* Horários;
+* Informações nutricionais;
+* Ingredientes;
+* Peso;
+* Validade;
+* Tempo de preparo;
+* Tempo de entrega.
+
+NÃO inventar informações reais.
+
+---
+
+# 43. EXPERIÊNCIA FINAL DESEJADA
+
+A experiência ideal do usuário deve ser:
+
+ENTRAR NO SITE
+↓
+Entender imediatamente o que a empresa vende
+↓
+Ver uma imagem apetitosa
+↓
+Entender os benefícios
+↓
+Conhecer a marca
+↓
+Ver algumas marmitas
+↓
+ENTRAR NO CARDÁPIO
+↓
+Escolher uma marmita ou combo
+↓
+Visualizar detalhes
+↓
+Escolher quantidade
+↓
+CLICAR EM "PEDIR"
+↓
+WHATSAPP
+
+O caminho até o pedido deve ser simples, curto e intuitivo.
+
+---
+
+# 44. PRIORIDADE VISUAL
+
+Dar maior destaque aos seguintes elementos:
+
+1. Fotografias das marmitas;
+2. Nome dos produtos;
+3. Preços;
+4. Economia dos combos;
+5. Botões de pedido;
+6. WhatsApp;
+7. Informações essenciais.
+
+Não deixar textos institucionais ocuparem mais espaço visual que os produtos.
+
+---
+
+# 45. RESULTADO ESPERADO
+
+O resultado final deve parecer um site real de uma marca profissional de alimentação, e não apenas um exercício acadêmico.
+
+O layout deve ser:
+
+* Moderno;
+* Bonito;
+* Comercial;
+* Elegante;
+* Fácil de navegar;
+* Responsivo;
+* Acessível;
+* Visualmente consistente;
+* Preparado para implementação em HTML/CSS/JavaScript.
+
+Priorizar uma excelente experiência de usuário e uma apresentação extremamente atraente das marmitas.
+
+Criar o layout completo de todas as páginas, componentes, modais, estados e versões responsivas, mantendo consistência visual em todo o projeto.

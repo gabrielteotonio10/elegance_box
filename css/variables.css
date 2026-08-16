@@ -1,0 +1,132 @@
+/* ==========================================================================
+   VARIABLES.CSS
+   Design Tokens do site Elegance Box.
+   Objetivo: centralizar TODAS as decisões visuais (cores, fontes, espaços,
+   bordas, sombras, transições) em um único lugar. Qualquer ajuste de marca
+   (ex: trocar a cor de destaque, trocar a fonte) deve ser feito aqui, e se
+   propaga automaticamente para o site inteiro, já que os outros arquivos
+   .css sempre consomem essas variáveis em vez de valores "soltos".
+
+   BREAKPOINTS DO PROJETO (documentados aqui porque CSS custom properties
+   não podem ser usadas dentro de @media, então os números abaixo precisam
+   ser repetidos manualmente nas media queries de cada arquivo):
+     - Desktop: a partir de 1200px (estilo "base", sem media query)
+     - Tablet:  de 768px até 1199px  → @media (max-width: 1199px)
+     - Mobile:  abaixo de 768px      → @media (max-width: 767px)
+   ========================================================================== */
+
+:root {
+  /* ------------------------------------------------------------------
+     CORES — PALETA DE MARCA
+     Paleta inspirada em alimentação/qualidade: fundo em tom de marfim
+     (aconchegante, remete a embalagem/papel kraft), verde floresta como
+     cor primária (natural, orgânico, confiança) e terracota como cor de
+     destaque para todas as chamadas de ação (contraste alto, aparece bem
+     sobre o fundo claro sem parecer um site "tecnológico" genérico).
+     ------------------------------------------------------------------ */
+  --color-bg: #f7f4ea; /* fundo principal das páginas (marfim quente) */
+  --color-bg-alt: #efeada; /* fundo de seções alternadas / cards sobre --color-bg */
+  --color-surface: #ffffff; /* superfície de cards e modais, "flutuando" sobre o fundo creme */
+
+  --color-primary: #2f4438; /* verde floresta: header, footer, títulos, ícones padrão */
+  --color-primary-dark: #22332a; /* variação mais escura, usada em hover de elementos primários */
+  --color-primary-soft: #e4e9e2; /* verde bem clarinho, usado em fundos de ícone/hover sutil */
+
+  --color-accent: #d9603d; /* terracota: CTAs, preços, badges de destaque, estado ativo */
+  --color-accent-dark: #c24f2f; /* terracota escurecido, usado no hover dos botões de destaque */
+  --color-accent-soft: #fbe7e0; /* terracota bem clarinho, usado em fundo de badge/alerta leve */
+
+  --color-text: #2a2a22; /* texto principal (títulos e corpo de texto) */
+  --color-text-muted: #6b6a5c; /* texto secundário (descrições, legendas, metadados) */
+  --color-text-on-dark: #f7f4ea; /* texto usado sobre fundos escuros (header/footer/CTA final) */
+  --color-text-on-dark-muted: #c7cec8; /* texto secundário sobre fundo escuro */
+
+  --color-border: #e2dcc8; /* bordas sutis de cards, inputs e divisórias */
+  --color-border-on-dark: rgba(247, 244, 234, 0.16); /* divisórias sobre fundo escuro */
+
+  --color-success: #4c7a56; /* feedback positivo (ex: economia em combos) */
+  --color-alert: #c24f2f; /* feedback de alerta (reaproveita o tom de terracota escuro) */
+
+  --color-overlay: rgba(34, 51, 42, 0.55); /* fundo escurecido atrás de modais/menu mobile */
+
+  /* ------------------------------------------------------------------
+     TIPOGRAFIA
+     Fraunces (serifada, com personalidade) para títulos/display — traz a
+     sofisticação e o "afeto" pedidos no briefing. Inter (sans-serif, alta
+     legibilidade) para texto corrido, navegação, preços e botões.
+     Carregadas via Google Fonts no <head> de cada página HTML.
+     ------------------------------------------------------------------ */
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Inter", -apple-system, Segoe UI, sans-serif;
+
+  /* Escala de tamanhos de fonte. Usa rem (relativo à fonte raiz do
+     navegador, tipicamente 16px) para respeitar configurações de
+     acessibilidade do usuário (zoom de texto do navegador/SO). */
+  --text-display: 3.25rem; /* título hero da Home */
+  --text-h1: 2.5rem; /* título principal de página (Cardápio, Contato) */
+  --text-h2: 2.125rem; /* título de seção */
+  --text-h3: 1.5rem; /* subtítulo de seção / título de card grande */
+  --text-h4: 1.125rem; /* título de card pequeno */
+  --text-lead: 1.25rem; /* texto de apoio logo abaixo de títulos grandes */
+  --text-body: 1rem; /* texto corrido padrão */
+  --text-small: 0.875rem; /* metadados, descrições de card, legendas */
+  --text-caption: 0.75rem; /* selos, rótulos pequenos, notas de rodapé de tabela */
+
+  --leading-tight: 1.15; /* line-height apertado, usado em títulos grandes */
+  --leading-normal: 1.5; /* line-height padrão para texto corrido */
+
+  /* ------------------------------------------------------------------
+     ESPAÇAMENTO
+     Escala baseada em múltiplos de 4px. Usar sempre estas variáveis (em
+     vez de valores soltos como "17px") mantém o ritmo vertical/horizontal
+     do site consistente entre seções e componentes diferentes.
+     ------------------------------------------------------------------ */
+  --space-1: 0.25rem; /* 4px  — ajustes finos (ex: gap entre ícone e texto) */
+  --space-2: 0.5rem; /* 8px  — espaçamento mínimo entre elementos relacionados */
+  --space-3: 0.75rem; /* 12px — padding interno de botões/badges */
+  --space-4: 1rem; /* 16px — espaçamento padrão entre elementos de um card */
+  --space-5: 1.5rem; /* 24px — padding interno de cards e modais */
+  --space-6: 2rem; /* 32px — espaço entre blocos dentro de uma seção */
+  --space-7: 3rem; /* 48px — espaço entre o título de uma seção e seu conteúdo */
+  --space-8: 4rem; /* 64px — padding vertical padrão de uma seção completa */
+  --space-9: 6rem; /* 96px — padding vertical de seções de destaque (hero, CTA final) */
+
+  /* ------------------------------------------------------------------
+     LAYOUT
+     ------------------------------------------------------------------ */
+  --container-width: 1200px; /* largura máxima do conteúdo, conforme briefing (1200–1280px) */
+  --container-padding: 2rem; /* respiro lateral mínimo do container em telas grandes */
+
+  /* ------------------------------------------------------------------
+     BORDAS E SOMBRAS
+     Cantos levemente arredondados (nunca "pill" nos cards, para manter a
+     aparência elegante/sofisticada) e sombras suaves, nunca fortes,
+     conforme pedido no briefing ("evitar sombras muito fortes").
+     ------------------------------------------------------------------ */
+  --radius-sm: 8px; /* botões, badges, inputs */
+  --radius-md: 12px; /* cards */
+  --radius-lg: 20px; /* modais, blocos grandes de imagem */
+  --radius-full: 999px; /* elementos circulares/pill (botão CTA, ícone social) */
+
+  --shadow-sm: 0 1px 3px rgba(42, 42, 34, 0.08);
+  --shadow-md: 0 8px 24px rgba(42, 42, 34, 0.1);
+  --shadow-lg: 0 24px 48px rgba(42, 42, 34, 0.18);
+
+  /* ------------------------------------------------------------------
+     TRANSIÇÕES
+     Duração única para todas as microinterações (hover, foco, abertura de
+     modal) — mantém a sensação de resposta do site consistente e evita
+     animações longas/exageradas (pedido explícito do briefing).
+     ------------------------------------------------------------------ */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+
+  /* ------------------------------------------------------------------
+     CAMADAS (z-index)
+     Escala centralizada para evitar "guerra de z-index" entre header
+     fixo, menu mobile e modais.
+     ------------------------------------------------------------------ */
+  --z-header: 100;
+  --z-mobile-menu: 200;
+  --z-modal: 300;
+}

@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cardápio | Elegance Box</title>
+    <meta
+      name="description"
+      content="Conheça o cardápio completo de marmitas congeladas da Elegance Box, monte combos prontos ou personalize o seu."
+    />
+
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%232F4438'/%3E%3Cpath d='M5 8.5l7-4 7 4-7 4-7-4Z' fill='none' stroke='%23F7F4EA' stroke-width='1.6' stroke-linejoin='round'/%3E%3Cpath d='M5 8.5v7l7 4 7-4v-7' fill='none' stroke='%23F7F4EA' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/global.css" />
+    <link rel="stylesheet" href="css/cardapio.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Pular para o conteúdo</a>
+
+    <!-- ==================================================================
+         HEADER GLOBAL (idêntico em todas as páginas — ver comentários
+         completos em index.html)
+         ================================================================== -->
+    <header class="site-header">
+      <div class="container site-header__inner">
+        <a href="index.html" class="logo">
+          <span class="logo__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 8l9-5 9 5-9 5-9-5Z" />
+              <path d="M3 8v8l9 5 9-5V8" />
+              <path d="M12 13v8" />
+            </svg>
+          </span>
+          <span class="logo__text">Elegance Box</span>
+        </a>
+
+        <nav class="site-nav" aria-label="Navegação principal">
+          <ul class="site-nav__list">
+            <li><a href="index.html" class="nav-link" data-nav-link>Home</a></li>
+            <li><a href="cardapio.html" class="nav-link" data-nav-link>Cardápio</a></li>
+            <li><a href="contato.html" class="nav-link" data-nav-link>Contato</a></li>
+          </ul>
+        </nav>
+
+        <div class="site-header__actions">
+          <a
+            class="icon-btn"
+            href="https://wa.me/5531992990564"
+            target="_blank"
+            rel="noopener"
+            title="Falar no WhatsApp"
+            aria-label="Falar no WhatsApp"
+            data-wa-cta
+            data-wa-message="Olá! Gostaria de fazer um pedido de marmitas Elegance Box."
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path
+                d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20Zm4.4-5.8c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1s-.6.8-.7.9-.3.2-.5.1a6.5 6.5 0 0 1-3.2-2.8c-.2-.4.2-.4.6-1.2.1-.2 0-.4 0-.5s-.5-1.2-.7-1.6-.4-.4-.5-.4h-.5a.9.9 0 0 0-.6.3 2.7 2.7 0 0 0-.8 2 4.7 4.7 0 0 0 1 2.5 10.6 10.6 0 0 0 4.4 3.9c1.6.6 2.2.7 2.7.6a2.3 2.3 0 0 0 1.5-1.1 1.9 1.9 0 0 0 .1-1.1c-.1-.1-.2-.2-.4-.3Z"
+              />
+            </svg>
+          </a>
+          <a
+            class="icon-btn"
+            href="https://www.instagram.com/eboxcestas?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==&igsi=ZDNlZDc0MzIxNw=="
+            target="_blank"
+            rel="noopener"
+            title="Ver Instagram"
+            aria-label="Ver Instagram"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="5" />
+              <circle cx="12" cy="12" r="4" />
+              <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+            </svg>
+          </a>
+          <a
+            class="btn btn--primary"
+            href="https://wa.me/5531992990564"
+            target="_blank"
+            rel="noopener"
+            data-wa-cta
+            data-wa-message="Olá! Gostaria de fazer um pedido de marmitas Elegance Box."
+          >
+            Peça agora
+          </a>
+        </div>
+
+        <button
+          type="button"
+          class="mobile-menu-toggle"
+          id="mobileMenuToggle"
+          aria-label="Abrir menu"
+          aria-expanded="false"
+          aria-controls="mobileMenu"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <!-- ================================================================
+           CABEÇALHO DO CARDÁPIO + FILTROS
+           Título/texto de introdução e os chips de categoria que filtram
+           o grid de produtos logo abaixo (ver cardapio.js).
+           ================================================================ -->
+      <section class="section cardapio-catalog">
+        <div class="container">
+          <div class="section-header">
+            <h1 class="section-header__title">Nosso cardápio</h1>
+            <p class="section-header__subtitle">Escolha suas marmitas favoritas ou monte um combo do seu jeito.</p>
+          </div>
+
+          <!-- role="group" com aria-label: identifica para leitores de tela
+               que estes botões formam um conjunto de filtros relacionados -->
+          <div class="filter-bar" id="filterBar" role="group" aria-label="Filtrar cardápio por categoria">
+            <button type="button" class="filter-chip" data-filter="todas" aria-pressed="true">Todas</button>
+            <button type="button" class="filter-chip" data-filter="carnes" aria-pressed="false">Carnes</button>
+            <button type="button" class="filter-chip" data-filter="frango" aria-pressed="false">Frango</button>
+            <button type="button" class="filter-chip" data-filter="peixes" aria-pressed="false">Peixes</button>
+            <button type="button" class="filter-chip" data-filter="vegetarianas" aria-pressed="false">Vegetarianas</button>
+            <button type="button" class="filter-chip" data-filter="mais-vendidas" aria-pressed="false">Mais vendidas</button>
+            <button type="button" class="filter-chip" data-filter="novidades" aria-pressed="false">Novidades</button>
+          </div>
+
+          <!-- Grid de produtos: preenchido/atualizado por cardapio.js a
+               cada clique num filtro. aria-live="polite" faz leitores de
+               tela avisarem discretamente quando o conteúdo do grid muda -->
+          <div class="products-grid" id="productsGrid" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           COMBOS
+           3 combos prontos (renderizados via JS a partir de
+           EB.data.COMBOS) + o card "Monte seu combo", que abre o modal
+           grande de montagem personalizada.
+           ================================================================ -->
+      <section class="section section--alt combos-section">
+        <div class="container">
+          <div class="section-header section-header--center">
+            <h2 class="section-header__title">Combos</h2>
+            <p class="section-header__subtitle">Mais praticidade e economia para sua rotina.</p>
+          </div>
+
+          <div class="combos-grid" id="combosGrid"></div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ==================================================================
+         FOOTER GLOBAL (idêntico em todas as páginas)
+         ================================================================== -->
+    <footer class="site-footer">
+      <div class="container site-footer__grid">
+        <div class="footer-block">
+          <a href="index.html" class="logo">
+            <span class="logo__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 8l9-5 9 5-9 5-9-5Z" />
+                <path d="M3 8v8l9 5 9-5V8" />
+                <path d="M12 13v8" />
+              </svg>
+            </span>
+            <span class="logo__text">Elegance Box</span>
+          </a>
+          <p class="footer-block__description">
+            Unindo o sabor da comida caseira à praticidade do congelamento inteligente, para nutrir sua rotina de
+            forma simples e saborosa.
+          </p>
+        </div>
+
+        <div class="footer-block">
+          <h3 class="footer-block__title">Navegação</h3>
+          <ul class="footer-block__list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="cardapio.html">Cardápio</a></li>
+            <li><a href="contato.html">Contato</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-block">
+          <h3 class="footer-block__title">Contato</h3>
+          <ul class="footer-block__list">
+            <li>
+              <a
+                href="https://wa.me/5531992990564"
+                target="_blank"
+                rel="noopener"
+                data-wa-cta
+                data-wa-message="Olá! Gostaria de fazer um pedido de marmitas Elegance Box."
+                >WhatsApp: (31) 99299-0564</a
+              >
+            </li>
+            <li><a href="https://www.instagram.com/eboxcestas?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==&igsi=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener">Instagram: @eboxcestas</a></li>
+            <li>Seg. a Sex., das 9h às 19h</li>
+          </ul>
+        </div>
+
+        <div class="footer-block">
+          <h3 class="footer-block__title">Pedido Prático</h3>
+          <p class="footer-block__text">Clique abaixo e fale agora com a nossa equipe pelo WhatsApp.</p>
+          <a
+            class="btn btn--primary"
+            href="https://wa.me/5531992990564"
+            target="_blank"
+            rel="noopener"
+            data-wa-cta
+            data-wa-message="Olá! Gostaria de fazer um pedido de marmitas Elegance Box."
+          >
+            Peça agora via WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <div class="container site-footer__bottom">
+        <span>&copy; <span id="currentYear">2026</span> Elegance Box. Todos os direitos reservados.</span>
+        <div class="site-footer__bottom-links">
+          <a href="#">Política de Privacidade</a>
+          <a href="#">Termos de Uso</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ==================================================================
+         MENU MOBILE (idêntico em todas as páginas)
+         ================================================================== -->
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+      <div class="mobile-menu__header">
+        <a href="index.html" class="logo">
+          <span class="logo__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 8l9-5 9 5-9 5-9-5Z" />
+              <path d="M3 8v8l9 5 9-5V8" />
+              <path d="M12 13v8" />
+            </svg>
+          </span>
+          <span class="logo__text">Elegance Box</span>
+        </a>
+        <button type="button" class="icon-btn mobile-menu__close" id="mobileMenuClose" aria-label="Fechar menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <line x1="5" y1="5" x2="19" y2="19" />
+            <line x1="19" y1="5" x2="5" y2="19" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="mobile-menu__body">
+        <nav class="mobile-menu__nav" aria-label="Navegação mobile">
+          <a href="index.html" class="nav-link" data-nav-link>Home</a>
+          <a href="cardapio.html" class="nav-link" data-nav-link>Cardápio</a>
+          <a href="contato.html" class="nav-link" data-nav-link>Contato</a>
+        </nav>
+
+        <hr class="mobile-menu__divider" />
+
+        <div class="mobile-menu__actions">
+          <a
+            class="btn btn--primary btn--block"
+            href="https://wa.me/5531992990564"
+            target="_blank"
+            rel="noopener"
+            data-wa-cta
+            data-wa-message="Olá! Gostaria de fazer um pedido de marmitas Elegance Box."
+          >
+            Peça agora
+          </a>
+          <div class="mobile-menu__socials">
+            <a
+              class="icon-btn"
+              href="https://wa.me/5531992990564"
+              target="_blank"
+              rel="noopener"
+              aria-label="Falar no WhatsApp"
+              data-wa-cta
+              data-wa-message="Olá! Gostaria de fazer um pedido de marmitas Elegance Box."
+            >
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path
+                  d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20Zm4.4-5.8c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1s-.6.8-.7.9-.3.2-.5.1a6.5 6.5 0 0 1-3.2-2.8c-.2-.4.2-.4.6-1.2.1-.2 0-.4 0-.5s-.5-1.2-.7-1.6-.4-.4-.5-.4h-.5a.9.9 0 0 0-.6.3 2.7 2.7 0 0 0-.8 2 4.7 4.7 0 0 0 1 2.5 10.6 10.6 0 0 0 4.4 3.9c1.6.6 2.2.7 2.7.6a2.3 2.3 0 0 0 1.5-1.1 1.9 1.9 0 0 0 .1-1.1c-.1-.1-.2-.2-.4-.3Z"
+                />
+              </svg>
+            </a>
+            <a class="icon-btn" href="https://www.instagram.com/eboxcestas?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==&igsi=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener" aria-label="Ver Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================================================================
+         MODAL: DETALHES DA MARMITA
+         Aberto ao clicar em "Ver mais" num card de produto, ou ao clicar
+         numa marmita dentro do modal de combo. O conteúdo interno
+         (.modal__body) é montado inteiramente via JS (cardapio.js,
+         função buildProductModalBody), pois os campos (ingredientes,
+         tabela nutricional etc.) são os mesmos para toda marmita — só o
+         valor de cada campo muda conforme o produto clicado.
+         ================================================================== -->
+    <div class="modal-overlay" id="productModal" aria-hidden="true">
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="productModalTitle">
+        <button type="button" class="icon-btn modal__close" data-modal-close aria-label="Fechar detalhes da marmita">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <line x1="5" y1="5" x2="19" y2="19" />
+            <line x1="19" y1="5" x2="5" y2="19" />
+          </svg>
+        </button>
+        <div class="modal__body" id="productModalBody"></div>
+      </div>
+    </div>
+
+    <!-- ==================================================================
+         MODAL: DETALHES DO COMBO
+         Aberto ao clicar em "Ver itens" num combo pronto. Lista as
+         marmitas incluídas; cada uma pode ser clicada para abrir o modal
+         de detalhes daquela marmita (com opção de "Voltar" para este
+         modal). Conteúdo montado via JS (buildComboModalBody).
+         ================================================================== -->
+    <div class="modal-overlay" id="comboModal" aria-hidden="true">
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="comboModalTitle">
+        <button type="button" class="icon-btn modal__close" data-modal-close aria-label="Fechar detalhes do combo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <line x1="5" y1="5" x2="19" y2="19" />
+            <line x1="19" y1="5" x2="5" y2="19" />
+          </svg>
+        </button>
+        <div class="modal__body" id="comboModalBody"></div>
+      </div>
+    </div>
+
+    <!-- ==================================================================
+         MODAL: MONTE SEU COMBO
+         O modal mais complexo do site: lista todas as marmitas com
+         seletor de quantidade (coluna esquerda) e um resumo fixo com
+         cálculo de desconto progressivo em tempo real (coluna direita).
+         Ao contrário dos dois modais acima, aqui a ESTRUTURA é sempre a
+         mesma (só os números mudam), então o HTML já vem praticamente
+         pronto e cardapio.js só atualiza os valores — ver função
+         renderBuilderSummary().
+         ================================================================== -->
+    <div class="modal-overlay" id="builderModal" aria-hidden="true">
+      <div class="modal modal--builder" role="dialog" aria-modal="true" aria-labelledby="builderModalTitle">
+        <button type="button" class="icon-btn modal__close" data-modal-close aria-label="Fechar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <line x1="5" y1="5" x2="19" y2="19" />
+            <line x1="19" y1="5" x2="5" y2="19" />
+          </svg>
+        </button>
+
+        <div class="modal__header">
+          <h2 class="modal__title" id="builderModalTitle">Monte seu Combo</h2>
+          <p class="modal__subtitle">Escolha as unidades das suas marmitas e garanta descontos progressivos.</p>
+        </div>
+
+        <div class="builder">
+          <!-- Coluna esquerda: uma linha por marmita disponível, com
+               seletor de quantidade. Preenchida uma única vez (ao
+               carregar a página) por cardapio.js — a lista de marmitas
+               não muda depois, só a quantidade de cada uma. -->
+          <div class="builder__list" id="builderProductList"></div>
+
+          <!-- Coluna direita: resumo do combo sendo montado. Fica "presa"
+               (sticky) na tela enquanto o usuário rola a lista de
+               marmitas à esquerda, graças ao CSS em cardapio.css. -->
+          <aside class="builder__summary">
+            <h3 class="builder__summary-title">Seu Combo Especial</h3>
+
+            <ul class="builder__summary-items" id="builderSummaryItems"></ul>
+
+            <!-- Exibida enquanto nenhuma marmita foi escolhida ainda -->
+            <p class="builder__summary-empty" id="builderSummaryEmpty">Escolha ao menos uma marmita para simular o preço.</p>
+
+            <!-- Escondida enquanto o carrinho estiver vazio -->
+            <div class="builder__summary-totals" id="builderSummaryTotals" hidden>
+              <div class="builder__summary-row">
+                <span id="builderSubtotalLabel">Subtotal (0 marmitas):</span>
+                <span id="builderSubtotalValue">R$ 0,00</span>
+              </div>
+              <div class="builder__summary-row builder__summary-row--discount" id="builderDiscountRow" hidden>
+                <span id="builderDiscountLabel">Desconto Progressivo:</span>
+                <span id="builderDiscountValue">- R$ 0,00</span>
+              </div>
+              <div class="builder__summary-row builder__summary-row--total">
+                <span>Total Final:</span>
+                <span id="builderTotalValue">R$ 0,00</span>
+              </div>
+            </div>
+
+            <div class="builder__summary-actions">
+              <!-- Começa com aria-disabled="true" (carrinho vazio);
+                   cardapio.js remove o atributo assim que há ao menos 1
+                   marmita escolhida, e recalcula o href a cada mudança -->
+              <a class="btn btn--primary btn--block" id="builderSendOrderBtn" target="_blank" rel="noopener" aria-disabled="true" href="#">
+                Enviar pedido pelo WhatsApp
+              </a>
+              <button type="button" class="btn btn--outline btn--block" data-modal-close>Continuar escolhendo</button>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================================================================
+         TEMPLATE: CARD "MONTE SEU COMBO"
+         Uma tag <template> nunca é exibida nem processada pelo navegador
+         "do jeito que está" no HTML — seu conteúdo só entra na página
+         quando explicitamente clonado via JS (ver renderCombosGrid em
+         cardapio.js). Usado aqui porque este card é sempre o mesmo
+         (nenhum dado vem de EB.data.COMBOS), mas precisa ser inserido
+         DEPOIS dos 3 combos prontos, que são gerados dinamicamente.
+         ================================================================== -->
+    <template id="customComboCardTemplate">
+      <article class="combo-card combo-card--custom">
+        <span class="combo-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 8l9-5 9 5-9 5-9-5Z" />
+            <path d="M3 8v8l9 5 9-5V8" />
+            <path d="M12 13v8" />
+          </svg>
+        </span>
+        <h3 class="combo-card__name">Monte seu combo</h3>
+        <p class="combo-card__description">Escolha suas marmitas favoritas e monte um combo do seu jeito.</p>
+        <button type="button" class="btn btn--primary" data-action="open-builder">Simular preço</button>
+      </article>
+    </template>
+
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/cardapio.js"></script>
+  </body>
+</html>

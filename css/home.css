@@ -1,0 +1,288 @@
+/* ==========================================================================
+   HOME.CSS
+   Estilos específicos das seções da página Home (index.html). Componentes
+   reaproveitáveis (botões, cards, badges, header, footer) já vêm de
+   global.css — aqui só entra o layout particular de cada seção da Home.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   HERO
+   Duas colunas no desktop: texto à esquerda, foto grande à direita,
+   conforme briefing (seção 10).
+   -------------------------------------------------------------------- */
+
+.hero__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: var(--space-8);
+  padding-block: var(--space-9);
+}
+
+.hero__eyebrow {
+  display: inline-block;
+  font-size: var(--text-small);
+  font-weight: 600;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-4);
+}
+
+.hero__title {
+  font-size: var(--text-display);
+  margin-bottom: var(--space-5);
+}
+
+.hero__lead {
+  font-size: var(--text-lead);
+  margin-bottom: var(--space-6);
+  max-width: 46ch; /* impede a linha de texto ficar longa demais e difícil de ler */
+}
+
+.hero__actions {
+  display: flex;
+  gap: var(--space-4);
+}
+
+/* --------------------------------------------------------------------------
+   BENEFÍCIOS
+   -------------------------------------------------------------------- */
+
+.benefits__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-5);
+}
+
+/* --------------------------------------------------------------------------
+   ONDE ATENDEMOS
+   Duas colunas: bloco ilustrativo (mapa decorativo) + conteúdo textual.
+   -------------------------------------------------------------------- */
+
+.coverage__inner {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: var(--space-8);
+  align-items: center;
+}
+
+/* Bloco "mapa": moldura quadrada e arredondada em volta do <iframe> do
+   Google Maps (ver index.html). position: relative é o que permite o
+   selo .coverage__pin flutuar por cima do mapa; overflow: hidden é o
+   que corta os cantos do iframe para acompanhar o border-radius, já que
+   um <iframe> não herda arredondamento do elemento pai sozinho. */
+.coverage__map {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  background-color: var(--color-bg-alt); /* aparece brevemente enquanto o mapa carrega */
+}
+
+.coverage__map-frame {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Selo decorativo flutuando sobre o mapa, no canto inferior direito —
+   reforça a identidade visual da marca por cima do mapa "genérico" do
+   Google. aria-hidden porque é puramente decorativo: a região atendida
+   já está descrita em texto ao lado (.coverage__region). */
+.coverage__pin {
+  position: absolute;
+  right: var(--space-4);
+  bottom: var(--space-4);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+  box-shadow: var(--shadow-md);
+}
+.coverage__pin svg {
+  width: 26px;
+  height: 26px;
+}
+
+.coverage__region {
+  margin-block: var(--space-5);
+  font-size: var(--text-small);
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3) var(--space-4);
+}
+
+.coverage__info-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.coverage__info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.coverage__info-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+.coverage__info-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.coverage__info-title {
+  font-size: var(--text-h4);
+  margin-bottom: var(--space-1);
+}
+
+.coverage__info-text {
+  font-size: var(--text-small);
+}
+
+/* --------------------------------------------------------------------------
+   GRID DE PASSOS
+   Reaproveitado por "Como funciona" e "Como preparar" — mesma grade de 4
+   colunas, ambas usando o componente .step-card definido em global.css.
+   -------------------------------------------------------------------- */
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-6);
+}
+
+/* --------------------------------------------------------------------------
+   SOBRE A MARCA
+   -------------------------------------------------------------------- */
+
+.about__inner {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: var(--space-8);
+  align-items: center;
+}
+
+.about__stats {
+  display: flex;
+  gap: var(--space-7);
+  margin-block: var(--space-6);
+}
+
+.about__stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.about__stat-number {
+  font-family: var(--font-display);
+  font-size: var(--text-h1);
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.about__stat-label {
+  font-size: var(--text-small);
+  color: var(--color-text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   DESTAQUE DO CARDÁPIO
+   Grid preenchido via JS (home.js) com 3 .product-card (componente
+   definido em global.css).
+   -------------------------------------------------------------------- */
+
+.featured-products__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVIDADE — TABLET (768–1199px)
+   -------------------------------------------------------------------- */
+
+@media (max-width: 1199px) {
+  .hero__inner {
+    grid-template-columns: 1fr;
+    padding-block: var(--space-7);
+  }
+  /* Na versão empilhada, a foto sobe para cima do texto — decisão de
+     hierarquia visual (a comida aparece primeiro), conforme prioridade
+     visual pedida no briefing (seção 44). */
+  .hero__media {
+    order: -1;
+  }
+
+  .benefits__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .coverage__inner {
+    grid-template-columns: 1fr;
+  }
+  .coverage__map {
+    max-width: 320px;
+    margin-inline: auto;
+  }
+
+  .steps-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .about__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .featured-products__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVIDADE — MOBILE (<768px)
+   -------------------------------------------------------------------- */
+
+@media (max-width: 767px) {
+  .hero__title {
+    font-size: var(--text-h1);
+  }
+  .hero__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .benefits__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .steps-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about__stats {
+    gap: var(--space-6);
+  }
+
+  .featured-products__grid {
+    grid-template-columns: 1fr;
+  }
+}

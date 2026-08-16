@@ -1,0 +1,1382 @@
+/* ==========================================================================
+   GLOBAL.CSS
+   Estilos e componentes compartilhados por TODAS as páginas do site:
+   tipografia base, layout (container/seções), header, footer, menu mobile,
+   botões, badges, cards de produto/combo, modal base, tabela nutricional,
+   seletor de quantidade e utilitários de acessibilidade.
+
+   Estilos que só existem em UMA página (ex: hero da Home) ficam nos
+   arquivos home.css / cardapio.css / contato.css — aqui só entra o que é
+   reaproveitado em 2 ou mais lugares.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   TIPOGRAFIA BASE
+   Define a aparência padrão de texto do site inteiro. Cada página só
+   precisa sobrescrever o que for realmente diferente.
+   -------------------------------------------------------------------- */
+
+/* Fundo e cor de texto padrão do site + fonte de corpo (Inter). */
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+}
+
+/* Todos os títulos usam a fonte serifada de destaque (Fraunces) e um
+   line-height mais apertado, já que textos grandes com line-height normal
+   ficam com espaçamento visualmente exagerado entre linhas. */
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  color: var(--color-primary);
+  line-height: var(--leading-tight);
+  font-weight: 600;
+}
+
+h1 {
+  font-size: var(--text-h1);
+}
+h2 {
+  font-size: var(--text-h2);
+}
+h3 {
+  font-size: var(--text-h3);
+}
+h4 {
+  font-size: var(--text-h4);
+}
+
+/* Parágrafos usam a cor secundária de texto por padrão (mais suave que
+   títulos), já que a maior parte dos parágrafos do site é texto de apoio,
+   não conteúdo principal. */
+p {
+  color: var(--color-text-muted);
+  line-height: var(--leading-normal);
+}
+
+/* --------------------------------------------------------------------------
+   ACESSIBILIDADE — FOCO E SKIP LINK
+   -------------------------------------------------------------------- */
+
+/* Estado de foco visível e consistente em qualquer elemento navegável por
+   teclado. Usamos :focus-visible (em vez de :focus) para o contorno só
+   aparecer quando a navegação é por teclado (Tab), não em cliques de
+   mouse — evita o "anel" de foco aparecer em cliques comuns. */
+:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Esconde visualmente um elemento mas mantém acessível a leitores de tela.
+   Usado em textos de apoio que só existem para contexto (ex: labels de
+   ícones que já têm aria-label, mas quando queremos reforçar com texto). */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Link "pular para o conteúdo": fica invisível até receber foco via Tab,
+   permitindo que usuários de teclado pulem o header/nav repetido em toda
+   página e vão direto para o <main>. */
+.skip-link {
+  position: absolute;
+  top: -48px;
+  left: var(--space-4);
+  z-index: 1000;
+  background: var(--color-primary);
+  color: var(--color-text-on-dark);
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-sm);
+  transition: top var(--transition-fast);
+}
+
+.skip-link:focus {
+  top: var(--space-4);
+}
+
+/* --------------------------------------------------------------------------
+   LAYOUT — CONTAINER E SEÇÕES
+   Componentes de estrutura reaproveitados por toda seção de toda página.
+   -------------------------------------------------------------------- */
+
+/* Container centralizado com largura máxima, conforme briefing (seção 5):
+   o conteúdo nunca deve esticar 100% da tela em telas grandes. */
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+}
+
+/* Espaçamento vertical padrão de uma seção de página. */
+.section {
+  padding-block: var(--space-9);
+}
+
+/* Modificador para seções com fundo alternado (dá "respiro" visual entre
+   seções consecutivas, evitando que tudo pareça um bloco único). */
+.section--alt {
+  background-color: var(--color-bg-alt);
+}
+
+/* Modificador para seções com fundo escuro (ex: CTA final da Home/Contato):
+   troca a cor de texto padrão para a versão clara, já que --color-text
+   (escuro) ficaria ilegível sobre --color-primary. */
+.section--dark {
+  background-color: var(--color-primary);
+  color: var(--color-text-on-dark);
+}
+.section--dark h1,
+.section--dark h2,
+.section--dark h3,
+.section--dark h4 {
+  color: var(--color-text-on-dark);
+}
+.section--dark p {
+  color: var(--color-text-on-dark-muted);
+}
+
+/* Cabeçalho de seção: pequeno rótulo (eyebrow) + título + subtítulo.
+   Reaproveitado em praticamente toda seção do site (Benefícios, Como
+   Funciona, Sobre, Destaque do Cardápio, etc.) — por isso vive aqui e não
+   em home.css. */
+.section-header {
+  max-width: 640px;
+  margin-bottom: var(--space-7);
+}
+
+/* Variante centralizada, usada em seções sem conteúdo lateral (ex:
+   Benefícios, Como Funciona). */
+.section-header--center {
+  margin-inline: auto;
+  text-align: center;
+}
+
+/* Variante com ação: título à esquerda e um botão à direita, na mesma
+   linha (ex: "Conheça algumas opções" + botão "Ver cardápio completo"). */
+.section-header--with-action {
+  max-width: none;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-5);
+}
+
+/* Rótulo pequeno acima do título (ex: "Diferenciais Elegance Box"): usa a
+   cor de destaque e letras espaçadas para funcionar como um "olho" que
+   guia a leitura antes do título grande. */
+.section-header__eyebrow {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--text-small);
+  font-weight: 600;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-2);
+}
+
+.section-header__title {
+  margin-bottom: var(--space-3);
+}
+
+.section-header__subtitle {
+  font-size: var(--text-lead);
+  color: var(--color-text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   BOTÕES
+   Componente .btn reaproveitado em CTAs de header, hero, cards, modais e
+   footer. Variantes de cor via modificador de classe; estado desabilitado
+   via o atributo HTML nativo [disabled], não uma classe — assim o
+   navegador já trata teclado/leitor de tela corretamente sem JS extra.
+   -------------------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-full);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  font-weight: 600;
+  border: 2px solid transparent;
+  transition: background-color var(--transition-fast), color var(--transition-fast),
+    border-color var(--transition-fast), transform var(--transition-fast);
+  white-space: nowrap;
+}
+
+/* Leve efeito de "afundar" ao clicar (estado active) — feedback tátil sem
+   depender de animação exagerada. */
+.btn:active {
+  transform: scale(0.97);
+}
+
+/* Botão primário (cor de destaque sólida): usado em toda ação de conversão
+   (Peça agora, Pedir agora, Enviar pedido pelo WhatsApp). */
+.btn--primary {
+  background-color: var(--color-accent);
+  color: var(--color-text-on-dark);
+}
+.btn--primary:hover {
+  background-color: var(--color-accent-dark);
+}
+
+/* Botão outline (contorno, fundo transparente): usado em ações
+   secundárias (Ver mais, Ver Instagram, Continuar escolhendo). A cor de
+   contorno se adapta ao fundo escuro/claro via .section--dark abaixo. */
+.btn--outline {
+  background-color: transparent;
+  border-color: currentColor;
+  color: var(--color-primary);
+}
+.btn--outline:hover {
+  background-color: var(--color-primary);
+  color: var(--color-text-on-dark);
+}
+.section--dark .btn--outline {
+  color: var(--color-text-on-dark);
+}
+.section--dark .btn--outline:hover {
+  background-color: var(--color-text-on-dark);
+  color: var(--color-primary);
+}
+
+/* Botão maior, usado nos CTAs de mais destaque (hero e CTA final). */
+.btn--lg {
+  padding: var(--space-4) var(--space-7);
+  font-size: var(--text-lead);
+}
+
+/* Botão que ocupa 100% da largura do container pai (usado dentro dos
+   modais, onde os botões ficam empilhados verticalmente). */
+.btn--block {
+  width: 100%;
+}
+
+/* Estado desabilitado: aparência "apagada" e cursor de bloqueio, para
+   deixar claro que a ação não pode ser executada agora (ex: enviar pedido
+   com o combo personalizado vazio). */
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.btn:disabled:hover {
+  background-color: var(--color-accent);
+  transform: none;
+}
+
+/* Equivalente ao :disabled acima, mas para o botão "Enviar pedido" do
+   combo personalizado, que é um link <a> (não um <button>) — precisa
+   permanecer <a> para funcionar com "abrir em nova guia" nativamente, e
+   por isso usa aria-disabled em vez do atributo disabled (que só existe
+   em elementos de formulário). O bloqueio real do clique é feito em
+   cardapio.js. */
+.btn[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Botão circular só com ícone (WhatsApp/Instagram do header, fechar do
+   modal, +/- do seletor de quantidade herdam a base mas redefinem
+   formato). aria-label é usado no HTML já que não há texto visível. */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border);
+  color: var(--color-primary);
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+  flex-shrink: 0;
+}
+.icon-btn svg {
+  width: 18px;
+  height: 18px;
+}
+.icon-btn:hover {
+  background-color: var(--color-primary);
+  color: var(--color-text-on-dark);
+  border-color: var(--color-primary);
+}
+
+/* --------------------------------------------------------------------------
+   BADGES
+   Selo pequeno usado sobre a foto de produtos/combos (ex: "Mais vendida")
+   e sobre o preço riscado de um combo (ex: "12% OFF").
+   -------------------------------------------------------------------- */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-caption);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+/* Variante sólida (cor de destaque): usada para o selo mais "forte" de
+   cada card, o primeiro que o olho deve notar (ex: Mais vendida, % OFF). */
+.badge--accent {
+  background-color: var(--color-accent);
+  color: var(--color-text-on-dark);
+}
+
+/* Variante em verde: usada para selos informativos, um degrau abaixo do
+   selo de destaque (ex: Novidade, Premium). */
+.badge--primary {
+  background-color: var(--color-primary);
+  color: var(--color-text-on-dark);
+}
+
+/* Variante clara: usada para selos mais discretos, que não devem competir
+   visualmente com o selo principal do card (ex: Baixo Carbo). */
+.badge--soft {
+  background-color: var(--color-surface);
+  color: var(--color-primary);
+}
+
+/* --------------------------------------------------------------------------
+   HEADER GLOBAL
+   Fixo no topo (position: sticky) para o CTA "Peça agora" e a navegação
+   ficarem sempre acessíveis, mesmo com o usuário tendo rolado a página.
+   -------------------------------------------------------------------- */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
+  background-color: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  padding-block: var(--space-4);
+}
+
+/* Área da marca (ícone + nome), à esquerda do header. */
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-shrink: 0;
+}
+
+/* Ícone da marca: fundo verde primário circular com o glifo em creme,
+   tamanho suficiente para ser reconhecido sem dominar o header (pedido
+   explícito do briefing, seção 6). */
+.logo__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+  flex-shrink: 0;
+}
+.logo__icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.logo__text {
+  font-family: var(--font-display);
+  font-size: var(--text-h4);
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+/* Navegação principal desktop. */
+.site-nav__list {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.nav-link {
+  position: relative;
+  font-size: var(--text-body);
+  font-weight: 500;
+  color: var(--color-primary);
+  padding-block: var(--space-1);
+  transition: color var(--transition-fast);
+}
+.nav-link:hover {
+  color: var(--color-accent);
+}
+
+/* Estado "página atual", aplicado via JS em main.js (comparando a URL
+   atual com o href de cada link) — ver EB.nav.highlightActiveLink(). Usa
+   cor de destaque + um traço embaixo, replicando o estado visto no menu
+   mobile do Figma. */
+.nav-link.is-active {
+  color: var(--color-accent);
+}
+.nav-link.is-active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 2px;
+  background-color: var(--color-accent);
+  border-radius: var(--radius-full);
+}
+
+/* Área direita do header: ícones sociais + CTA. */
+.site-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* Botão hambúrguer: escondido no desktop, exibido apenas em telas
+   menores (ver media query no fim do arquivo). */
+.mobile-menu-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: var(--color-primary);
+}
+.mobile-menu-toggle svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* --------------------------------------------------------------------------
+   MENU MOBILE
+   Painel fullscreen que substitui a navegação horizontal em telas
+   estreitas. Fica fora do fluxo normal (position: fixed) e é
+   mostrado/escondido via a classe .is-open, controlada por main.js.
+   -------------------------------------------------------------------- */
+
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-mobile-menu);
+  background-color: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+  /* Começa invisível e levemente deslocado; a transição de opacidade só
+     dá a sensação de "aparecer suavemente" quando .is-open é aplicada. */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition-base), visibility var(--transition-base);
+}
+
+.mobile-menu.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-menu__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--container-padding);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Botão de fechar com fundo suave em tom de destaque, conforme visto no
+   protótipo do Figma (círculo rosado com X). */
+.mobile-menu__close {
+  background-color: var(--color-accent-soft);
+  color: var(--color-accent-dark);
+  border-radius: var(--radius-full);
+}
+.mobile-menu__close:hover {
+  background-color: var(--color-accent);
+  color: var(--color-text-on-dark);
+}
+
+/* Corpo do menu: navegação centralizada vertical e horizontalmente,
+   ocupando o espaço restante da tela. */
+.mobile-menu__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-6);
+  padding: var(--space-6) var(--container-padding);
+}
+
+.mobile-menu__nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+.mobile-menu__nav .nav-link {
+  font-family: var(--font-display);
+  font-size: var(--text-h2);
+}
+
+.mobile-menu__divider {
+  width: 100%;
+  max-width: 240px;
+  border: none;
+  border-top: 1px solid var(--color-border);
+}
+
+.mobile-menu__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  width: 100%;
+  max-width: 320px;
+}
+
+.mobile-menu__socials {
+  display: flex;
+  gap: var(--space-3);
+}
+
+/* Impede a rolagem da página por trás quando o menu mobile (ou um modal)
+   está aberto — aplicada/removida em document.body via JS. */
+body.no-scroll {
+  overflow: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   FOOTER GLOBAL
+   -------------------------------------------------------------------- */
+
+.site-footer {
+  background-color: var(--color-primary);
+  color: var(--color-text-on-dark-muted);
+  padding-block: var(--space-8) var(--space-5);
+  margin-top: auto; /* garante que o footer "grude" no final em páginas curtas */
+}
+
+.site-footer__grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+  gap: var(--space-7);
+  padding-bottom: var(--space-7);
+  border-bottom: 1px solid var(--color-border-on-dark);
+}
+
+.footer-block__title {
+  font-family: var(--font-body);
+  font-size: var(--text-small);
+  font-weight: 700;
+  color: var(--color-text-on-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-4);
+}
+
+.footer-block .logo__text {
+  color: var(--color-text-on-dark);
+}
+.footer-block__description {
+  margin-top: var(--space-3);
+  font-size: var(--text-small);
+  color: var(--color-text-on-dark-muted);
+}
+
+.footer-block__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.footer-block__list a {
+  font-size: var(--text-small);
+  color: var(--color-text-on-dark-muted);
+  transition: color var(--transition-fast);
+}
+.footer-block__list a:hover {
+  color: var(--color-text-on-dark);
+}
+
+.footer-block__text {
+  font-size: var(--text-small);
+  margin-bottom: var(--space-4);
+}
+
+.site-footer__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-top: var(--space-5);
+  font-size: var(--text-caption);
+}
+.site-footer__bottom-links {
+  display: flex;
+  gap: var(--space-5);
+}
+.site-footer__bottom-links a:hover {
+  color: var(--color-text-on-dark);
+}
+
+/* --------------------------------------------------------------------------
+   MEDIA PLACEHOLDER
+   Substitui fotos reais enquanto o cliente não envia o material definitivo
+   (briefing, seção 42). Mostra um ícone neutro + legenda descritiva, para
+   deixar claro que ali entrará uma fotografia real do prato/ambiente —
+   troque este <div> por uma tag <img src="images/..." alt="..."> quando a
+   foto estiver disponível.
+   -------------------------------------------------------------------- */
+
+.media-placeholder {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 100%;
+  background-color: var(--color-bg-alt);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  /* Ícone de imagem em SVG embutido via data-URI, centralizado — evita
+     depender de um arquivo de imagem externo só para exibir o placeholder. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a9a68f' stroke-width='1.5'%3E%3Crect x='3' y='4' width='18' height='16' rx='2'/%3E%3Ccircle cx='8.5' cy='9.5' r='1.5'/%3E%3Cpath d='M21 16l-5.5-5.5a2 2 0 0 0-2.8 0L3 20'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center 38%;
+  background-size: 15%;
+  overflow: hidden;
+}
+
+.media-placeholder__label {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  background-color: rgba(255, 255, 255, 0.75);
+  color: var(--color-text-muted);
+  font-size: var(--text-caption);
+  text-align: center;
+}
+
+/* Modificadores de proporção — cada contexto de uso define a altura
+   necessária (hero grande, card de produto, foto quadrada, etc.). */
+.media-placeholder--hero {
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius-lg);
+}
+.media-placeholder--wide {
+  aspect-ratio: 16 / 9;
+}
+.media-placeholder--card {
+  aspect-ratio: 4 / 3;
+}
+.media-placeholder--square {
+  aspect-ratio: 1 / 1;
+}
+
+/* --------------------------------------------------------------------------
+   PRODUCT CARD
+   Componente principal do Cardápio, reaproveitado na Home (seção de
+   destaques) — por isso mora em global.css. Estrutura: mídia (com badge
+   sobreposto) + corpo (nome, descrição, metadados, preço, ações).
+   -------------------------------------------------------------------- */
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-surface);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition-base), transform var(--transition-base);
+  height: 100%;
+}
+
+/* Pequena elevação ao passar o mouse — o único "movimento" do card,
+   conforme pedido no briefing (nada de animações exageradas). */
+.product-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
+}
+
+.product-card__media {
+  position: relative;
+}
+
+.product-card__media .badge {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+}
+
+.product-card__media .media-placeholder {
+  border-radius: 0; /* a foto ocupa toda a largura do card, sem cantos arredondados próprios */
+  border-width: 0 0 1px 0;
+}
+
+.product-card__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: var(--space-5);
+}
+
+.product-card__name {
+  font-size: var(--text-h4);
+  margin-bottom: var(--space-2);
+}
+
+.product-card__description {
+  font-size: var(--text-small);
+  flex: 1;
+}
+
+.product-card__meta {
+  display: flex;
+  gap: var(--space-3);
+  font-size: var(--text-caption);
+  color: var(--color-text-muted);
+  margin-block: var(--space-3);
+}
+
+.product-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+
+.product-card__actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+/* Nos cards, os botões de ação são menores que o padrão global, para não
+   competir visualmente com o preço. */
+.product-card__actions .btn {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-small);
+}
+
+/* Variante "featured": usada nos 3 cards de destaque da Home. Recebe uma
+   borda sutil na cor de destaque para se diferenciar levemente dos cards
+   padrão do Cardápio. */
+.product-card--featured {
+  box-shadow: var(--shadow-md);
+}
+
+/* --------------------------------------------------------------------------
+   PREÇO
+   -------------------------------------------------------------------- */
+
+.price {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.price__value {
+  font-family: var(--font-display);
+  font-size: var(--text-h4);
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+/* Preço "de", riscado — exibido apenas quando existe promoção (combos). */
+.price__old {
+  font-size: var(--text-small);
+  color: var(--color-text-muted);
+  text-decoration: line-through;
+}
+
+/* --------------------------------------------------------------------------
+   COMBO CARD
+   Visualmente mais chamativo que o product-card (mais alto contraste),
+   já que os combos são o principal ponto de conversão do site.
+   -------------------------------------------------------------------- */
+
+.combo-card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-surface);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  height: 100%;
+}
+
+.combo-card__media {
+  position: relative;
+}
+
+/* O selo de desconto do combo fica no canto, sobre a foto — é um dos
+   elementos visuais mais importantes do card (briefing, seção 23). */
+.combo-card__media .badge {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+}
+
+.combo-card__media .media-placeholder {
+  border-radius: 0;
+  border-width: 0 0 1px 0;
+}
+
+.combo-card__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: var(--space-5);
+}
+
+.combo-card__title-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.combo-card__name {
+  font-size: var(--text-h4);
+}
+
+.combo-card__count {
+  font-size: var(--text-caption);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.combo-card__description {
+  font-size: var(--text-small);
+  margin-bottom: var(--space-4);
+}
+
+/* Lista resumida das marmitas incluídas no combo. */
+.combo-card__items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-size: var(--text-small);
+  color: var(--color-text);
+  margin-bottom: var(--space-4);
+}
+
+.combo-card__footer {
+  margin-top: auto;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+
+/* Texto de economia (ex: "Você economiza R$ 14,60") — usa a cor de
+   sucesso para reforçar positivamente a vantagem financeira do combo. */
+.combo-card__savings {
+  font-size: var(--text-small);
+  font-weight: 600;
+  color: var(--color-success);
+  margin-block: var(--space-2) var(--space-4);
+}
+
+.combo-card__actions {
+  display: flex;
+  gap: var(--space-3);
+}
+.combo-card__actions .btn {
+  flex: 1;
+}
+
+/* Variante do card "Monte seu combo": sem foto, com borda tracejada para
+   comunicar visualmente que é uma ação "diferente" das demais (montar, não
+   apenas comprar pronto), conforme briefing seção 25. */
+.combo-card--custom {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: 2px dashed var(--color-border);
+  box-shadow: none;
+  padding: var(--space-7) var(--space-5);
+  gap: var(--space-4);
+}
+
+.combo-card--custom .combo-card__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-primary-soft);
+  color: var(--color-primary);
+  margin-inline: auto;
+}
+.combo-card--custom .combo-card__icon svg {
+  width: 28px;
+  height: 28px;
+}
+
+/* --------------------------------------------------------------------------
+   STEP CARD
+   Passo numerado, usado em "Como funciona" e "Como preparar" (Home).
+   -------------------------------------------------------------------- */
+
+.step-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.step-card__number {
+  font-family: var(--font-display);
+  font-size: var(--text-h2);
+  color: var(--color-accent-soft);
+  -webkit-text-stroke: 1.5px var(--color-accent);
+}
+
+.step-card__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+.step-card__icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.step-card__title {
+  font-size: var(--text-h4);
+}
+
+.step-card__text {
+  font-size: var(--text-small);
+}
+
+/* --------------------------------------------------------------------------
+   BENEFIT CARD
+   Usado na seção "Benefícios" da Home — mais simples que o step-card
+   (sem numeração), focado no ícone + texto curto.
+   -------------------------------------------------------------------- */
+
+.benefit-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  background-color: var(--color-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.benefit-card__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-accent-soft);
+  color: var(--color-accent-dark);
+}
+.benefit-card__icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.benefit-card__title {
+  font-size: var(--text-h4);
+}
+
+.benefit-card__text {
+  font-size: var(--text-small);
+}
+
+/* --------------------------------------------------------------------------
+   CONTACT CARD
+   Usado na página Contato (WhatsApp / Instagram).
+   -------------------------------------------------------------------- */
+
+.contact-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-6);
+  background-color: var(--color-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  height: 100%;
+}
+
+.contact-card__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-primary-soft);
+  color: var(--color-primary);
+  margin-bottom: var(--space-2);
+}
+.contact-card__icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.contact-card__title {
+  font-size: var(--text-h4);
+}
+
+.contact-card__text {
+  font-size: var(--text-small);
+}
+
+/* Valor de destaque do card (número de telefone / @usuário), em texto
+   maior e com peso forte para ser o segundo elemento mais notado depois
+   do ícone. */
+.contact-card__value {
+  font-family: var(--font-display);
+  font-size: var(--text-h4);
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.contact-card .btn {
+  margin-top: var(--space-2);
+  width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   MODAL (base)
+   Estrutura compartilhada pelos 3 modais do Cardápio (produto, combo,
+   monte-seu-combo). O overlay cobre a tela inteira; o modal em si fica
+   centralizado dentro dele. Aberto/fechado via a classe .is-open,
+   controlada pelo helper genérico EB.modal em main.js.
+   -------------------------------------------------------------------- */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  background-color: var(--color-overlay);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-5);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition-base), visibility var(--transition-base);
+}
+
+.modal-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Usada por EB.modal.closeInstantly() (main.js) para trocar de um modal
+   para outro sem o fade-out de ~250ms — sem isso, o modal que está
+   fechando e o que está abrindo ficam visíveis ao mesmo tempo por um
+   instante, sobrepondo os dois conteúdos na tela. */
+.modal-overlay.is-closing-instant {
+  transition: none;
+}
+
+.modal {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  max-height: 85vh;
+  overflow-y: auto;
+  background-color: var(--color-bg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-6);
+  /* Pequeno deslocamento vertical que "assenta" suavemente ao abrir,
+     controlado pela mesma classe .is-open do overlay (transição de
+     transform sincronizada com a opacidade do fundo). */
+  transform: translateY(12px);
+  transition: transform var(--transition-base);
+}
+.modal-overlay.is-open .modal {
+  transform: translateY(0);
+}
+
+/* Modal do "Monte seu combo": mais largo, pois tem duas colunas
+   (lista de produtos + resumo do pedido). */
+.modal--builder {
+  max-width: 960px;
+}
+
+.modal__close {
+  position: absolute;
+  top: var(--space-5);
+  right: var(--space-5);
+}
+
+.modal__header {
+  margin-bottom: var(--space-5);
+  padding-right: var(--space-7); /* evita o título passar por baixo do botão de fechar */
+}
+
+.modal__title {
+  margin-bottom: var(--space-2);
+}
+
+.modal__subtitle {
+  color: var(--color-text-muted);
+  font-size: var(--text-small);
+}
+
+/* Botão "Voltar", exibido apenas quando o modal de produto foi aberto a
+   partir de dentro de um modal de combo (briefing, seção 24). */
+.modal__back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-small);
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: var(--space-4);
+}
+.modal__back svg {
+  width: 16px;
+  height: 16px;
+}
+.modal__back:hover {
+  color: var(--color-accent);
+}
+
+/* --------------------------------------------------------------------------
+   TABELA NUTRICIONAL
+   Usada dentro do modal de detalhes da marmita.
+   -------------------------------------------------------------------- */
+
+.nutrition-table {
+  font-size: var(--text-small);
+}
+
+.nutrition-table caption {
+  text-align: left;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: var(--space-3);
+}
+
+.nutrition-table td {
+  padding: var(--space-2) var(--space-1);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.nutrition-table td:last-child {
+  text-align: right;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* Nota de rodapé da tabela, exibida apenas nos produtos sem valores
+   nutricionais confirmados (ver EB.data.PRODUCTS) — nunca inventamos
+   número, então avisamos explicitamente que o dado está pendente. */
+.nutrition-table__note {
+  display: block;
+  margin-top: var(--space-3);
+  font-size: var(--text-caption);
+  font-style: italic;
+  color: var(--color-text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   SELETOR DE QUANTIDADE
+   Usado no modal "Monte seu combo", um por marmita da lista.
+   -------------------------------------------------------------------- */
+
+.quantity-selector {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-shrink: 0;
+}
+
+.quantity-selector__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-bg-alt);
+  color: var(--color-primary);
+  font-weight: 700;
+  transition: background-color var(--transition-fast);
+}
+.quantity-selector__btn:hover:not(:disabled) {
+  background-color: var(--color-primary-soft);
+}
+.quantity-selector__btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.quantity-selector__btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.quantity-selector__value {
+  min-width: 1.5em;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   FILTER BAR
+   Chips de categoria usados no topo do grid do Cardápio.
+   -------------------------------------------------------------------- */
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.filter-chip {
+  padding: var(--space-2) var(--space-5);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  font-size: var(--text-small);
+  font-weight: 500;
+  color: var(--color-text-muted);
+  transition: background-color var(--transition-fast), color var(--transition-fast),
+    border-color var(--transition-fast);
+}
+.filter-chip:hover {
+  border-color: var(--color-accent);
+  color: var(--color-text);
+}
+
+/* Estado ativo controlado via aria-pressed (refletindo o estado
+   semântico do botão) em vez de uma classe solta — assim o estilo visual
+   nunca desalinha do estado real exposto a leitores de tela. */
+.filter-chip[aria-pressed="true"] {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-text-on-dark);
+}
+
+/* --------------------------------------------------------------------------
+   CTA FINAL
+   Seção de conversão de alto contraste (fundo escuro via .section--dark)
+   usada tanto na Home quanto no Contato — por isso vive aqui e não em
+   home.css/contato.css. Conteúdo estreito e centralizado, para funcionar
+   como um "ponto final" de alto impacto visual antes do footer.
+   -------------------------------------------------------------------- */
+
+.final-cta__inner {
+  max-width: 640px;
+  margin-inline: auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+/* O círculo em volta do ícone tem tamanho fixo (56px) e o SVG dentro
+   dele é limitado a 26px — sem essas duas regras, o <svg> (sem width
+   e height definidos no HTML) cairia no tamanho "replaced element"
+   padrão do navegador, ocupando várias vezes o espaço pretendido. */
+.final-cta__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-full);
+  background-color: rgba(247, 244, 234, 0.12);
+  color: var(--color-accent);
+  margin-bottom: var(--space-2);
+}
+.final-cta__icon svg {
+  width: 26px;
+  height: 26px;
+}
+
+.final-cta__inner .btn {
+  margin-top: var(--space-3);
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVIDADE — HEADER E FOOTER
+   Regras de tablet/mobile dos componentes globais. Cada arquivo de página
+   (home.css/cardapio.css/contato.css) cuida da própria responsividade de
+   seção; aqui só entra o que afeta header/footer/menu em todas as páginas.
+   -------------------------------------------------------------------- */
+
+/* TABLET (768–1199px): a navegação horizontal completa não cabe de forma
+   confortável ao lado da logo + ícones + CTA (ver nota no plano de
+   implementação), então o header já assume o formato mobile a partir daqui. */
+@media (max-width: 1199px) {
+  .site-nav,
+  .site-header__actions {
+    display: none;
+  }
+  .mobile-menu-toggle {
+    display: inline-flex;
+  }
+
+  .site-footer__grid {
+    grid-template-columns: 1fr 1fr;
+    row-gap: var(--space-7);
+  }
+}
+
+/* MOBILE (<768px) */
+@media (max-width: 767px) {
+  .container {
+    --container-padding: 1.25rem;
+  }
+
+  .site-footer__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .site-footer__bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+
+  .section-header--with-action {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .modal {
+    max-height: 92vh;
+    padding: var(--space-5);
+  }
+}
