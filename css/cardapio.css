@@ -166,24 +166,47 @@
    Duas colunas: lista rolável de marmitas + resumo fixo (sticky).
    -------------------------------------------------------------------- */
 
+/* minmax(0, ...) em cada coluna, não "1.6fr 1fr" sozinho: um valor
+   "fr" isolado equivale a minmax(auto, <fr>), cujo mínimo "auto" ainda é
+   calculado a partir do conteúdo — e a lista de marmitas contém texto
+   com white-space: nowrap (a descrição truncada), então sem o "0"
+   explícito a 1ª coluna cresce para caber o texto inteiro e empurra a
+   coluna do resumo para fora do modal (min-width: 0 nos itens sozinho
+   não é suficiente para conter uma trilha "fr" nesse cenário). */
 .builder {
   display: grid;
-  grid-template-columns: 1.6fr 1fr;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
   gap: var(--space-7);
   align-items: start;
 }
 
+/* min-width: 0 é essencial aqui: por padrão, um item de grid nunca
+   encolhe abaixo da largura "natural" do seu conteúdo (min-width: auto),
+   e .builder__row-description usa white-space: nowrap para o efeito de
+   reticências — sem este reset, o texto integral (bem mais largo que a
+   coluna) força a 1ª coluna do grid .builder a crescer muito além dos
+   1.6fr definidos, empurrando a coluna do resumo (.builder__summary)
+   para fora da área visível do modal. */
 .builder__list {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
+/* min-width: 0 de novo, pelo mesmo motivo do .builder__list acima: cada
+   .builder__row é um item flex dentro de .builder__list (que empilha as
+   linhas em coluna), e sem este reset a linha nunca encolhe abaixo da
+   largura "natural" da descrição com white-space: nowrap — em telas
+   bem estreitas isso faz a linha (e o texto dentro dela) vazar para
+   fora do modal em vez de truncar com reticências. */
 .builder__row {
   display: flex;
   align-items: center;
   gap: var(--space-4);
   padding-block: var(--space-4);
   border-bottom: 1px solid var(--color-border);
+  width: 100%;
+  min-width: 0;
 }
 .builder__row:first-child {
   padding-top: 0;
@@ -274,6 +297,16 @@
   font-size: var(--text-small);
   padding-block: var(--space-1);
 }
+/* O atributo HTML "hidden" some do elemento graças a uma regra padrão do
+   navegador ([hidden] { display: none }) — mas como a regra acima já
+   define display: flex para esta mesma classe, ela venceria a regra
+   nativa do navegador e a linha de desconto ficaria visível mesmo
+   escondida. Esta regra reforça o display: none sempre que o atributo
+   hidden estiver presente (usado por cardapio.js para esconder a linha
+   de desconto quando a faixa de desconto atual é 0%). */
+.builder__summary-row[hidden] {
+  display: none;
+}
 
 .builder__summary-row--discount {
   color: var(--color-accent);
@@ -308,7 +341,7 @@
   }
 
   .builder {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   /* Sem a segunda coluna, o resumo não precisa mais ficar "grudado" no
      topo — ele simplesmente aparece depois da lista de marmitas. */
@@ -338,11 +371,40 @@
     width: 100%;
   }
 
+  /* No mobile, uma linha flex única (foto + texto + seletor de
+     quantidade) fica espremida demais para caber em ~320px de largura —
+     o nome quebra em 2 linhas, a descrição sobra quase ilegível e o
+     seletor de quantidade fica apertado contra a borda. Em vez disso,
+     cada linha vira um mini-grid de 2 colunas x 2 linhas: a foto ocupa
+     as duas linhas à esquerda, o texto fica em cima à direita e o
+     seletor de quantidade embaixo, alinhado com o texto — dando à
+     descrição a largura inteira da coluna direita para truncar melhor. */
   .builder__row {
-    flex-wrap: wrap;
+    display: grid;
+    /* minmax(0, 1fr), não "1fr" sozinho: "1fr" isolado equivale a
+       minmax(auto, 1fr), e o mínimo "auto" ainda se baseia na largura do
+       conteúdo (a descrição com white-space: nowrap) — o que reintroduz
+       o mesmo vazamento que min-width: 0 resolve para flex/bloco, só que
+       para uma trilha de grid. minmax(0, 1fr) é o jeito de zerar esse
+       mínimo automático diretamente na trilha. */
+    grid-template-columns: 48px minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    column-gap: var(--space-4);
+    row-gap: var(--space-3);
   }
   .builder__row-media {
+    grid-column: 1;
+    grid-row: 1 / 3;
     width: 48px;
     height: 48px;
+  }
+  .builder__row-info {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .builder__row .quantity-selector {
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: start;
   }
 }

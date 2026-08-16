@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // mais" apontar para a página cardapio.html em vez de tentar abrir um
   // modal que não existe no HTML da Home.
   featuredProducts.forEach(function (product) {
-    const card = EB.components.createProductCard(product, { detailsAsLink: true });
+    const card = EB.components.createProductCard(product, { detailsAsLink: true, featuredStyle: true });
     grid.appendChild(card);
   });
 });

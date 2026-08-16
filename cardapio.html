@@ -117,6 +117,24 @@
 
     <main id="main-content">
       <!-- ================================================================
+                 COMBOS
+                 3 combos prontos (renderizados via JS a partir de
+                 EB.data.COMBOS) + o card "Monte seu combo", que abre o modal
+                 grande de montagem personalizada.
+                 ================================================================ -->
+      <section class="section section--alt combos-section">
+        <div class="container">
+          <div class="section-header section-header--center">
+            <h2 class="section-header__title">Combos</h2>
+            <p class="section-header__subtitle">Mais praticidade e economia para sua rotina.</p>
+          </div>
+      
+          <div class="combos-grid" id="combosGrid"></div>
+        </div>
+      </section>
+
+      
+      <!-- ================================================================
            CABEÇALHO DO CARDÁPIO + FILTROS
            Título/texto de introdução e os chips de categoria que filtram
            o grid de produtos logo abaixo (ver cardapio.js).
@@ -140,6 +158,13 @@
             <button type="button" class="filter-chip" data-filter="novidades" aria-pressed="false">Novidades</button>
           </div>
 
+          <!-- Cabeçalho invisível apenas para leitores de tela: o nome de
+               cada marmita abaixo é um <h3> (mesmo componente usado na
+               Home), e sem este <h2> a hierarquia de títulos pularia do
+               <h1> "Nosso cardápio" direto para <h3>, o que confunde a
+               navegação por cabeçalhos de quem usa leitor de tela. -->
+          <h2 class="visually-hidden">Marmitas disponíveis</h2>
+
           <!-- Grid de produtos: preenchido/atualizado por cardapio.js a
                cada clique num filtro. aria-live="polite" faz leitores de
                tela avisarem discretamente quando o conteúdo do grid muda -->
@@ -147,22 +172,7 @@
         </div>
       </section>
 
-      <!-- ================================================================
-           COMBOS
-           3 combos prontos (renderizados via JS a partir de
-           EB.data.COMBOS) + o card "Monte seu combo", que abre o modal
-           grande de montagem personalizada.
-           ================================================================ -->
-      <section class="section section--alt combos-section">
-        <div class="container">
-          <div class="section-header section-header--center">
-            <h2 class="section-header__title">Combos</h2>
-            <p class="section-header__subtitle">Mais praticidade e economia para sua rotina.</p>
-          </div>
 
-          <div class="combos-grid" id="combosGrid"></div>
-        </div>
-      </section>
     </main>
 
     <!-- ==================================================================

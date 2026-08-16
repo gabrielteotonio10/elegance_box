@@ -32,8 +32,19 @@
   --color-primary-dark: #22332a; /* variação mais escura, usada em hover de elementos primários */
   --color-primary-soft: #e4e9e2; /* verde bem clarinho, usado em fundos de ícone/hover sutil */
 
-  --color-accent: #d9603d; /* terracota: CTAs, preços, badges de destaque, estado ativo */
-  --color-accent-dark: #c24f2f; /* terracota escurecido, usado no hover dos botões de destaque */
+  /* Terracota escurecido em relação à primeira versão: o tom original
+     (#D9603D) media só 3.35:1 de contraste contra o fundo creme e contra
+     branco — abaixo do mínimo de 4.5:1 do WCAG AA para texto normal.
+     Como esta cor é usada sobretudo em texto pequeno (eyebrow, preço) e
+     como fundo de botão com texto claro em cima (todo CTA "Peça agora"/
+     "Pedir agora" do site), o contraste baixo prejudicava a leitura
+     exatamente nos elementos mais importantes da página. Os valores
+     abaixo foram calculados para garantir >=4.5:1 contra os 3 fundos
+     onde a cor aparece como texto (creme --color-bg, o creme mais escuro
+     --color-bg-alt das seções alternadas, e branco --color-surface dos
+     cards), com margem de segurança. */
+  --color-accent: #a5492e; /* terracota: CTAs, preços, badges de destaque, estado ativo — 4.86:1 vs bg-alt (pior caso), 5.85:1 vs branco */
+  --color-accent-dark: #8d3e28; /* terracota escurecido, usado no hover dos botões de destaque — 6.69:1 vs creme */
   --color-accent-soft: #fbe7e0; /* terracota bem clarinho, usado em fundo de badge/alerta leve */
 
   --color-text: #2a2a22; /* texto principal (títulos e corpo de texto) */
@@ -45,7 +56,7 @@
   --color-border-on-dark: rgba(247, 244, 234, 0.16); /* divisórias sobre fundo escuro */
 
   --color-success: #4c7a56; /* feedback positivo (ex: economia em combos) */
-  --color-alert: #c24f2f; /* feedback de alerta (reaproveita o tom de terracota escuro) */
+  --color-alert: #8d3e28; /* feedback de alerta (reaproveita o tom de terracota escuro) */
 
   --color-overlay: rgba(34, 51, 42, 0.55); /* fundo escurecido atrás de modais/menu mobile */
 

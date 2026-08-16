@@ -514,9 +514,9 @@ document.addEventListener("DOMContentLoaded", function () {
     row.innerHTML =
       '<div class="media-placeholder media-placeholder--square builder__row-media" aria-hidden="true"></div>' +
       '<div class="builder__row-info">' +
-      '<h4 class="builder__row-name">' +
+      '<h3 class="builder__row-name">' +
       product.name +
-      "</h4>" +
+      "</h3>" +
       '<p class="builder__row-description">' +
       product.description +
       "</p>" +

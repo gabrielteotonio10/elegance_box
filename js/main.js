@@ -278,11 +278,19 @@ window.EB = window.EB || {};
      *   false/omitido, "Ver mais" é um <button> que dispara a abertura do
      *   modal via JS (usado no Cardápio, onde cardapio.js trata o clique
      *   por delegação de evento, procurando por data-action="open-product").
+     * @param {boolean} [options.featuredStyle] - aplica a sombra mais forte
+     *   de destaque (.product-card--featured). É uma decisão de CONTEXTO
+     *   (a Home passa true, pois ali os 3 cards são realmente uma vitrine
+     *   selecionada), não uma propriedade do produto em si — por isso não
+     *   é lida diretamente de product.featured: no grid completo do
+     *   Cardápio, os 6 produtos devem ter o mesmo peso visual, mesmo que
+     *   3 deles também estejam marcados como featured em EB.data.PRODUCTS
+     *   (campo usado só para a Home saber QUAIS produtos exibir).
      */
     createProductCard(product, options) {
       options = options || {};
       const article = document.createElement("article");
-      article.className = "product-card" + (product.featured ? " product-card--featured" : "");
+      article.className = "product-card" + (options.featuredStyle ? " product-card--featured" : "");
 
       const badgeHtml = product.badge
         ? '<span class="badge badge--' + product.badge.variant + '">' + product.badge.label + "</span>"

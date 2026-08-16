@@ -294,13 +294,16 @@ p {
 
 /* Botão circular só com ícone (WhatsApp/Instagram do header, fechar do
    modal, +/- do seletor de quantidade herdam a base mas redefinem
-   formato). aria-label é usado no HTML já que não há texto visível. */
+   formato). 44x44px é o mínimo recomendado de área de toque (Apple HIG /
+   Material Design) — importante aqui porque não há texto visível para
+   "compensar" um alvo pequeno, só o ícone. aria-label é usado no HTML já
+   que não há texto visível. */
 .icon-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: var(--radius-full);
   border: 1px solid var(--color-border);
   color: var(--color-primary);
@@ -392,8 +395,8 @@ p {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: var(--radius-full);
   background-color: var(--color-primary);
   color: var(--color-bg);
@@ -461,8 +464,8 @@ p {
   display: none;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   color: var(--color-primary);
 }
 .mobile-menu-toggle svg {
@@ -622,6 +625,12 @@ body.no-scroll {
 .footer-block__text {
   font-size: var(--text-small);
   margin-bottom: var(--space-4);
+  /* Sem isso, a regra genérica "p { color: var(--color-text-muted) }"
+     (pensada para texto sobre fundo claro) vence por especificidade e
+     este parágrafo fica quase ilegível sobre o fundo verde escuro do
+     footer — precisa do mesmo tom claro usado nos elementos vizinhos
+     (.footer-block__description, .footer-block__list a). */
+  color: var(--color-text-on-dark-muted);
 }
 
 .site-footer__bottom {
@@ -771,10 +780,12 @@ body.no-scroll {
   gap: var(--space-2);
 }
 
-/* Nos cards, os botões de ação são menores que o padrão global, para não
-   competir visualmente com o preço. */
+/* Nos cards, os botões de ação são menores que o padrão global (fonte
+   reduzida, para não competir visualmente com o preço), mas o padding
+   vertical usa --space-3 (não --space-2) para a altura final não cair
+   abaixo dos 44px de área de toque recomendados. */
 .product-card__actions .btn {
-  padding: var(--space-2) var(--space-4);
+  padding: var(--space-3) var(--space-4);
   font-size: var(--text-small);
 }
 
@@ -1221,12 +1232,16 @@ body.no-scroll {
   flex-shrink: 0;
 }
 
+/* 44x44px (não os 32px originais): este é o botão que o usuário mais
+   toca repetidamente em todo o site, ao montar o combo personalizado —
+   um alvo pequeno demais aqui é o tipo de detalhe que mais prejudica a
+   experiência mobile, mesmo que passe despercebido no desktop. */
 .quantity-selector__btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 44px;
+  height: 44px;
   border-radius: var(--radius-full);
   background-color: var(--color-bg-alt);
   color: var(--color-primary);
@@ -1241,8 +1256,8 @@ body.no-scroll {
   cursor: not-allowed;
 }
 .quantity-selector__btn svg {
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
 }
 
 .quantity-selector__value {
@@ -1378,5 +1393,18 @@ body.no-scroll {
   .modal {
     max-height: 92vh;
     padding: var(--space-5);
+  }
+
+  /* .btn--lg some vezes carrega textos longos (ex: "Fazer pedido pelo
+     WhatsApp"), e a base de .btn usa white-space: nowrap — em telas
+     estreitas, texto + o padding generoso de --space-7 de cada lado
+     ultrapassa a largura da tela (overflow horizontal). Permitir quebra
+     de linha aqui, com o botão ocupando 100% da largura disponível, é
+     mais robusto do que só reduzir o padding: continua funcionando se o
+     texto do botão mudar para algo ainda maior. */
+  .btn--lg {
+    width: 100%;
+    white-space: normal;
+    text-align: center;
   }
 }
