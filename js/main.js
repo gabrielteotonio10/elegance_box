@@ -1,14 +1,5 @@
 /* ==========================================================================
    MAIN.JS
-   Comportamento compartilhado por TODAS as páginas: utilitários (preço,
-   link do WhatsApp), o mecanismo genérico de abrir/fechar modais, o menu
-   mobile (hambúrguer) e a marcação automática do link de navegação ativo.
-
-   Lógica que só existe em UMA página (renderizar o grid do Cardápio, os
-   3 modais de produto/combo, os destaques da Home) fica em cardapio.js /
-   home.js — este arquivo não conhece produtos nem combos.
-
-   Depende de data.js já ter sido carregado antes (usa EB.data.WHATSAPP_NUMBER).
    ========================================================================== */
 
 window.EB = window.EB || {};
@@ -17,14 +8,11 @@ window.EB = window.EB || {};
   "use strict";
 
   /* ======================================================================
-     EB.utils — funções puras de formatação/link, sem efeito colateral no
-     DOM. Reaproveitadas por home.js e cardapio.js.
+     EB.utils
      ====================================================================== */
   const utils = {
     /**
      * Formata um número (ex: 21.9) como moeda brasileira (ex: "R$ 21,90").
-     * Centralizado aqui para todo preço do site usar exatamente o mesmo
-     * formato, em vez de cada arquivo montar a string manualmente.
      */
     formatPrice(value) {
       return value.toLocaleString("pt-BR", {
@@ -36,9 +24,6 @@ window.EB = window.EB || {};
     /**
      * Monta a URL do WhatsApp (wa.me) para o número da Elegance Box, já
      * com a mensagem pré-preenchida e corretamente codificada.
-     * encodeURIComponent() é o que permite escrever a mensagem em
-     * português normal (com acentos, espaços, R$, etc.) em vez de termos
-     * que montar a URL já codificada manualmente.
      */
     buildWhatsAppLink(message) {
       const base = "https://wa.me/" + EB.data.WHATSAPP_NUMBER;
@@ -48,12 +33,6 @@ window.EB = window.EB || {};
     /**
      * Liga os botões/links de WhatsApp "estáticos" do HTML (header, hero,
      * CTA final, footer, cards de contato) à mensagem correta.
-     * Em vez de escrever a URL do WhatsApp já codificada dentro do
-     * atributo href de cada link no HTML (o que exigiria escrever
-     * manualmente %20, %C3%A9, etc. e ficaria ilegível/difícil de editar),
-     * cada link só precisa do atributo data-wa-message com o texto puro
-     * em português. Esta função roda uma vez, ao carregar a página, e
-     * transforma esse texto no link final do WhatsApp.
      */
     wireStaticWhatsAppLinks() {
       const links = document.querySelectorAll("[data-wa-cta]");
@@ -66,20 +45,14 @@ window.EB = window.EB || {};
 
   /* ======================================================================
      EB.modal — mecanismo genérico de abrir/fechar modal, reaproveitado
-     pelos 3 modais do Cardápio (produto, combo, monte-seu-combo). Cada
-     modal é um <div class="modal-overlay"> com um <div class="modal">
-     dentro; a visibilidade é controlada pela classe .is-open.
+     pelos 3 modais do Cardápio (produto, combo, monte-seu-combo).
      ====================================================================== */
   const modal = {
     /**
      * Abre um modal: mostra o overlay, bloqueia a rolagem da página por
      * trás (para o usuário não rolar o conteúdo "escondido") e move o
      * foco do teclado para dentro do modal — essencial para
-     * acessibilidade, já que sem isso um usuário de teclado/leitor de
-     * tela continuaria "preso" no conteúdo da página por trás do modal.
-     * `trigger` é o elemento que foi clicado para abrir o modal (o botão
-     * "Ver mais", por exemplo); guardamos essa referência para devolver o
-     * foco a ele quando o modal for fechado.
+     * acessibilidade.
      */
     open(overlay, trigger) {
       overlay._lastTrigger = trigger || document.activeElement;
@@ -95,11 +68,7 @@ window.EB = window.EB || {};
 
     /**
      * Fecha um modal: esconde o overlay e devolve o foco ao elemento que
-     * originalmente o abriu. Só remove o bloqueio de rolagem do body se
-     * não houver NENHUM outro modal (ou o menu mobile) ainda aberto —
-     * isso evita que, ao fechar o modal de produto aberto por cima do
-     * modal de combo, a página "por trás de tudo" volte a rolar
-     * indevidamente.
+     * originalmente o abriu. 
      */
     close(overlay) {
       overlay.classList.remove("is-open");
@@ -119,15 +88,7 @@ window.EB = window.EB || {};
      * Fecha um modal SEM a transição de fade — usado apenas quando outro
      * modal vai abrir imediatamente em seguida (ex: clicar numa marmita
      * dentro do modal de combo, ou clicar em "Voltar" dentro do modal de
-     * produto). Sem isso, o fade-out de ~250ms de um modal se sobrepõe
-     * ao fade-in do próximo, e os dois conteúdos ficam visíveis ao mesmo
-     * tempo por um instante — a troca fica "suja" em vez de instantânea.
-     * A classe .is-closing-instant zera a transição só durante essa
-     * remoção específica (ver global.css); o "void overlay.offsetWidth"
-     * força o navegador a aplicar esse estilo antes de tirá-lo de novo no
-     * próximo frame, senão as duas mudanças de classe aconteceriam rápido
-     * demais para o navegador "perceber" que uma transição deveria ser
-     * pulada.
+     * produto). 
      */
     closeInstantly(overlay) {
       overlay.classList.add("is-closing-instant");
@@ -152,8 +113,7 @@ window.EB = window.EB || {};
     /**
      * Liga o comportamento padrão de fechamento de UM modal específico:
      * clique no botão de fechar (X) e clique fora do card (no fundo
-     * escurecido). Deve ser chamado uma vez por modal, na inicialização
-     * da página que o contém (cardapio.js).
+     * escurecido). 
      */
     initClosers(overlay) {
       overlay.querySelectorAll("[data-modal-close]").forEach(function (btn) {
@@ -163,9 +123,7 @@ window.EB = window.EB || {};
       });
 
       // Fecha ao clicar no overlay, mas SÓ se o clique foi no próprio
-      // overlay (o fundo) e não em algum elemento dentro do .modal — por
-      // isso a checagem `event.target === overlay`, em vez de reagir a
-      // qualquer clique que "borbulhe" (bubble) até o overlay.
+      // overlay (o fundo) e não em algum elemento dentro do .modal 
       overlay.addEventListener("click", function (event) {
         if (event.target === overlay) {
           modal.close(overlay);
@@ -175,8 +133,7 @@ window.EB = window.EB || {};
   };
 
   /* ======================================================================
-     EB.menu — menu mobile (hambúrguer). Presente em todas as páginas,
-     pois o header (com o botão hambúrguer) é duplicado em cada uma.
+     EB.menu — menu mobile (hambúrguer).
      ====================================================================== */
   const menu = {
     init() {
@@ -185,8 +142,6 @@ window.EB = window.EB || {};
       const closeBtn = document.getElementById("mobileMenuClose");
 
       // Páginas sem os 3 elementos acima simplesmente não têm menu mobile
-      // (não deveria acontecer, já que o header é padrão, mas evita erro
-      // em tempo de execução caso algum dia um markup fique incompleto).
       if (!toggle || !overlay || !closeBtn) {
         return;
       }
@@ -215,8 +170,7 @@ window.EB = window.EB || {};
 
       // Fecha o menu automaticamente ao clicar em qualquer link dele
       // (navegação para outra página, ícone social, ou o CTA do
-      // WhatsApp) — evita que o menu continue "aberto" visualmente
-      // durante a transição para a próxima página.
+      // WhatsApp)
       overlay.querySelectorAll("a").forEach(function (link) {
         link.addEventListener("click", close);
       });
@@ -232,23 +186,18 @@ window.EB = window.EB || {};
 
     // Sobrescrita em init(); existe aqui só para o listener de Esc ter uma
     // função segura para chamar mesmo se init() não tiver encontrado o
-    // menu mobile na página (ver checagem `!toggle || !overlay...` acima).
     closeIfOpen() {},
   };
 
   /* ======================================================================
      EB.nav — marca automaticamente o link do menu (desktop + mobile)
      correspondente à página atual com a classe .is-active.
-     Em vez de exigir que cada página HTML lembre de adicionar essa classe
-     manualmente no link certo (fácil de esquecer/errar ao duplicar o
-     header em 3 arquivos), comparamos o href de cada link com o nome do
-     arquivo atual da URL.
      ====================================================================== */
   const nav = {
     highlightActiveLink() {
       // "index.html" quando a URL termina em "/" (ex: acessando a raiz
       // do site hospedado), senão o nome real do arquivo (ex:
-      // "cardapio.html").
+      // "marmitas.html").
       const currentPage = window.location.pathname.split("/").pop() || "index.html";
 
       document.querySelectorAll("[data-nav-link]").forEach(function (link) {
@@ -265,53 +214,108 @@ window.EB = window.EB || {};
      EB.components — pequenos "componentes" de UI montados via JS e
      reaproveitados em mais de uma página.
      ====================================================================== */
+
+  // Usado só dentro de buildProductModalBody, no botão "Voltar para o
+  // combo" — fica aqui (não em marmitas.js/frios.js) porque a função em
+  // si também vive aqui, compartilhada pelas duas páginas de produto.
+  const ICONS = {
+    chevronLeft:
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>',
+  };
+
+  /**
+   * Cada produto mora em UMA página de detalhes: marmitas comuns em
+   * marmitas.html, Frios e Antepastos (category inclui
+   * "frios-antepastos") em frios-antepastos.html. Usado tanto para
+   * montar o link "Ver mais" da Home quanto, futuramente, por qualquer
+   * outro lugar que precise linkar para o produto certo.
+   */
+  function resolveProductPageUrl(product) {
+    return product.category.indexOf("frios-antepastos") !== -1 ? "frios-antepastos.html" : "marmitas.html";
+  }
+
   const components = {
     /**
-     * Cria o card de uma marmita (.product-card), usado tanto na grade
-     * completa do Cardápio quanto nos 3 destaques da Home.
+     * Cria o card de um produto (.product-card) — marmita ou item de
+     * Frios e Antepastos —, usado na grade completa de Marmitas, na
+     * grade de exemplos de Frios e Antepastos e nos destaques da Home.
      *
      * @param {object} product - um item de EB.data.PRODUCTS.
      * @param {object} [options]
      * @param {boolean} [options.detailsAsLink] - quando true, o botão
-     *   "Ver mais" vira um link comum para cardapio.html (usado na Home,
-     *   que não tem o modal de detalhes no próprio HTML). Quando
+     *   "Ver mais" vira um link comum para a página de detalhes do
+     *   produto (marmitas.html ou frios-antepastos.html, conforme a
+     *   categoria — ver resolveProductPageUrl acima; usado na Home, que
+     *   não tem o modal de detalhes no próprio HTML). Quando
      *   false/omitido, "Ver mais" é um <button> que dispara a abertura do
-     *   modal via JS (usado no Cardápio, onde cardapio.js trata o clique
-     *   por delegação de evento, procurando por data-action="open-product").
+     *   modal via JS (usado nas próprias páginas de produto, que tratam o
+     *   clique por delegação de evento, procurando por
+     *   data-action="open-product").
      * @param {boolean} [options.featuredStyle] - aplica a sombra mais forte
      *   de destaque (.product-card--featured). É uma decisão de CONTEXTO
-     *   (a Home passa true, pois ali os 3 cards são realmente uma vitrine
+     *   (a Home passa true, pois ali os cards são realmente uma vitrine
      *   selecionada), não uma propriedade do produto em si — por isso não
-     *   é lida diretamente de product.featured: no grid completo do
-     *   Cardápio, os 6 produtos devem ter o mesmo peso visual, mesmo que
-     *   3 deles também estejam marcados como featured em EB.data.PRODUCTS
-     *   (campo usado só para a Home saber QUAIS produtos exibir).
+     *   é lida diretamente de product.featured: no grid completo de
+     *   Marmitas, os produtos devem ter o mesmo peso visual, mesmo que
+     *   também estejam marcados como featured em EB.data.PRODUCTS (campo
+     *   usado só para a Home saber QUAIS produtos exibir).
+     * @param {boolean} [options.mobileOnly] - aplica .product-card--mobile-only,
+     *   que esconde o card em telas >=768px (ver home.css). Usado pela Home
+     *   para mostrar 1 marmita a mais só no mobile (ver home.js).
      */
     createProductCard(product, options) {
       options = options || {};
+      const isQuote = product.price == null; // "sob consulta" (ex: Frios e Antepastos) — sem preço fixo
       const article = document.createElement("article");
-      article.className = "product-card" + (options.featuredStyle ? " product-card--featured" : "");
+      article.className =
+        "product-card" +
+        (options.featuredStyle ? " product-card--featured" : "") +
+        (options.mobileOnly ? " product-card--mobile-only" : "");
 
       const badgeHtml = product.badge
         ? '<span class="badge badge--' + product.badge.variant + '">' + product.badge.label + "</span>"
         : "";
 
+      // Home (options.detailsAsLink) linka para a página de detalhes certa
+      // (marmitas.html ou frios-antepastos.html, conforme a categoria do
+      // produto — ver resolveProductPageUrl) já indicando qual produto
+      // abrir (?produto=id). O script daquela página lê esse parâmetro e
+      // abre o modal de detalhes sozinho, assim que a página carrega, em
+      // vez de deixar o visitante procurar o produto de novo no grid.
       const detailsButtonHtml = options.detailsAsLink
-        ? '<a href="cardapio.html" class="btn btn--outline">Ver mais</a>'
+        ? '<a href="' +
+          resolveProductPageUrl(product) +
+          "?produto=" +
+          encodeURIComponent(product.id) +
+          '" class="btn btn--outline">Ver mais</a>'
         : '<button type="button" class="btn btn--outline" data-action="open-product" data-product-id="' +
           product.id +
           '">Ver mais</button>';
 
-      const orderMessage = "Olá! Gostaria de pedir: " + product.name + " (" + utils.formatPrice(product.price) + ").";
+      const priceHtml = isQuote
+        ? '<span class="price__value price__value--quote">Clique para fazer seu orçamento</span>'
+        : '<span class="price__value">' + utils.formatPrice(product.price) + "</span>";
+
+      const orderMessage = isQuote
+        ? "Olá! Gostaria de fazer um orçamento para: " + product.name + "."
+        : "Olá! Gostaria de pedir: " + product.name + " (" + utils.formatPrice(product.price) + ").";
+      const orderButtonLabel = isQuote ? "Fazer orçamento" : "Pedir agora";
+
+      // Sem foto definitiva ainda (ex: Frios e Antepastos, campo "image"
+      // omitido em data.js): cai no placeholder tracejado padrão do site
+      // em vez de um <img> quebrado apontando para um arquivo inexistente.
+      const mediaHtml = product.image
+        ? '<img class="media-placeholder media-placeholder--card" src="' +
+          product.image +
+          '" alt="' +
+          product.imageLabel +
+          '" loading="lazy" />'
+        : '<div class="media-placeholder media-placeholder--card"><span class="media-placeholder__label">Foto em breve</span></div>';
 
       article.innerHTML =
         '<div class="product-card__media">' +
         badgeHtml +
-        '<img class="media-placeholder media-placeholder--card" src="' +
-        product.image +
-        '" alt="' +
-        product.imageLabel +
-        '" loading="lazy" />' +
+        mediaHtml +
         "</div>" +
         '<div class="product-card__body">' +
         '<h3 class="product-card__name">' +
@@ -324,19 +328,99 @@ window.EB = window.EB || {};
         product.weight +
         "</span></div>" +
         '<div class="product-card__footer">' +
-        '<div class="price"><span class="price__value">' +
-        utils.formatPrice(product.price) +
-        "</span></div>" +
+        '<div class="price">' +
+        priceHtml +
+        "</div>" +
         '<div class="product-card__actions">' +
         detailsButtonHtml +
         '<a class="btn btn--primary" target="_blank" rel="noopener" href="' +
         utils.buildWhatsAppLink(orderMessage) +
-        '">Pedir agora</a>' +
+        '">' +
+        orderButtonLabel +
+        "</a>" +
         "</div>" +
         "</div>" +
         "</div>";
 
       return article;
+    },
+
+    /**
+     * Monta o HTML interno do modal de detalhes de UM produto (marmita ou
+     * item de Frios e Antepastos) — usado tanto em marmitas.js quanto em
+     * frios.js, por isso vive aqui e não em nenhum dos dois.
+     * `options.returnToComboId`, quando presente, faz aparecer o botão
+     * "Voltar para o combo" (só se aplica a marmitas.html, que tem
+     * combos; frios.js nunca passa essa opção). O id fica guardado no
+     * próprio botão via data-combo-id, para o clique saber para qual
+     * combo voltar sem depender de nenhuma variável externa/compartilhada.
+     */
+    buildProductModalBody(product, options) {
+      options = options || {};
+      const isQuote = product.price == null; // "sob consulta" (ex: Frios e Antepastos)
+
+      const backButtonHtml = options.returnToComboId
+        ? '<button type="button" class="modal__back" data-action="back-to-combo" data-combo-id="' +
+          options.returnToComboId +
+          '">' +
+          ICONS.chevronLeft +
+          "Voltar para o combo</button>"
+        : "";
+
+      const badgeHtml = product.badge ? '<span class="badge badge--' + product.badge.variant + '">' + product.badge.label + "</span>" : "";
+
+      // Sem foto definitiva ainda: mesmo placeholder tracejado usado no
+      // product-card (ver createProductCard acima).
+      const mediaHtml = product.image
+        ? '<img class="media-placeholder media-placeholder--wide product-modal__media" src="' +
+          product.image +
+          '" alt="' +
+          product.imageLabel +
+          '" loading="lazy" />'
+        : '<div class="media-placeholder media-placeholder--wide product-modal__media"><span class="media-placeholder__label">Foto em breve</span></div>';
+
+      const priceHtml = isQuote
+        ? '<span class="price__value price__value--quote">Clique para fazer seu orçamento</span>'
+        : '<span class="price__value">' + utils.formatPrice(product.price) + "</span>";
+
+      const orderMessage = isQuote
+        ? "Olá! Gostaria de fazer um orçamento para: " + product.name + "."
+        : "Olá! Gostaria de pedir: " + product.name + " (" + utils.formatPrice(product.price) + ").";
+      const orderButtonLabel = isQuote ? "Fazer orçamento" : "Peça esta marmita";
+
+      return (
+        backButtonHtml +
+        '<div class="modal__header">' +
+        badgeHtml +
+        '<h2 class="modal__title" id="productModalTitle">' +
+        product.name +
+        "</h2>" +
+        "</div>" +
+        mediaHtml +
+        '<p class="product-modal__description">' +
+        product.description +
+        "</p>" +
+        '<div class="product-modal__grid">' +
+        '<div><h3 class="product-modal__label">Ingredientes</h3><p class="product-modal__text">' +
+        product.ingredients +
+        "</p></div>" +
+        '<div><h3 class="product-modal__label">Preparo e conservação</h3><p class="product-modal__text">' +
+        product.preparo +
+        '</p><p class="product-modal__text">' +
+        product.conservacao +
+        "</p></div>" +
+        "</div>" +
+        '<div class="product-modal__footer">' +
+        '<div class="price">' +
+        priceHtml +
+        "</div>" +
+        '<a class="btn btn--primary" target="_blank" rel="noopener" href="' +
+        utils.buildWhatsAppLink(orderMessage) +
+        '">' +
+        orderButtonLabel +
+        "</a>" +
+        "</div>"
+      );
     },
   };
 
@@ -365,8 +449,7 @@ window.EB = window.EB || {};
 
     // Listener global da tecla Esc: fecha o modal aberto (se houver) ou,
     // se não houver modal aberto, fecha o menu mobile (se estiver
-    // aberto). Centralizado aqui em vez de em cada modal individualmente
-    // porque o comportamento é idêntico para qualquer um deles.
+    // aberto). 
     document.addEventListener("keydown", function (event) {
       if (event.key !== "Escape") {
         return;

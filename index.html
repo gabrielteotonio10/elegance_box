@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Elegance Box | Marmitas Congeladas Gourmet</title>
   <meta name="description"
-    content="Marmitas congeladas gourmet, prontas em minutos. Monte seu combo e peça pelo WhatsApp." />
+    content="Marmitas congeladas gourmet, prontas em minutos, além de frios e antepastos sob consulta. Monte seu combo e peça pelo WhatsApp." />
 
   <!-- Ícone SVG embutido (quadrado rosa da marca
          com o glifo da caixa), evita precisar de um arquivo favicon.ico à parte -->
@@ -38,8 +38,9 @@
          HEADER GLOBAL
          Cabeçalho fixo (sticky) com logo, navegação, ícones de contato,
          CTA de pedido e o botão do menu mobile. Este bloco é idêntico nas
-         3 páginas do site (index.html / cardapio.html / contato.html); o
-         link ativo é aplicado via JS em main.js (EB.nav.highlightActiveLink).
+         4 páginas do site (index.html / marmitas.html /
+         frios-antepastos.html / contato.html); o link ativo é aplicado
+         via JS em main.js (EB.nav.highlightActiveLink).
          ================================================================== -->
   <header class="site-header">
     <div class="container site-header__inner">
@@ -61,7 +62,8 @@
       <nav class="site-nav" aria-label="Navegação principal">
         <ul class="site-nav__list">
           <li><a href="index.html" class="nav-link" data-nav-link>Home</a></li>
-          <li><a href="cardapio.html" class="nav-link" data-nav-link>Cardápio</a></li>
+          <li><a href="marmitas.html" class="nav-link" data-nav-link>Marmitas</a></li>
+          <li><a href="frios-antepastos.html" class="nav-link" data-nav-link>Frios e Antepastos</a></li>
           <li><a href="contato.html" class="nav-link" data-nav-link>Contato</a></li>
         </ul>
       </nav>
@@ -115,6 +117,7 @@
       <div class="container hero__inner">
         <div class="hero__content">
           <span class="hero__eyebrow">Marmitas congeladas para facilitar sua rotina</span>
+          <span class="hero__eyebrow">Frios e antepastos para suas comemorações</span>
           <h1 class="hero__title">Comida de verdade, pronta para o seu dia.</h1>
           <p class="hero__lead">
             Unimos a praticidade do congelamento ao sabor afetivo da comida caseira. Ingredientes
@@ -125,7 +128,7 @@
               data-wa-cta data-wa-message="Olá! Gostaria de fazer um pedido de marmitas Elegance Box.">
               Peça agora
             </a>
-            <a class="btn btn--outline btn--lg" href="cardapio.html">Ver cardápio</a>
+            <a class="btn btn--outline btn--lg" href="marmitas.html">Ver marmitas</a>
           </div>
         </div>
         <div class="hero__media">
@@ -402,7 +405,7 @@
             </div>
           </div>
 
-          <a class="btn btn--primary" href="cardapio.html">Conheça nosso cardápio</a>
+          <a class="btn btn--primary" href="marmitas.html">Conheça nossas marmitas</a>
         </div>
       </div>
     </section>
@@ -476,9 +479,10 @@
 
     <!-- ================================================================
            DESTAQUE DO CARDÁPIO
-           3 marmitas em destaque, renderizadas via JS a partir da mesma
-           lista de produtos usada na página Cardápio (ver js/home.js) —
-           assim um preço/descrição só precisa ser atualizado em um lugar.
+           Marmitas + 1 exemplo de Frios e Antepastos em destaque,
+           sorteados via JS a partir da mesma lista de produtos usada nas
+           páginas Marmitas/Frios e Antepastos (ver js/home.js) — assim um
+           preço/descrição só precisa ser atualizado em um lugar.
            ================================================================ -->
     <section class="section section--alt featured-products">
       <div class="container">
@@ -487,7 +491,7 @@
             <span class="section-header__eyebrow">Mais Pedidas</span>
             <h2 class="section-header__title">Conheça algumas das nossas opções</h2>
           </div>
-          <a class="btn btn--outline" href="cardapio.html">Ver cardápio completo</a>
+          <a class="btn btn--outline" href="marmitas.html">Ver cardápio completo</a>
         </div>
 
         <!-- Preenchido dinamicamente por home.js -->
@@ -543,8 +547,8 @@
           <span class="logo__text">Elegance Box</span>
         </a>
         <p class="footer-block__description">
-          Unindo o sabor da comida caseira à praticidade do congelamento inteligente, para nutrir sua rotina de
-          forma simples e saborosa.
+          Unindo o sabor da comida caseira à praticidade do congelamento inteligente — marmitas, frios e antepastos
+          para nutrir sua rotina de forma simples e saborosa.
         </p>
       </div>
 
@@ -553,7 +557,8 @@
         <h3 class="footer-block__title">Navegação</h3>
         <ul class="footer-block__list">
           <li><a href="index.html">Home</a></li>
-          <li><a href="cardapio.html">Cardápio</a></li>
+          <li><a href="marmitas.html">Marmitas</a></li>
+          <li><a href="frios-antepastos.html">Frios e Antepastos</a></li>
           <li><a href="contato.html">Contato</a></li>
         </ul>
       </div>
@@ -623,7 +628,8 @@
     <div class="mobile-menu__body">
       <nav class="mobile-menu__nav" aria-label="Navegação mobile">
         <a href="index.html" class="nav-link" data-nav-link>Home</a>
-        <a href="cardapio.html" class="nav-link" data-nav-link>Cardápio</a>
+        <a href="marmitas.html" class="nav-link" data-nav-link>Marmitas</a>
+        <a href="frios-antepastos.html" class="nav-link" data-nav-link>Frios e Antepastos</a>
         <a href="contato.html" class="nav-link" data-nav-link>Contato</a>
       </nav>
 

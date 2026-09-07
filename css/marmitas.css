@@ -1,6 +1,6 @@
 /* ==========================================================================
-   CARDAPIO.CSS
-   Estilos específicos da página Cardápio (cardapio.html): grid de
+   MARMITAS.CSS
+   Estilos específicos da página Marmitas (marmitas.html): grid de
    produtos, grid de combos e os 3 modais (detalhes da marmita, detalhes
    do combo, monte seu combo). Componentes genéricos (.product-card,
    .combo-card, .modal, .quantity-selector...) já vêm de global.css —
@@ -11,7 +11,7 @@
    CABEÇALHO + FILTROS + GRID DE PRODUTOS
    -------------------------------------------------------------------- */
 
-.cardapio-catalog .section-header {
+.marmitas-catalog .section-header {
   margin-bottom: var(--space-6);
 }
 
@@ -19,11 +19,8 @@
   margin-bottom: var(--space-7);
 }
 
-.products-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-6);
-}
+/* .products-grid mora em global.css: é usada tanto aqui (grid de
+   marmitas) quanto em frios-antepastos.html (grid dos 2 exemplos). */
 
 /* --------------------------------------------------------------------------
    GRID DE COMBOS
@@ -38,56 +35,15 @@
   gap: var(--space-6);
 }
 
-/* --------------------------------------------------------------------------
-   MODAL: DETALHES DA MARMITA
-   Classes usadas dentro do template gerado por buildProductModalBody()
-   em cardapio.js.
-   -------------------------------------------------------------------- */
-
-.product-modal__media {
-  margin-block: var(--space-5);
-}
-
-.product-modal__description {
-  font-size: var(--text-body);
-  color: var(--color-text);
-  margin-bottom: var(--space-5);
-}
-
-.product-modal__grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-5);
-  margin-bottom: var(--space-6);
-}
-
-.product-modal__label {
-  font-size: var(--text-small);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--color-text-muted);
-  margin-bottom: var(--space-2);
-}
-
-.product-modal__text {
-  font-size: var(--text-small);
-  color: var(--color-text);
-}
-
-.product-modal__footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-4);
-  margin-top: var(--space-6);
-  padding-top: var(--space-5);
-  border-top: 1px solid var(--color-border);
-}
+/* .product-modal__* (detalhes de UM produto: media, descrição, grid de
+   ingredientes/preparo, footer) mora em global.css — é gerado por
+   EB.components.buildProductModalBody (main.js), compartilhada com
+   frios.js, então não pode ficar num CSS só desta página. */
 
 /* --------------------------------------------------------------------------
    MODAL: DETALHES DO COMBO
    Classes usadas dentro do template gerado por buildComboModalBody() em
-   cardapio.js.
+   marmitas.js.
    -------------------------------------------------------------------- */
 
 .combo-modal__items {
@@ -114,7 +70,13 @@
   background-color: var(--color-bg-alt);
 }
 
-.combo-modal__item-media {
+/* Qualificado com "img." (não só ".combo-modal__item-media") de propósito:
+   img.media-placeholder já define height:100% em global.css com
+   especificidade elemento+classe — uma regra só de classe aqui perderia
+   esse empate e o height:56px seria ignorado (o tamanho real acabaria
+   dependendo de aspect-ratio "salvar" o cálculo, o que nem sempre
+   acontece — ver nota igual em .builder__row-media mais abaixo). */
+img.combo-modal__item-media {
   width: 56px;
   height: 56px;
   flex-shrink: 0;
@@ -166,8 +128,38 @@
    Duas colunas: lista rolável de marmitas + resumo fixo (sticky).
    -------------------------------------------------------------------- */
 
+/* Total repetido logo abaixo do cabeçalho (ver nota em marmitas.html) —
+   position: sticky faz ele "grudar" no topo da área rolável do modal
+   (.modal tem overflow-y: auto em global.css) conforme o cliente rola a
+   lista de marmitas, então o preço se formando nunca sai da tela. Fundo
+   sólido + z-index: o conteúdo que rola por baixo (a lista de marmitas)
+   não pode aparecer por cima nem ficar ilegível atrás. padding-right
+   igual ao do .modal__header evita colidir com o botão de fechar (X),
+   que também fica "grudado" no canto por ser position: absolute. */
+.builder__top-total {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  padding-right: var(--space-7);
+  margin-bottom: var(--space-5);
+  background-color: var(--color-primary-soft);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-small);
+  color: var(--color-primary);
+}
+.builder__top-total strong {
+  font-family: var(--font-display);
+  font-size: var(--text-h4);
+  color: var(--color-accent);
+}
+
 /* Faixas de desconto (ex: "5 a 7 marmitas: 5% OFF"), preenchidas por
-   renderDiscountTiersInfo() em cardapio.js. Reaproveita o componente
+   renderDiscountTiersInfo() em marmitas.js. Reaproveita o componente
    .badge de global.css em vez de estilo próprio — só o container em
    flex-wrap é específico daqui. */
 .builder__discount-tiers {
@@ -223,7 +215,13 @@
   padding-top: 0;
 }
 
-.builder__row-media {
+/* Qualificado com "img." — mesmo motivo do img.combo-modal__item-media
+   acima. Aqui o problema é visível de verdade: no mobile (ver media query
+   no fim do arquivo) esta foto vira item de grid ocupando 2 linhas
+   (grid-row: 1 / 3), e o alinhamento padrão do grid (stretch) vence o
+   aspect-ratio quando o height:56px "normal" perde a especificidade —
+   a foto esticava para ~127px de altura em vez de ficar quadrada. */
+img.builder__row-media {
   width: 56px;
   height: 56px;
   flex-shrink: 0;
@@ -288,6 +286,17 @@
   gap: var(--space-3);
 }
 
+/* "-6%"/"-10%" ao lado do nome da marmita, quando aquela linha se
+   qualificou para o desconto por sabor repetido (ver
+   result.lines[].flavorDiscountPercent em renderBuilderSummary,
+   marmitas.js). Cor de sucesso para não competir com a cor de destaque
+   já usada no preço da linha. */
+.builder__summary-item-discount {
+  color: var(--color-success);
+  font-weight: 600;
+  font-size: var(--text-caption);
+}
+
 .builder__summary-empty {
   font-size: var(--text-small);
   font-style: italic;
@@ -313,14 +322,19 @@
    define display: flex para esta mesma classe, ela venceria a regra
    nativa do navegador e a linha de desconto ficaria visível mesmo
    escondida. Esta regra reforça o display: none sempre que o atributo
-   hidden estiver presente (usado por cardapio.js para esconder a linha
+   hidden estiver presente (usado por marmitas.js para esconder a linha
    de desconto quando a faixa de desconto atual é 0%). */
 .builder__summary-row[hidden] {
   display: none;
 }
 
-.builder__summary-row--discount {
-  color: var(--color-accent);
+/* Linha "Você economiza" — cor de sucesso, no mesmo padrão já usado em
+   .combo-card__savings (global.css), para reforçar positivamente o
+   valor total economizado. O detalhamento de qual desconto se aplica a
+   cada grupo já aparece na lista de itens acima (.builder__summary-item-
+   discount), então aqui só sobrou esta linha de resumo. */
+.builder__summary-row--savings {
+  color: var(--color-success);
   font-weight: 600;
 }
 
@@ -343,10 +357,6 @@
    -------------------------------------------------------------------- */
 
 @media (max-width: 1199px) {
-  .product-modal__grid {
-    grid-template-columns: 1fr;
-  }
-
   .builder {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -362,11 +372,6 @@
    -------------------------------------------------------------------- */
 
 @media (max-width: 767px) {
-  .products-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-4);
-  }
-
   .combos-grid {
     grid-template-columns: 1fr;
   }
@@ -400,7 +405,7 @@
     column-gap: var(--space-4);
     row-gap: var(--space-3);
   }
-  .builder__row-media {
+  img.builder__row-media {
     grid-column: 1;
     grid-row: 1 / 3;
     width: 48px;

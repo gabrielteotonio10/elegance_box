@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cardápio | Elegance Box</title>
+    <title>Frios e Antepastos | Elegance Box</title>
     <meta
       name="description"
-      content="Conheça o cardápio completo de marmitas congeladas da Elegance Box, monte combos prontos ou personalize o seu."
+      content="Tábuas de frios e antepastos premium da Elegance Box, montadas sob consulta para elevar qualquer ocasião."
     />
 
     <link
@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/variables.css" />
     <link rel="stylesheet" href="css/global.css" />
-    <link rel="stylesheet" href="css/cardapio.css" />
+    <link rel="stylesheet" href="css/frios.css" />
   </head>
   <body>
     <a class="skip-link" href="#main-content">Pular para o conteúdo</a>
@@ -50,7 +50,8 @@
         <nav class="site-nav" aria-label="Navegação principal">
           <ul class="site-nav__list">
             <li><a href="index.html" class="nav-link" data-nav-link>Home</a></li>
-            <li><a href="cardapio.html" class="nav-link" data-nav-link>Cardápio</a></li>
+            <li><a href="marmitas.html" class="nav-link" data-nav-link>Marmitas</a></li>
+            <li><a href="frios-antepastos.html" class="nav-link" data-nav-link>Frios e Antepastos</a></li>
             <li><a href="contato.html" class="nav-link" data-nav-link>Contato</a></li>
           </ul>
         </nav>
@@ -117,60 +118,65 @@
 
     <main id="main-content">
       <!-- ================================================================
-                 COMBOS
-                 3 combos prontos (renderizados via JS a partir de
-                 EB.data.COMBOS) + o card "Monte seu combo", que abre o modal
-                 grande de montagem personalizada.
-                 ================================================================ -->
-      <section class="section section--alt combos-section">
+           ABERTURA
+           Foto + texto sobre a qualidade dos frios e antepastos — igual
+           pedido pelo cliente: "uma escrita falando da qualidade e uma
+           foto, e abaixo os exemplos". Sem foto definitiva ainda, cai no
+           placeholder tracejado padrão do site (ver .media-placeholder em
+           global.css).
+           ================================================================ -->
+      <section class="section frios-intro">
+        <div class="container frios-intro__inner">
+          <div class="frios-intro__media">
+            <div class="media-placeholder media-placeholder--square">
+              <span class="media-placeholder__label">Foto em breve</span>
+            </div>
+          </div>
+
+          <div class="frios-intro__content">
+            <div class="section-header">
+              <span class="section-header__eyebrow">Frios e Antepastos</span>
+              <h1 class="section-header__title">Sabor e sofisticação para elevar qualquer ocasião</h1>
+              <p class="section-header__subtitle">
+                Selecionamos queijos, frios e antepastos de qualidade premium, montados sob medida para o seu evento,
+                reunião ou jantar especial. Cada combinação é pensada nos mínimos detalhes — do equilíbrio de sabores
+                à apresentação — para você receber com elegância e surpreender seus convidados sem esforço.
+              </p>
+            </div>
+            <a
+              class="btn btn--primary"
+              target="_blank"
+              rel="noopener"
+              href="https://wa.me/5531992990564"
+              data-wa-cta
+              data-wa-message="Olá! Gostaria de fazer um orçamento de frios e antepastos."
+            >
+              Fazer orçamento pelo WhatsApp
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           EXEMPLOS
+           2 exemplos (sem preço fixo, sempre "sob consulta"), no mesmo
+           componente .product-card usado em Marmitas. Preenchido via JS
+           (ver frios.js) a partir de EB.data.PRODUCTS filtrado por
+           category "frios-antepastos".
+           ================================================================ -->
+      <section class="section section--alt frios-examples">
         <div class="container">
           <div class="section-header section-header--center">
-            <h2 class="section-header__title">Combos</h2>
-            <p class="section-header__subtitle">Mais praticidade e economia para sua rotina.</p>
+            <span class="section-header__eyebrow">Alguns Exemplos</span>
+            <h2 class="section-header__title">Sob consulta, sob medida</h2>
+            <p class="section-header__subtitle">
+              Cada tábua é montada de acordo com a ocasião — fale com a gente pelo WhatsApp para simular a sua.
+            </p>
           </div>
-      
-          <div class="combos-grid" id="combosGrid"></div>
+
+          <div class="products-grid" id="friosGrid" aria-live="polite"></div>
         </div>
       </section>
-
-      
-      <!-- ================================================================
-           CABEÇALHO DO CARDÁPIO + FILTROS
-           Título/texto de introdução e os chips de categoria que filtram
-           o grid de produtos logo abaixo (ver cardapio.js).
-           ================================================================ -->
-      <section class="section cardapio-catalog">
-        <div class="container">
-          <div class="section-header">
-            <h1 class="section-header__title">Nosso cardápio</h1>
-            <p class="section-header__subtitle">Escolha suas marmitas favoritas ou monte um combo do seu jeito.</p>
-          </div>
-
-          <!-- role="group" com aria-label: identifica para leitores de tela
-               que estes botões formam um conjunto de filtros relacionados -->
-          <div class="filter-bar" id="filterBar" role="group" aria-label="Filtrar cardápio por categoria">
-            <button type="button" class="filter-chip" data-filter="todas" aria-pressed="true">Todas</button>
-            <button type="button" class="filter-chip" data-filter="massas" aria-pressed="false">Massas</button>
-            <button type="button" class="filter-chip" data-filter="carnes" aria-pressed="false">Carnes</button>
-            <button type="button" class="filter-chip" data-filter="frango" aria-pressed="false">Frango</button>
-            <button type="button" class="filter-chip" data-filter="peixes" aria-pressed="false">Peixes</button>
-          </div>
-
-          <!-- Cabeçalho invisível apenas para leitores de tela: o nome de
-               cada marmita abaixo é um <h3> (mesmo componente usado na
-               Home), e sem este <h2> a hierarquia de títulos pularia do
-               <h1> "Nosso cardápio" direto para <h3>, o que confunde a
-               navegação por cabeçalhos de quem usa leitor de tela. -->
-          <h2 class="visually-hidden">Marmitas disponíveis</h2>
-
-          <!-- Grid de produtos: preenchido/atualizado por cardapio.js a
-               cada clique num filtro. aria-live="polite" faz leitores de
-               tela avisarem discretamente quando o conteúdo do grid muda -->
-          <div class="products-grid" id="productsGrid" aria-live="polite"></div>
-        </div>
-      </section>
-
-
     </main>
 
     <!-- ==================================================================
@@ -190,8 +196,8 @@
             <span class="logo__text">Elegance Box</span>
           </a>
           <p class="footer-block__description">
-            Unindo o sabor da comida caseira à praticidade do congelamento inteligente, para nutrir sua rotina de
-            forma simples e saborosa.
+            Unindo o sabor da comida caseira à praticidade do congelamento inteligente — marmitas, frios e antepastos
+            para nutrir sua rotina de forma simples e saborosa.
           </p>
         </div>
 
@@ -199,7 +205,8 @@
           <h3 class="footer-block__title">Navegação</h3>
           <ul class="footer-block__list">
             <li><a href="index.html">Home</a></li>
-            <li><a href="cardapio.html">Cardápio</a></li>
+            <li><a href="marmitas.html">Marmitas</a></li>
+            <li><a href="frios-antepastos.html">Frios e Antepastos</a></li>
             <li><a href="contato.html">Contato</a></li>
           </ul>
         </div>
@@ -273,7 +280,8 @@
       <div class="mobile-menu__body">
         <nav class="mobile-menu__nav" aria-label="Navegação mobile">
           <a href="index.html" class="nav-link" data-nav-link>Home</a>
-          <a href="cardapio.html" class="nav-link" data-nav-link>Cardápio</a>
+          <a href="marmitas.html" class="nav-link" data-nav-link>Marmitas</a>
+          <a href="frios-antepastos.html" class="nav-link" data-nav-link>Frios e Antepastos</a>
           <a href="contato.html" class="nav-link" data-nav-link>Contato</a>
         </nav>
 
@@ -319,17 +327,16 @@
     </div>
 
     <!-- ==================================================================
-         MODAL: DETALHES DA MARMITA
-         Aberto ao clicar em "Ver mais" num card de produto, ou ao clicar
-         numa marmita dentro do modal de combo. O conteúdo interno
-         (.modal__body) é montado inteiramente via JS (cardapio.js,
-         função buildProductModalBody), pois os campos (ingredientes,
-         tabela nutricional etc.) são os mesmos para toda marmita — só o
-         valor de cada campo muda conforme o produto clicado.
+         MODAL: DETALHES DO PRODUTO
+         Aberto ao clicar em "Ver mais" num dos exemplos. O conteúdo
+         interno (.modal__body) é montado via EB.components.
+         buildProductModalBody (main.js), a mesma função usada em
+         marmitas.html — nunca abre com "Voltar para o combo" aqui, já
+         que Frios e Antepastos não entra em combos.
          ================================================================== -->
     <div class="modal-overlay" id="productModal" aria-hidden="true">
       <div class="modal" role="dialog" aria-modal="true" aria-labelledby="productModalTitle">
-        <button type="button" class="icon-btn modal__close" data-modal-close aria-label="Fechar detalhes da marmita">
+        <button type="button" class="icon-btn modal__close" data-modal-close aria-label="Fechar detalhes">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
             <line x1="5" y1="5" x2="19" y2="19" />
             <line x1="19" y1="5" x2="5" y2="19" />
@@ -339,129 +346,8 @@
       </div>
     </div>
 
-    <!-- ==================================================================
-         MODAL: DETALHES DO COMBO
-         Aberto ao clicar em "Ver itens" num combo pronto. Lista as
-         marmitas incluídas; cada uma pode ser clicada para abrir o modal
-         de detalhes daquela marmita (com opção de "Voltar" para este
-         modal). Conteúdo montado via JS (buildComboModalBody).
-         ================================================================== -->
-    <div class="modal-overlay" id="comboModal" aria-hidden="true">
-      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="comboModalTitle">
-        <button type="button" class="icon-btn modal__close" data-modal-close aria-label="Fechar detalhes do combo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-            <line x1="5" y1="5" x2="19" y2="19" />
-            <line x1="19" y1="5" x2="5" y2="19" />
-          </svg>
-        </button>
-        <div class="modal__body" id="comboModalBody"></div>
-      </div>
-    </div>
-
-    <!-- ==================================================================
-         MODAL: MONTE SEU COMBO
-         O modal mais complexo do site: lista todas as marmitas com
-         seletor de quantidade (coluna esquerda) e um resumo fixo com
-         cálculo de desconto progressivo em tempo real (coluna direita).
-         Ao contrário dos dois modais acima, aqui a ESTRUTURA é sempre a
-         mesma (só os números mudam), então o HTML já vem praticamente
-         pronto e cardapio.js só atualiza os valores — ver função
-         renderBuilderSummary().
-         ================================================================== -->
-    <div class="modal-overlay" id="builderModal" aria-hidden="true">
-      <div class="modal modal--builder" role="dialog" aria-modal="true" aria-labelledby="builderModalTitle">
-        <button type="button" class="icon-btn modal__close" data-modal-close aria-label="Fechar">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-            <line x1="5" y1="5" x2="19" y2="19" />
-            <line x1="19" y1="5" x2="5" y2="19" />
-          </svg>
-        </button>
-
-        <div class="modal__header">
-          <h2 class="modal__title" id="builderModalTitle">Monte seu Combo</h2>
-          <p class="modal__subtitle">Escolha as unidades das suas marmitas e garanta descontos progressivos.</p>
-        </div>
-
-        <!-- Faixas de desconto lidas de EB.data.DISCOUNT_TIERS e preenchidas
-             por cardapio.js (renderDiscountTiersInfo) — nunca escrever os
-             números aqui direto, para não haver risco de ficarem
-             dessincronizados caso a régua de desconto mude em data.js. -->
-        <ul class="builder__discount-tiers" id="builderDiscountTiers" aria-label="Descontos progressivos por quantidade de marmitas"></ul>
-
-        <div class="builder">
-          <!-- Coluna esquerda: uma linha por marmita disponível, com
-               seletor de quantidade. Preenchida uma única vez (ao
-               carregar a página) por cardapio.js — a lista de marmitas
-               não muda depois, só a quantidade de cada uma. -->
-          <div class="builder__list" id="builderProductList"></div>
-
-          <!-- Coluna direita: resumo do combo sendo montado. Fica "presa"
-               (sticky) na tela enquanto o usuário rola a lista de
-               marmitas à esquerda, graças ao CSS em cardapio.css. -->
-          <aside class="builder__summary">
-            <h3 class="builder__summary-title">Seu Combo Especial</h3>
-
-            <ul class="builder__summary-items" id="builderSummaryItems"></ul>
-
-            <!-- Exibida enquanto nenhuma marmita foi escolhida ainda -->
-            <p class="builder__summary-empty" id="builderSummaryEmpty">Escolha ao menos uma marmita para simular o preço.</p>
-
-            <!-- Escondida enquanto o carrinho estiver vazio -->
-            <div class="builder__summary-totals" id="builderSummaryTotals" hidden>
-              <div class="builder__summary-row">
-                <span id="builderSubtotalLabel">Subtotal (0 marmitas):</span>
-                <span id="builderSubtotalValue">R$ 0,00</span>
-              </div>
-              <div class="builder__summary-row builder__summary-row--discount" id="builderDiscountRow" hidden>
-                <span id="builderDiscountLabel">Desconto Progressivo:</span>
-                <span id="builderDiscountValue">- R$ 0,00</span>
-              </div>
-              <div class="builder__summary-row builder__summary-row--total">
-                <span>Total Final:</span>
-                <span id="builderTotalValue">R$ 0,00</span>
-              </div>
-            </div>
-
-            <div class="builder__summary-actions">
-              <!-- Começa com aria-disabled="true" (carrinho vazio);
-                   cardapio.js remove o atributo assim que há ao menos 1
-                   marmita escolhida, e recalcula o href a cada mudança -->
-              <a class="btn btn--primary btn--block" id="builderSendOrderBtn" target="_blank" rel="noopener" aria-disabled="true" href="#">
-                Enviar pedido pelo WhatsApp
-              </a>
-              <button type="button" class="btn btn--outline btn--block" data-modal-close>Continuar escolhendo</button>
-            </div>
-          </aside>
-        </div>
-      </div>
-    </div>
-
-    <!-- ==================================================================
-         TEMPLATE: CARD "MONTE SEU COMBO"
-         Uma tag <template> nunca é exibida nem processada pelo navegador
-         "do jeito que está" no HTML — seu conteúdo só entra na página
-         quando explicitamente clonado via JS (ver renderCombosGrid em
-         cardapio.js). Usado aqui porque este card é sempre o mesmo
-         (nenhum dado vem de EB.data.COMBOS), mas precisa ser inserido
-         DEPOIS dos 3 combos prontos, que são gerados dinamicamente.
-         ================================================================== -->
-    <template id="customComboCardTemplate">
-      <article class="combo-card combo-card--custom">
-        <span class="combo-card__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 8l9-5 9 5-9 5-9-5Z" />
-            <path d="M3 8v8l9 5 9-5V8" />
-            <path d="M12 13v8" />
-          </svg>
-        </span>
-        <h3 class="combo-card__name">Monte seu combo</h3>
-        <p class="combo-card__description">Escolha suas marmitas favoritas e monte um combo do seu jeito.</p>
-        <button type="button" class="btn btn--primary" data-action="open-builder">Simular preço</button>
-      </article>
-    </template>
-
     <script src="js/data.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/cardapio.js"></script>
+    <script src="js/frios.js"></script>
   </body>
 </html>

@@ -1,12 +1,15 @@
 /* ==========================================================================
-   CARDAPIO.JS
-   Lógica específica da página Cardápio (cardapio.html):
-     1) grid de produtos com filtro por categoria;
+   MARMITAS.JS
+   Lógica específica da página Marmitas (marmitas.html):
+     1) grid de produtos com filtro por categoria (só marmitas — Frios e
+        Antepastos tem página própria, ver frios.js);
      2) grid de combos prontos + card "monte seu combo";
      3) modal de detalhes da marmita;
      4) modal de detalhes do combo (com navegação para o modal de produto);
      5) modal "Monte seu combo", com seletor de quantidade por marmita e
-        cálculo de desconto progressivo em tempo real.
+        cálculo em tempo real dos dois descontos que se acumulam
+        (por sabor repetido + por quantidade total — ver
+        calculateComboDiscount).
 
    Depende de data.js e main.js já terem sido carregados antes.
    ========================================================================== */
@@ -21,8 +24,6 @@ document.addEventListener("DOMContentLoaded", function () {
      montado dinamicamente pelas funções abaixo.
      ====================================================================== */
   const ICONS = {
-    chevronLeft:
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>',
     plus:
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>',
     minus:
@@ -45,11 +46,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const builderModalOverlay = document.getElementById("builderModal");
   const builderDiscountTiersList = document.getElementById("builderDiscountTiers");
+  const builderTopTotalValue = document.getElementById("builderTopTotalValue");
   const builderProductList = document.getElementById("builderProductList");
   const builderSummaryItems = document.getElementById("builderSummaryItems");
   const builderSummaryEmpty = document.getElementById("builderSummaryEmpty");
   const builderSummaryTotals = document.getElementById("builderSummaryTotals");
-  const builderDiscountRow = document.getElementById("builderDiscountRow");
+  const builderSavingsRow = document.getElementById("builderSavingsRow");
   const builderSendOrderBtn = document.getElementById("builderSendOrderBtn");
 
   /* ======================================================================
@@ -87,10 +89,16 @@ document.addEventListener("DOMContentLoaded", function () {
   function renderProductsGrid(filterTag) {
     productsGrid.innerHTML = "";
 
+    // Frios e Antepastos têm página própria (frios-antepastos.html) —
+    // nunca aparecem aqui, nem com o filtro "todas".
+    const marmitaProducts = EB.data.PRODUCTS.filter(function (product) {
+      return product.category.indexOf("frios-antepastos") === -1;
+    });
+
     const filteredProducts =
       filterTag === "todas"
-        ? EB.data.PRODUCTS
-        : EB.data.PRODUCTS.filter(function (product) {
+        ? marmitaProducts
+        : marmitaProducts.filter(function (product) {
             return product.category.indexOf(filterTag) !== -1;
           });
 
@@ -251,71 +259,16 @@ document.addEventListener("DOMContentLoaded", function () {
      ====================================================================== */
 
   /**
-   * Monta o HTML interno do modal de produto para UMA marmita específica.
-   * `options.returnToComboId`, quando presente, faz aparecer o botão
-   * "Voltar para o combo" (o id fica guardado no próprio botão via
-   * data-combo-id, para o clique saber para qual combo voltar sem
-   * depender de nenhuma variável externa/compartilhada).
-   */
-  function buildProductModalBody(product, options) {
-    const backButtonHtml = options.returnToComboId
-      ? '<button type="button" class="modal__back" data-action="back-to-combo" data-combo-id="' +
-        options.returnToComboId +
-        '">' +
-        ICONS.chevronLeft +
-        "Voltar para o combo</button>"
-      : "";
-
-    const badgeHtml = product.badge ? '<span class="badge badge--' + product.badge.variant + '">' + product.badge.label + "</span>" : "";
-
-    const orderMessage = "Olá! Gostaria de pedir: " + product.name + " (" + EB.utils.formatPrice(product.price) + ").";
-
-    return (
-      backButtonHtml +
-      '<div class="modal__header">' +
-      badgeHtml +
-      '<h2 class="modal__title" id="productModalTitle">' +
-      product.name +
-      "</h2>" +
-      "</div>" +
-      '<img class="media-placeholder media-placeholder--wide product-modal__media" src="' +
-      product.image +
-      '" alt="' +
-      product.imageLabel +
-      '" loading="lazy" />' +
-      '<p class="product-modal__description">' +
-      product.description +
-      "</p>" +
-      '<div class="product-modal__grid">' +
-      '<div><h3 class="product-modal__label">Ingredientes</h3><p class="product-modal__text">' +
-      product.ingredients +
-      "</p></div>" +
-      '<div><h3 class="product-modal__label">Preparo e conservação</h3><p class="product-modal__text">' +
-      product.preparo +
-      '</p><p class="product-modal__text">' +
-      product.conservacao +
-      "</p></div>" +
-      "</div>" +
-      '<div class="product-modal__footer">' +
-      '<div class="price"><span class="price__value">' +
-      EB.utils.formatPrice(product.price) +
-      "</span></div>" +
-      '<a class="btn btn--primary" target="_blank" rel="noopener" href="' +
-      EB.utils.buildWhatsAppLink(orderMessage) +
-      '">Peça esta marmita</a>' +
-      "</div>"
-    );
-  }
-
-  /**
    * Abre o modal de detalhes de UMA marmita. `trigger` é o elemento que
    * disparou a abertura (para o foco voltar a ele ao fechar — ver
    * EB.modal.open em main.js); `options.returnToComboId` é repassado
-   * para buildProductModalBody definir se o botão "Voltar" aparece.
+   * para EB.components.buildProductModalBody (main.js) definir se o
+   * botão "Voltar" aparece. A função em si é compartilhada com
+   * frios.js — ver o comentário dela em main.js.
    */
   function openProductModal(productId, options, trigger) {
     const product = findProductById(productId);
-    productModalBody.innerHTML = buildProductModalBody(product, options || {});
+    productModalBody.innerHTML = EB.components.buildProductModalBody(product, options || {});
     EB.modal.open(productModalOverlay, trigger);
   }
 
@@ -442,42 +395,153 @@ document.addEventListener("DOMContentLoaded", function () {
   // na mesma visita, permitindo o botão "Continuar escolhendo" fazer sentido.
   const cart = {};
 
-  function getCartTotalMarmitas() {
-    return Object.keys(cart).reduce(function (sum, productId) {
-      return sum + cart[productId];
-    }, 0);
-  }
-
   /**
-   * Retorna a faixa de desconto (ver EB.data.DISCOUNT_TIERS) que se
-   * aplica a um determinado total de marmitas. Se nenhuma faixa bater
-   * (não deveria acontecer, já que a última faixa vai até Infinity),
-   * retorna 0% como segurança.
+   * Retorna a faixa de desconto de um array de faixas (EB.data.
+   * QUANTITY_DISCOUNT_TIERS ou EB.data.FLAVOR_DISCOUNT_TIERS) que se
+   * aplica a uma determinada quantidade. Se nenhuma faixa bater (não
+   * deveria acontecer, já que a última faixa de cada array vai até
+   * Infinity), retorna 0% como segurança.
    */
-  function getDiscountTier(totalMarmitas) {
+  function findDiscountTier(tiers, quantity) {
     return (
-      EB.data.DISCOUNT_TIERS.find(function (tier) {
-        return totalMarmitas >= tier.min && totalMarmitas <= tier.max;
+      tiers.find(function (tier) {
+        return quantity >= tier.min && quantity <= tier.max;
       }) || { percent: 0 }
     );
   }
 
   /**
+   * Calcula o preço de um combo (pronto ou personalizado) por "grupos"
+   * (buckets), sem misturar o desconto de um grupo com o de outro. Cada
+   * marmita do carrinho entra em EXATAMENTE um grupo — nunca nos dois,
+   * nunca em nenhum:
+   *
+   *   1) GRUPOS DE BULK (mesmo sabor) — todo item cuja PRÓPRIA
+   *      quantidade já bate uma faixa de EB.data.FLAVOR_DISCOUNT_TIERS
+   *      (5-9 unidades = 6%; 10+ = 10%) vira o seu próprio grupo,
+   *      descontado sozinho, sobre o subtotal só daquele item.
+   *   2) GRUPO VARIADO (leftover) — todo item que NÃO bateu nenhuma
+   *      faixa de bulk (menos de 5 unidades) cai neste grupo único,
+   *      compartilhado com qualquer outro item também "pequeno demais"
+   *      para ter seu próprio grupo. O desconto deste grupo depende da
+   *      quantidade TOTAL do grupo (soma de todos os itens que caíram
+   *      nele), buscada em EB.data.QUANTITY_DISCOUNT_TIERS (5-9 = 4%;
+   *      10+ = 8%) — NUNCA da quantidade total do carrinho inteiro.
+   *
+   * Isso é diferente de "aplicar desconto por sabor e depois um desconto
+   * por quantidade total por cima de tudo": aqui, um item que já virou
+   * grupo de bulk (grupo 1) NÃO participa do desconto do grupo variado
+   * — os dois descontos nunca se empilham na mesma marmita.
+   *
+   * Função pura (não lê `cart` nem toca no DOM) de propósito, para poder
+   * ser chamada tanto pelo carrinho ao vivo (renderBuilderSummary)
+   * quanto, se um dia for preciso, por um script à parte que só recalcule
+   * os valores dos combos prontos em EB.data.COMBOS. Nenhum valor é
+   * arredondado aqui dentro — os subtotais/totais ficam em ponto
+   * flutuante "cru" e só viram centavos na hora de exibir (ver
+   * EB.utils.formatPrice), para não acumular erro de arredondamento em
+   * cálculos intermediários.
+   *
+   * @param {Array<{id: string, name: string, price: number, quantity: number}>} cartItems
+   * @returns {{
+   *   bulkGroups: Array<{id, name, quantity, subtotal, discountPercent, total}>,
+   *   leftoverItems: Array<{id, name, price, quantity}>,
+   *   leftoverSubtotal: number,
+   *   leftoverTotalQty: number,
+   *   leftoverDiscountPercent: number,
+   *   leftoverTotal: number,
+   *   totalQuantity: number,
+   *   originalTotal: number,
+   *   finalTotal: number,
+   *   totalSavings: number
+   * }}
+   */
+  function calculateComboDiscount(cartItems) {
+    const bulkGroups = [];
+    const leftoverItems = [];
+
+    cartItems.forEach(function (item) {
+      const flavorTier = findDiscountTier(EB.data.FLAVOR_DISCOUNT_TIERS, item.quantity);
+      if (flavorTier.percent > 0) {
+        const subtotal = item.price * item.quantity;
+        bulkGroups.push({
+          id: item.id,
+          name: item.name,
+          quantity: item.quantity,
+          subtotal: subtotal,
+          discountPercent: flavorTier.percent,
+          total: subtotal * (1 - flavorTier.percent),
+        });
+      } else {
+        leftoverItems.push(item);
+      }
+    });
+
+    const leftoverTotalQty = leftoverItems.reduce(function (sum, item) {
+      return sum + item.quantity;
+    }, 0);
+    const leftoverSubtotal = leftoverItems.reduce(function (sum, item) {
+      return sum + item.price * item.quantity;
+    }, 0);
+    const leftoverTier = findDiscountTier(EB.data.QUANTITY_DISCOUNT_TIERS, leftoverTotalQty);
+    const leftoverTotal = leftoverSubtotal * (1 - leftoverTier.percent);
+
+    const bulkSubtotal = bulkGroups.reduce(function (sum, group) {
+      return sum + group.subtotal;
+    }, 0);
+    const bulkTotal = bulkGroups.reduce(function (sum, group) {
+      return sum + group.total;
+    }, 0);
+
+    const totalQuantity = cartItems.reduce(function (sum, item) {
+      return sum + item.quantity;
+    }, 0);
+    const originalTotal = bulkSubtotal + leftoverSubtotal;
+    const finalTotal = bulkTotal + leftoverTotal;
+
+    return {
+      bulkGroups: bulkGroups,
+      leftoverItems: leftoverItems,
+      leftoverSubtotal: leftoverSubtotal,
+      leftoverTotalQty: leftoverTotalQty,
+      leftoverDiscountPercent: leftoverTier.percent,
+      leftoverTotal: leftoverTotal,
+      totalQuantity: totalQuantity,
+      originalTotal: originalTotal,
+      // Matematicamente finalTotal nunca fica negativo aqui (todo
+      // discountPercent está entre 0 e 1, aplicado sobre subtotais que
+      // nunca são negativos) — o Math.max(0, ...) é só uma segunda trava
+      // de segurança explícita, caso price/quantity um dia venham
+      // inválidos de algum lugar inesperado.
+      finalTotal: Math.max(0, finalTotal),
+      totalSavings: originalTotal - finalTotal,
+    };
+  }
+
+  /**
    * Preenche a lista de faixas de desconto acima do builder, lida direto
-   * de EB.data.DISCOUNT_TIERS (a faixa de 0% não é exibida, já que não é
-   * um desconto). Roda uma única vez, no carregamento da página — se a
-   * régua de desconto mudar em data.js, o texto acompanha automaticamente,
-   * sem precisar editar nada aqui.
+   * de EB.data.QUANTITY_DISCOUNT_TIERS/FLAVOR_DISCOUNT_TIERS (as faixas
+   * de 0% não são exibidas, já que não são um desconto). Roda uma única
+   * vez, no carregamento da página — se a régua de desconto mudar em
+   * data.js, o texto acompanha automaticamente, sem precisar editar nada
+   * aqui.
    */
   function renderDiscountTiersInfo() {
-    builderDiscountTiersList.innerHTML = EB.data.DISCOUNT_TIERS.filter(function (tier) {
+    const quantityBadges = EB.data.QUANTITY_DISCOUNT_TIERS.filter(function (tier) {
       return tier.percent > 0;
-    })
-      .map(function (tier) {
-        const range = tier.max === Infinity ? tier.min + "+ marmitas" : tier.min + " a " + tier.max + " marmitas";
-        return '<li class="badge badge--soft">' + range + ": " + Math.round(tier.percent * 100) + "% OFF</li>";
-      })
-      .join("");
+    }).map(function (tier) {
+      const range = tier.max === Infinity ? tier.min + "+ marmitas" : tier.min + " a " + tier.max + " marmitas";
+      return '<li class="badge badge--soft">' + range + " do grupo variado: " + Math.round(tier.percent * 100) + "% OFF</li>";
+    });
+
+    const flavorBadges = EB.data.FLAVOR_DISCOUNT_TIERS.filter(function (tier) {
+      return tier.percent > 0;
+    }).map(function (tier) {
+      const range = tier.max === Infinity ? tier.min + "+" : tier.min + " a " + tier.max;
+      return '<li class="badge badge--soft">' + range + " do mesmo sabor: " + Math.round(tier.percent * 100) + "% OFF</li>";
+    });
+
+    builderDiscountTiersList.innerHTML = quantityBadges.concat(flavorBadges).join("");
   }
 
   /**
@@ -523,8 +587,13 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Preenche a coluna esquerda do modal com uma linha para cada marmita
-  // do cardápio. Roda uma única vez, no carregamento da página.
-  EB.data.PRODUCTS.forEach(function (product) {
+  // do cardápio. Roda uma única vez, no carregamento da página. Produtos
+  // "sob consulta" (price null — ex: Frios e Antepastos) ficam de fora:
+  // o desconto progressivo é calculado em cima de um preço por unidade,
+  // que esses itens não têm.
+  EB.data.PRODUCTS.filter(function (product) {
+    return product.price != null;
+  }).forEach(function (product) {
     builderProductList.appendChild(createBuilderRow(product));
   });
 
@@ -544,14 +613,28 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   /**
+   * Monta o texto (sem HTML) de UM item do "grupo variado" para a lista
+   * do resumo — reaproveitado tanto para o único item (nenhum "Grupo
+   * variado" quando só sobrou 1 sabor pequeno, não faz sentido chamar de
+   * "variado" um grupo de 1 item só) quanto dentro da lista de nomes do
+   * grupo combinado.
+   */
+  function formatQuantityAndName(item) {
+    return item.quantity + "x " + item.name;
+  }
+
+  /**
    * Redesenha toda a coluna direita (resumo do combo) a partir do estado
-   * atual de `cart`: lista de itens escolhidos, subtotal, desconto
-   * progressivo (calculado com base no total de marmitas) e total final.
-   * Chamada sempre que uma quantidade muda, para o preço acompanhar o
-   * clique em tempo real — por isso o desconto é recalculado do zero a
-   * cada chamada, em vez de guardado/atualizado incrementalmente (o
-   * cálculo é barato e assim não há risco de o valor exibido "desviar"
-   * do valor real depois de várias mudanças seguidas).
+   * atual de `cart`, usando calculateComboDiscount(): um <li> por grupo
+   * de bulk (mesmo sabor, 5+ unidades, com seu desconto próprio) e, se
+   * houver, um <li> a mais para o grupo variado (todo o resto, com o
+   * desconto — se houver — da faixa de EB.data.QUANTITY_DISCOUNT_TIERS
+   * que bater a quantidade TOTAL desse grupo). Chamada sempre que uma
+   * quantidade muda, para o preço acompanhar o clique em tempo real —
+   * por isso é recalculado do zero a cada chamada, em vez de
+   * guardado/atualizado incrementalmente (o cálculo é barato e assim não
+   * há risco de o valor exibido "desviar" do valor real depois de várias
+   * mudanças seguidas).
    */
   function renderBuilderSummary() {
     const selectedProductIds = Object.keys(cart).filter(function (productId) {
@@ -564,68 +647,118 @@ document.addEventListener("DOMContentLoaded", function () {
       builderSummaryTotals.hidden = true;
       builderSendOrderBtn.setAttribute("aria-disabled", "true");
       builderSendOrderBtn.href = "#";
+      builderTopTotalValue.textContent = EB.utils.formatPrice(0);
       return;
     }
 
     builderSummaryEmpty.hidden = true;
     builderSummaryTotals.hidden = false;
 
-    let subtotal = 0;
-    builderSummaryItems.innerHTML = selectedProductIds
-      .map(function (productId) {
-        const product = findProductById(productId);
-        const quantity = cart[productId];
-        const lineTotal = product.price * quantity;
-        subtotal += lineTotal;
-        return "<li><span>" + quantity + "x " + product.name + "</span><span>" + EB.utils.formatPrice(lineTotal) + "</span></li>";
+    const cartItems = selectedProductIds.map(function (productId) {
+      const product = findProductById(productId);
+      return { id: product.id, name: product.name, price: product.price, quantity: cart[productId] };
+    });
+    const result = calculateComboDiscount(cartItems);
+
+    const bulkLinesHtml = result.bulkGroups
+      .map(function (group) {
+        return (
+          "<li><span>" +
+          formatQuantityAndName(group) +
+          ' <span class="builder__summary-item-discount">-' +
+          Math.round(group.discountPercent * 100) +
+          "%</span></span><span>" +
+          EB.utils.formatPrice(group.total) +
+          "</span></li>"
+        );
       })
       .join("");
 
-    const totalMarmitas = getCartTotalMarmitas();
-    const tier = getDiscountTier(totalMarmitas);
-    const discountValue = subtotal * tier.percent;
-    const total = subtotal - discountValue;
-
-    document.getElementById("builderSubtotalLabel").textContent = "Subtotal (" + totalMarmitas + " " + pluralizeMarmita(totalMarmitas) + "):";
-    document.getElementById("builderSubtotalValue").textContent = EB.utils.formatPrice(subtotal);
-
-    if (tier.percent > 0) {
-      builderDiscountRow.hidden = false;
-      document.getElementById("builderDiscountLabel").textContent = "Desconto Progressivo (" + Math.round(tier.percent * 100) + "%):";
-      document.getElementById("builderDiscountValue").textContent = "- " + EB.utils.formatPrice(discountValue);
-    } else {
-      builderDiscountRow.hidden = true;
+    // Grupo variado: com 1 item só, mostra a linha normal (sem "Grupo
+    // variado (...)" em volta — não tem nada "variado" num grupo de 1);
+    // com 2+ itens, combina tudo numa única linha, no mesmo padrão dos
+    // grupos de bulk acima (nome do grupo + desconto, se houver + total
+    // já descontado do grupo inteiro).
+    let leftoverLineHtml = "";
+    if (result.leftoverItems.length === 1) {
+      const item = result.leftoverItems[0];
+      leftoverLineHtml =
+        "<li><span>" + formatQuantityAndName(item) + "</span><span>" + EB.utils.formatPrice(item.price * item.quantity) + "</span></li>";
+    } else if (result.leftoverItems.length > 1) {
+      const names = result.leftoverItems.map(formatQuantityAndName).join(", ");
+      const discountBadge =
+        result.leftoverDiscountPercent > 0
+          ? ' <span class="builder__summary-item-discount">-' + Math.round(result.leftoverDiscountPercent * 100) + "%</span>"
+          : "";
+      leftoverLineHtml =
+        "<li><span>Grupo variado (" +
+        names +
+        ")" +
+        discountBadge +
+        "</span><span>" +
+        EB.utils.formatPrice(result.leftoverTotal) +
+        "</span></li>";
     }
 
-    document.getElementById("builderTotalValue").textContent = EB.utils.formatPrice(total);
+    builderSummaryItems.innerHTML = bulkLinesHtml + leftoverLineHtml;
+
+    document.getElementById("builderSubtotalLabel").textContent =
+      "Subtotal (" + result.totalQuantity + " " + pluralizeMarmita(result.totalQuantity) + "):";
+    document.getElementById("builderSubtotalValue").textContent = EB.utils.formatPrice(result.originalTotal);
+
+    if (result.totalSavings > 0) {
+      builderSavingsRow.hidden = false;
+      document.getElementById("builderSavingsValue").textContent = EB.utils.formatPrice(result.totalSavings);
+    } else {
+      builderSavingsRow.hidden = true;
+    }
+
+    document.getElementById("builderTotalValue").textContent = EB.utils.formatPrice(result.finalTotal);
+    // Mesmo valor repetido no topo do modal (ver builder__top-total em
+    // marmitas.html) — no mobile/tablet o resumo da direita vira estático
+    // e só aparece depois de rolar a lista inteira de marmitas; este
+    // segundo total, logo abaixo do cabeçalho, evita que o cliente
+    // precise rolar para acompanhar o preço se formando.
+    builderTopTotalValue.textContent = EB.utils.formatPrice(result.finalTotal);
 
     builderSendOrderBtn.removeAttribute("aria-disabled");
-    builderSendOrderBtn.href = EB.utils.buildWhatsAppLink(
-      buildBuilderWhatsAppMessage(selectedProductIds, subtotal, discountValue, total, totalMarmitas)
-    );
+    builderSendOrderBtn.href = EB.utils.buildWhatsAppLink(buildBuilderWhatsAppMessage(result));
   }
 
   /**
-   * Monta a mensagem de WhatsApp do combo personalizado: cada marmita
-   * escolhida com sua quantidade e subtotal, seguido do resumo
-   * financeiro completo (subtotal, desconto se houver, e total final).
+   * Monta a mensagem de WhatsApp do combo personalizado a partir do
+   * resultado de calculateComboDiscount(): cada marmita escolhida (item
+   * a item, tanto os que viraram grupo de bulk quanto os do grupo
+   * variado) com seu preço já descontado quando aplicável, seguido do
+   * resumo financeiro completo.
    */
-  function buildBuilderWhatsAppMessage(selectedProductIds, subtotal, discountValue, total, totalMarmitas) {
-    const itemLines = selectedProductIds
-      .map(function (productId) {
-        const product = findProductById(productId);
-        const quantity = cart[productId];
-        return quantity + "x " + product.name + " — " + EB.utils.formatPrice(product.price * quantity);
-      })
-      .join("\n");
+  function buildBuilderWhatsAppMessage(result) {
+    const bulkLines = result.bulkGroups.map(function (group) {
+      return formatQuantityAndName(group) + " (-" + Math.round(group.discountPercent * 100) + "%) — " + EB.utils.formatPrice(group.total);
+    });
+    const leftoverLines = result.leftoverItems.map(function (item) {
+      return formatQuantityAndName(item) + " — " + EB.utils.formatPrice(item.price * item.quantity);
+    });
 
-    let message = "Olá! Quero montar o seguinte combo personalizado:\n" + itemLines;
-    message += "\n\nTotal de marmitas: " + totalMarmitas;
-    message += "\nSubtotal: " + EB.utils.formatPrice(subtotal);
-    if (discountValue > 0) {
-      message += "\nDesconto progressivo: -" + EB.utils.formatPrice(discountValue);
+    let message = "Olá! Quero montar o seguinte combo personalizado:\n" + bulkLines.concat(leftoverLines).join("\n");
+
+    if (result.leftoverItems.length > 1 && result.leftoverDiscountPercent > 0) {
+      message +=
+        "\n\nDesconto de " +
+        Math.round(result.leftoverDiscountPercent * 100) +
+        "% aplicado no grupo variado (" +
+        result.leftoverTotalQty +
+        " " +
+        pluralizeMarmita(result.leftoverTotalQty) +
+        ").";
     }
-    message += "\nTotal final: " + EB.utils.formatPrice(total);
+
+    message += "\n\nTotal de marmitas: " + result.totalQuantity;
+    message += "\nSubtotal: " + EB.utils.formatPrice(result.originalTotal);
+    if (result.totalSavings > 0) {
+      message += "\nVocê economiza: " + EB.utils.formatPrice(result.totalSavings);
+    }
+    message += "\nTotal final: " + EB.utils.formatPrice(result.finalTotal);
 
     return message;
   }
@@ -687,4 +820,14 @@ document.addEventListener("DOMContentLoaded", function () {
   renderCombosGrid();
   renderDiscountTiersInfo();
   renderBuilderSummary(); // estado inicial: carrinho vazio, botão de enviar desabilitado
+
+  // O "Ver mais" de um product-card na Home linka para
+  // "marmitas.html?produto=<id>" (ver resolveProductPageUrl em main.js)
+  // em vez de só trazer o visitante para cá e deixá-lo procurar a
+  // marmita de novo no grid. Se a URL trouxer esse parâmetro e o produto
+  // existir, abre o modal de detalhes direto ao carregar a página.
+  const requestedProductId = new URLSearchParams(window.location.search).get("produto");
+  if (requestedProductId && findProductById(requestedProductId)) {
+    openProductModal(requestedProductId, {});
+  }
 });

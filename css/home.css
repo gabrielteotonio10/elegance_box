@@ -206,14 +206,23 @@
 
 /* --------------------------------------------------------------------------
    DESTAQUE DO CARDÁPIO
-   Grid preenchido via JS (home.js) com 3 .product-card (componente
-   definido em global.css).
+   Grid preenchido via JS (home.js): 2 marmitas + 1 frio/antepasto no
+   tablet/desktop, e uma 3ª marmita extra só no mobile (ver
+   .product-card--mobile-only mais abaixo e a nota em home.js).
    -------------------------------------------------------------------- */
 
 .featured-products__grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--space-6);
+}
+
+/* Escondida por padrão (tablet + desktop); reaparece só no mobile (ver
+   media query no fim do arquivo). display:none remove o item do cálculo
+   do grid sem deixar buraco — os 3 cards restantes ocupam a linha inteira
+   normalmente, como se a marmita extra nunca tivesse sido inserida. */
+.featured-products__grid .product-card--mobile-only {
+  display: none;
 }
 
 /* --------------------------------------------------------------------------
@@ -274,12 +283,19 @@
     align-items: stretch;
   }
 
+  /* 2 colunas (não 1fr): pedido explícito do cliente para "Diferenciais
+     Elegance Box", "Como funciona o pedido?" e "Como preparar sua
+     marmita?" ficarem em pares lado a lado no mobile em vez de uma longa
+     lista empilhada. Gap reduzido para os cards não ficarem espremidos
+     demais em ~155px de largura cada. */
   .benefits__grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
   }
 
   .steps-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-5);
   }
 
   .about__stats {
@@ -289,5 +305,11 @@
   .featured-products__grid {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-4);
+  }
+  /* Reaparece só aqui: a regra "escondida por padrão" fica no bloco
+     desktop/tablet lá em cima. display:flex (não "block") porque
+     .product-card em si é display:flex — ver global.css. */
+  .featured-products__grid .product-card--mobile-only {
+    display: flex;
   }
 }

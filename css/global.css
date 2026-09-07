@@ -6,8 +6,8 @@
    seletor de quantidade e utilitários de acessibilidade.
 
    Estilos que só existem em UMA página (ex: hero da Home) ficam nos
-   arquivos home.css / cardapio.css / contato.css — aqui só entra o que é
-   reaproveitado em 2 ou mais lugares.
+   arquivos home.css / marmitas.css / frios.css / contato.css — aqui só
+   entra o que é reaproveitado em 2 ou mais lugares.
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -285,7 +285,7 @@ p {
    permanecer <a> para funcionar com "abrir em nova guia" nativamente, e
    por isso usa aria-disabled em vez do atributo disabled (que só existe
    em elementos de formulário). O bloqueio real do clique é feito em
-   cardapio.js. */
+   marmitas.js. */
 .btn[aria-disabled="true"] {
   opacity: 0.45;
   cursor: not-allowed;
@@ -714,10 +714,25 @@ img.media-placeholder {
 }
 
 /* --------------------------------------------------------------------------
+   GRID DE PRODUTOS
+   Grade de .product-card, usada no grid de Marmitas (marmitas.html) e no
+   grid de exemplos de Frios e Antepastos (frios-antepastos.html) — por
+   isso mora aqui e não em marmitas.css. Responsividade tratada junto com
+   a do product-card, no fim deste arquivo.
+   -------------------------------------------------------------------- */
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+
+/* --------------------------------------------------------------------------
    PRODUCT CARD
-   Componente principal do Cardápio, reaproveitado na Home (seção de
-   destaques) — por isso mora em global.css. Estrutura: mídia (com badge
-   sobreposto) + corpo (nome, descrição, metadados, preço, ações).
+   Componente principal de Marmitas, reaproveitado na Home (seção de
+   destaques) e em Frios e Antepastos — por isso mora em global.css.
+   Estrutura: mídia (com badge sobreposto) + corpo (nome, descrição,
+   metadados, preço, ações).
    -------------------------------------------------------------------- */
 
 .product-card {
@@ -824,6 +839,17 @@ img.media-placeholder {
   font-size: var(--text-h4);
   font-weight: 600;
   color: var(--color-accent);
+}
+
+/* Usado no lugar do preço para itens sem valor fixo (ex: Frios e
+   Antepastos, "sob consulta" — ver createProductCard em main.js). É uma
+   frase, não um número curto, então usa a fonte de corpo em vez da
+   serifada de destaque e um tamanho menor, para não ocupar 2-3 linhas no
+   espaço estreito de um product-card. */
+.price__value--quote {
+  font-family: var(--font-body);
+  font-size: var(--text-small);
+  font-weight: 600;
 }
 
 /* Preço "de", riscado — exibido apenas quando existe promoção (combos). */
@@ -1188,6 +1214,54 @@ img.media-placeholder {
 }
 
 /* --------------------------------------------------------------------------
+   MODAL: DETALHES DO PRODUTO
+   Classes usadas dentro do template gerado por
+   EB.components.buildProductModalBody() (main.js) — compartilhada pelo
+   modal de marmita (marmitas.html) e pelo modal de Frios e Antepastos
+   (frios-antepastos.html), por isso mora aqui e não em marmitas.css.
+   -------------------------------------------------------------------- */
+
+.product-modal__media {
+  margin-block: var(--space-5);
+}
+
+.product-modal__description {
+  font-size: var(--text-body);
+  color: var(--color-text);
+  margin-bottom: var(--space-5);
+}
+
+.product-modal__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-5);
+  margin-bottom: var(--space-6);
+}
+
+.product-modal__label {
+  font-size: var(--text-small);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2);
+}
+
+.product-modal__text {
+  font-size: var(--text-small);
+  color: var(--color-text);
+}
+
+.product-modal__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-border);
+}
+
+/* --------------------------------------------------------------------------
    SELETOR DE QUANTIDADE
    Usado no modal "Monte seu combo", um por marmita da lista.
    -------------------------------------------------------------------- */
@@ -1312,10 +1386,11 @@ img.media-placeholder {
 }
 
 /* --------------------------------------------------------------------------
-   RESPONSIVIDADE — HEADER E FOOTER
-   Regras de tablet/mobile dos componentes globais. Cada arquivo de página
-   (home.css/cardapio.css/contato.css) cuida da própria responsividade de
-   seção; aqui só entra o que afeta header/footer/menu em todas as páginas.
+   RESPONSIVIDADE — COMPONENTES GLOBAIS
+   Regras de tablet/mobile dos componentes definidos neste arquivo
+   (header, footer, product-card, modal de produto). Cada arquivo de
+   página (home.css/marmitas.css/frios.css/contato.css) cuida da própria
+   responsividade de seção.
    -------------------------------------------------------------------- */
 
 /* TABLET (768–1199px): a navegação horizontal completa não cabe de forma
@@ -1335,7 +1410,14 @@ img.media-placeholder {
     row-gap: var(--space-7);
   }
 
-  /* Ao herdar as 3 colunas do desktop (ver home.css/cardapio.css), o
+  /* Sem a 2ª coluna, o grid de ingredientes/preparo do modal de produto
+     vira 1 coluna só — a largura do modal (max-width: 640px) fica
+     apertada demais para 2 colunas de texto lado a lado nesta faixa. */
+  .product-modal__grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Ao herdar as 3 colunas do desktop (ver home.css/global.css .products-grid), o
      product-card cai para ~213px de largura no tablet — estreito demais
      para "Ver mais" e "Pedir agora" lado a lado sem estourar o card.
      Empilhar as ações resolve, no mesmo padrão já usado em
@@ -1379,8 +1461,25 @@ img.media-placeholder {
     margin-bottom: var(--space-6);
   }
 
+  /* Footer mais compacto no mobile: em vez dos 4 blocos empilhados em
+     largura total (o que deixa o footer bem alto), "Navegação" e
+     "Contato" — os 2 blocos mais curtos, ambos listas de links — dividem
+     uma linha lado a lado. "Marca" (tem um parágrafo inteiro) e "Pedido
+     Prático" (tem um botão de largura total) continuam sozinhos em cada
+     linha, via :first-child/:last-child (são sempre o 1º e o 4º
+     .footer-block dentro do grid, nessa ordem fixa nas 3 páginas). */
+  .site-footer {
+    padding-block: var(--space-6) var(--space-5);
+  }
+
   .site-footer__grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: var(--space-5);
+    row-gap: var(--space-6);
+  }
+  .site-footer__grid .footer-block:first-child,
+  .site-footer__grid .footer-block:last-child {
+    grid-column: 1 / -1;
   }
 
   .site-footer__bottom {
@@ -1419,6 +1518,11 @@ img.media-placeholder {
      verticalmente resolve sem depender do texto de cada botão. */
   .combo-card__actions {
     flex-direction: column;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
   }
 
   /* PRODUCT CARD — reduzido proporcionalmente para caber em 2 colunas
