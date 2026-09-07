@@ -307,9 +307,11 @@ window.EB = window.EB || {};
       article.innerHTML =
         '<div class="product-card__media">' +
         badgeHtml +
-        '<div class="media-placeholder media-placeholder--card"><span class="media-placeholder__label">' +
+        '<img class="media-placeholder media-placeholder--card" src="' +
+        product.image +
+        '" alt="' +
         product.imageLabel +
-        "</span></div>" +
+        '" loading="lazy" />' +
         "</div>" +
         '<div class="product-card__body">' +
         '<h3 class="product-card__name">' +
@@ -320,9 +322,7 @@ window.EB = window.EB || {};
         "</p>" +
         '<div class="product-card__meta"><span>' +
         product.weight +
-        "</span><span>" +
-        product.kcal +
-        ' kcal</span></div>' +
+        "</span></div>" +
         '<div class="product-card__footer">' +
         '<div class="price"><span class="price__value">' +
         utils.formatPrice(product.price) +

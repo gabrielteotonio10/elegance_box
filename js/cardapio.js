@@ -44,6 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const comboModalBody = document.getElementById("comboModalBody");
 
   const builderModalOverlay = document.getElementById("builderModal");
+  const builderDiscountTiersList = document.getElementById("builderDiscountTiers");
   const builderProductList = document.getElementById("builderProductList");
   const builderSummaryItems = document.getElementById("builderSummaryItems");
   const builderSummaryEmpty = document.getElementById("builderSummaryEmpty");
@@ -154,17 +155,12 @@ document.addEventListener("DOMContentLoaded", function () {
       .join("");
 
     article.innerHTML =
-      '<div class="combo-card__media">' +
+      '<div class="combo-card__body">' +
       '<span class="badge badge--' +
       combo.badge.variant +
-      '">' +
+      ' combo-card__badge">' +
       combo.badge.label +
       "</span>" +
-      '<div class="media-placeholder media-placeholder--card"><span class="media-placeholder__label">' +
-      combo.imageLabel +
-      "</span></div>" +
-      "</div>" +
-      '<div class="combo-card__body">' +
       '<div class="combo-card__title-row">' +
       '<h3 class="combo-card__name">' +
       combo.name +
@@ -262,37 +258,6 @@ document.addEventListener("DOMContentLoaded", function () {
    * depender de nenhuma variável externa/compartilhada).
    */
   function buildProductModalBody(product, options) {
-    const nutrition = product.nutrition;
-
-    // Uma linha da tabela nutricional: mostra "—" quando o valor ainda
-    // não foi confirmado pelo cliente, em vez de inventar um número.
-    function nutritionRow(label, value) {
-      return "<tr><td>" + label + "</td><td>" + (value || "—") + "</td></tr>";
-    }
-
-    const nutritionRowsHtml =
-      nutritionRow("Porção", nutrition.portion) +
-      nutritionRow("Valor Energético", nutrition.kcal ? nutrition.kcal + " kcal" : null) +
-      nutritionRow("Carboidratos", nutrition.carbs) +
-      nutritionRow("Proteínas", nutrition.protein) +
-      nutritionRow("Gorduras Totais", nutrition.totalFat) +
-      nutritionRow("Gorduras Saturadas", nutrition.satFat) +
-      nutritionRow("Fibra Alimentar", nutrition.fiber) +
-      nutritionRow("Sódio", nutrition.sodium);
-
-    // Enquanto QUALQUER campo da tabela não estiver confirmado, mostramos
-    // a nota avisando o cliente/visitante que aquele número é provisório.
-    const hasMissingNutritionValue = [
-      nutrition.carbs,
-      nutrition.protein,
-      nutrition.totalFat,
-      nutrition.satFat,
-      nutrition.fiber,
-      nutrition.sodium,
-    ].some(function (value) {
-      return !value;
-    });
-
     const backButtonHtml = options.returnToComboId
       ? '<button type="button" class="modal__back" data-action="back-to-combo" data-combo-id="' +
         options.returnToComboId +
@@ -313,9 +278,11 @@ document.addEventListener("DOMContentLoaded", function () {
       product.name +
       "</h2>" +
       "</div>" +
-      '<div class="media-placeholder media-placeholder--wide product-modal__media"><span class="media-placeholder__label">' +
+      '<img class="media-placeholder media-placeholder--wide product-modal__media" src="' +
+      product.image +
+      '" alt="' +
       product.imageLabel +
-      "</span></div>" +
+      '" loading="lazy" />' +
       '<p class="product-modal__description">' +
       product.description +
       "</p>" +
@@ -329,14 +296,6 @@ document.addEventListener("DOMContentLoaded", function () {
       product.conservacao +
       "</p></div>" +
       "</div>" +
-      '<table class="nutrition-table"><caption>Informação Nutricional (' +
-      product.weight +
-      ")</caption><tbody>" +
-      nutritionRowsHtml +
-      "</tbody></table>" +
-      (hasMissingNutritionValue
-        ? '<span class="nutrition-table__note">*Alguns valores nutricionais ainda não foram confirmados pelo cliente e serão atualizados em breve.</span>'
-        : "") +
       '<div class="product-modal__footer">' +
       '<div class="price"><span class="price__value">' +
       EB.utils.formatPrice(product.price) +
@@ -396,7 +355,9 @@ document.addEventListener("DOMContentLoaded", function () {
           '" data-combo-id="' +
           combo.id +
           '">' +
-          '<span class="media-placeholder media-placeholder--square combo-modal__item-media" aria-hidden="true"></span>' +
+          '<img class="media-placeholder media-placeholder--square combo-modal__item-media" src="' +
+          product.image +
+          '" alt="" aria-hidden="true" loading="lazy" />' +
           '<span class="combo-modal__item-info">' +
           '<span class="combo-modal__item-name">' +
           product.name +
@@ -502,6 +463,24 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   /**
+   * Preenche a lista de faixas de desconto acima do builder, lida direto
+   * de EB.data.DISCOUNT_TIERS (a faixa de 0% não é exibida, já que não é
+   * um desconto). Roda uma única vez, no carregamento da página — se a
+   * régua de desconto mudar em data.js, o texto acompanha automaticamente,
+   * sem precisar editar nada aqui.
+   */
+  function renderDiscountTiersInfo() {
+    builderDiscountTiersList.innerHTML = EB.data.DISCOUNT_TIERS.filter(function (tier) {
+      return tier.percent > 0;
+    })
+      .map(function (tier) {
+        const range = tier.max === Infinity ? tier.min + "+ marmitas" : tier.min + " a " + tier.max + " marmitas";
+        return '<li class="badge badge--soft">' + range + ": " + Math.round(tier.percent * 100) + "% OFF</li>";
+      })
+      .join("");
+  }
+
+  /**
    * Cria a linha (.builder__row) de UMA marmita na coluna esquerda do
    * modal, já com o seletor de quantidade zerado. Chamada uma única vez
    * por produto, na inicialização da página.
@@ -512,7 +491,9 @@ document.addEventListener("DOMContentLoaded", function () {
     row.dataset.productId = product.id;
 
     row.innerHTML =
-      '<div class="media-placeholder media-placeholder--square builder__row-media" aria-hidden="true"></div>' +
+      '<img class="media-placeholder media-placeholder--square builder__row-media" src="' +
+      product.image +
+      '" alt="" aria-hidden="true" loading="lazy" />' +
       '<div class="builder__row-info">' +
       '<h3 class="builder__row-name">' +
       product.name +
@@ -704,5 +685,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   renderProductsGrid("todas");
   renderCombosGrid();
+  renderDiscountTiersInfo();
   renderBuilderSummary(); // estado inicial: carrinho vazio, botão de enviar desabilitado
 });

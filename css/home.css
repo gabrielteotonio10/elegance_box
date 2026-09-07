@@ -251,10 +251,6 @@
   .about__inner {
     grid-template-columns: 1fr;
   }
-
-  .featured-products__grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
 /* --------------------------------------------------------------------------
@@ -262,6 +258,14 @@
    -------------------------------------------------------------------- */
 
 @media (max-width: 767px) {
+  /* A foto do hero mantém a mesma proporção 4/5 do desktop (herdada de
+     .media-placeholder--hero em global.css) — sem recorte extra no
+     mobile, a pedido do cliente. */
+  .hero__inner {
+    padding-block: var(--space-6);
+    gap: var(--space-5);
+  }
+
   .hero__title {
     font-size: var(--text-h1);
   }
@@ -283,6 +287,7 @@
   }
 
   .featured-products__grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
   }
 }

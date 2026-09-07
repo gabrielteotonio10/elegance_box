@@ -3,8 +3,8 @@
    Estilos específicos da página Cardápio (cardapio.html): grid de
    produtos, grid de combos e os 3 modais (detalhes da marmita, detalhes
    do combo, monte seu combo). Componentes genéricos (.product-card,
-   .combo-card, .modal, .quantity-selector, .nutrition-table...) já vêm
-   de global.css — aqui só entra o layout específico desta página.
+   .combo-card, .modal, .quantity-selector...) já vêm de global.css —
+   aqui só entra o layout específico desta página.
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -165,6 +165,17 @@
    MODAL: MONTE SEU COMBO
    Duas colunas: lista rolável de marmitas + resumo fixo (sticky).
    -------------------------------------------------------------------- */
+
+/* Faixas de desconto (ex: "5 a 7 marmitas: 5% OFF"), preenchidas por
+   renderDiscountTiersInfo() em cardapio.js. Reaproveita o componente
+   .badge de global.css em vez de estilo próprio — só o container em
+   flex-wrap é específico daqui. */
+.builder__discount-tiers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+}
 
 /* minmax(0, ...) em cada coluna, não "1.6fr 1fr" sozinho: um valor
    "fr" isolado equivale a minmax(auto, <fr>), cujo mínimo "auto" ainda é
@@ -332,10 +343,6 @@
    -------------------------------------------------------------------- */
 
 @media (max-width: 1199px) {
-  .products-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
   .product-modal__grid {
     grid-template-columns: 1fr;
   }
@@ -356,7 +363,8 @@
 
 @media (max-width: 767px) {
   .products-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
   }
 
   .combos-grid {

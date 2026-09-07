@@ -100,6 +100,24 @@
    -------------------------------------------------------------------- */
 
 @media (max-width: 767px) {
+  /* Mesmo ajuste do hero da Home: a foto quadrada (aspect-ratio 1/1
+     herdado de .media-placeholder--square) ocupa a largura inteira da
+     tela no mobile, o que já a deixa alta. object-fit: cover (herdado de
+     img.media-placeholder) faz o corte sem distorcer — testado com a foto
+     atual (entrega_marmita.png), o conteúdo relevante fica visível no
+     corte central padrão. */
+  .about-support__media .media-placeholder {
+    aspect-ratio: 4 / 3;
+  }
+
+  .about-support__inner {
+    gap: var(--space-5);
+  }
+
+  .contact-cards {
+    padding-bottom: var(--space-7);
+  }
+
   .contact-cards__grid {
     grid-template-columns: 1fr;
   }

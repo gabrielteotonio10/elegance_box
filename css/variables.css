@@ -19,30 +19,47 @@
   /* ------------------------------------------------------------------
      CORES — PALETA DE MARCA
      Paleta inspirada em alimentação/qualidade: fundo em tom de marfim
-     (aconchegante, remete a embalagem/papel kraft), verde floresta como
-     cor primária (natural, orgânico, confiança) e terracota como cor de
-     destaque para todas as chamadas de ação (contraste alto, aparece bem
-     sobre o fundo claro sem parecer um site "tecnológico" genérico).
+     (aconchegante, remete a embalagem/papel kraft), rosa acinzentado como
+     cor primária (identidade da logo) e terracota como cor de destaque
+     para todas as chamadas de ação — "rosé + terracota" é uma combinação
+     clássica e aconchegante (ambos tons terrosos/quentes, mas com
+     saturação/matiz diferentes o suficiente para distinguir claramente
+     "isto é um título" de "isto é uma ação"). Chegamos a testar um
+     dourado no lugar da terracota para afastar ainda mais as duas cores
+     na roda de cores, mas o tom ficou escurecido demais pela exigência de
+     contraste (WCAG) e leu como um amarelo/mostarda sem graça — a
+     terracota original já resolve bem o problema sendo mais bonita.
      ------------------------------------------------------------------ */
   --color-bg: #f7f4ea; /* fundo principal das páginas (marfim quente) */
   --color-bg-alt: #efeada; /* fundo de seções alternadas / cards sobre --color-bg */
   --color-surface: #ffffff; /* superfície de cards e modais, "flutuando" sobre o fundo creme */
 
-  --color-primary: #2f4438; /* verde floresta: header, footer, títulos, ícones padrão */
-  --color-primary-dark: #22332a; /* variação mais escura, usada em hover de elementos primários */
-  --color-primary-soft: #e4e9e2; /* verde bem clarinho, usado em fundos de ícone/hover sutil */
+  /* Antes verde floresta (#2f4438) — trocado pelo rosa da logo a pedido
+     do cliente. --color-primary-soft usa a cor exata enviada por ele
+     (referência visual em anexo); --color-primary/--color-primary-dark
+     são tons mais escuros da MESMA família (não o rosa claro em si), já
+     que esta variável também é usada como texto (títulos, links de nav)
+     e como fundo escuro com texto claro em cima (footer, --section-dark)
+     — um rosa tão claro quanto o da referência não teria contraste
+     suficiente para nenhum dos dois usos. Valores calculados para
+     >=4.5:1 (na prática >=8:1) contra --color-bg, --color-bg-alt,
+     --color-surface (uso como texto) E contra --color-text-on-dark (uso
+     como fundo escuro) — ajustar aqui se o tom não bater exatamente com
+     a referência do cliente. */
+  --color-primary: #7a3b44; /* rosa queimado: header, footer, títulos, ícones padrão — 8.9:1 vs creme, 8.9:1 com texto claro em cima */
+  --color-primary-dark: #5e2c34; /* variação mais escura, usada em hover de elementos primários */
+  --color-primary-soft: #fbe2e4; /* rosa clarinho (cor enviada pelo cliente), usado em fundos de ícone/hover sutil */
 
-  /* Terracota escurecido em relação à primeira versão: o tom original
-     (#D9603D) media só 3.35:1 de contraste contra o fundo creme e contra
-     branco — abaixo do mínimo de 4.5:1 do WCAG AA para texto normal.
-     Como esta cor é usada sobretudo em texto pequeno (eyebrow, preço) e
-     como fundo de botão com texto claro em cima (todo CTA "Peça agora"/
-     "Pedir agora" do site), o contraste baixo prejudicava a leitura
-     exatamente nos elementos mais importantes da página. Os valores
-     abaixo foram calculados para garantir >=4.5:1 contra os 3 fundos
-     onde a cor aparece como texto (creme --color-bg, o creme mais escuro
-     --color-bg-alt das seções alternadas, e branco --color-surface dos
-     cards), com margem de segurança. */
+  /* Terracota original (mantida — a variante em dourado testada para
+     combinar com o novo --color-primary rosa ficou com aparência de
+     amarelo/mostarda sem graça, escurecida demais pela exigência de
+     contraste). Esta cor é usada sobretudo em texto pequeno (eyebrow,
+     preço) e como fundo de botão com texto claro em cima (todo CTA
+     "Peça agora"/"Pedir agora" do site); os valores abaixo garantem
+     >=4.5:1 contra os 3 fundos onde a cor aparece como texto (creme
+     --color-bg, o creme mais escuro --color-bg-alt das seções
+     alternadas, e branco --color-surface dos cards), com margem de
+     segurança. */
   --color-accent: #a5492e; /* terracota: CTAs, preços, badges de destaque, estado ativo — 4.86:1 vs bg-alt (pior caso), 5.85:1 vs branco */
   --color-accent-dark: #8d3e28; /* terracota escurecido, usado no hover dos botões de destaque — 6.69:1 vs creme */
   --color-accent-soft: #fbe7e0; /* terracota bem clarinho, usado em fundo de badge/alerta leve */
@@ -55,10 +72,10 @@
   --color-border: #e2dcc8; /* bordas sutis de cards, inputs e divisórias */
   --color-border-on-dark: rgba(247, 244, 234, 0.16); /* divisórias sobre fundo escuro */
 
-  --color-success: #4c7a56; /* feedback positivo (ex: economia em combos) */
+  --color-success: #4c7a56; /* feedback positivo (ex: economia em combos) — mantido verde de propósito: é a cor universalmente associada a "economia/dinheiro" no Brasil, e continua distinta tanto do rosa quanto da terracota */
   --color-alert: #8d3e28; /* feedback de alerta (reaproveita o tom de terracota escuro) */
 
-  --color-overlay: rgba(34, 51, 42, 0.55); /* fundo escurecido atrás de modais/menu mobile */
+  --color-overlay: rgba(94, 44, 52, 0.55); /* fundo escurecido atrás de modais/menu mobile — agora usa o tom de --color-primary-dark (rosa) em vez do antigo verde-escuro */
 
   /* ------------------------------------------------------------------
      TIPOGRAFIA

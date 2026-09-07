@@ -529,6 +529,10 @@ p {
   justify-content: center;
   gap: var(--space-6);
   padding: var(--space-6) var(--container-padding);
+  /* Em telas baixas (ex: celular em modo paisagem), a navegação + divisor
+     + ações podem ultrapassar a altura disponível — sem overflow-y, o
+     conteúdo centralizado ficaria cortado e inacessível. */
+  overflow-y: auto;
 }
 
 .mobile-menu__nav {
@@ -684,6 +688,15 @@ body.no-scroll {
   text-align: center;
 }
 
+/* Quando o placeholder é substituído por uma <img> real, a imagem deve
+   preencher a mesma caixa (aspect-ratio + border-radius definidos abaixo). */
+img.media-placeholder {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  background-image: none;
+}
+
 /* Modificadores de proporção — cada contexto de uso define a altura
    necessária (hero grande, card de produto, foto quadrada, etc.). */
 .media-placeholder--hero {
@@ -836,21 +849,13 @@ body.no-scroll {
   height: 100%;
 }
 
-.combo-card__media {
-  position: relative;
-}
-
-/* O selo de desconto do combo fica no canto, sobre a foto — é um dos
-   elementos visuais mais importantes do card (briefing, seção 23). */
-.combo-card__media .badge {
-  position: absolute;
-  top: var(--space-3);
-  left: var(--space-3);
-}
-
-.combo-card__media .media-placeholder {
-  border-radius: 0;
-  border-width: 0 0 1px 0;
+/* O selo de desconto do combo é o primeiro elemento do card — um dos
+   elementos visuais mais importantes (briefing, seção 23) — por isso fica
+   destacado acima do título, sem "esticar" na largura do card (o
+   combo-card__body é flex column, que por padrão esticaria o badge). */
+.combo-card__badge {
+  align-self: flex-start;
+  margin-bottom: var(--space-3);
 }
 
 .combo-card__body {
@@ -1183,44 +1188,6 @@ body.no-scroll {
 }
 
 /* --------------------------------------------------------------------------
-   TABELA NUTRICIONAL
-   Usada dentro do modal de detalhes da marmita.
-   -------------------------------------------------------------------- */
-
-.nutrition-table {
-  font-size: var(--text-small);
-}
-
-.nutrition-table caption {
-  text-align: left;
-  font-weight: 600;
-  color: var(--color-text);
-  margin-bottom: var(--space-3);
-}
-
-.nutrition-table td {
-  padding: var(--space-2) var(--space-1);
-  border-bottom: 1px solid var(--color-border);
-}
-
-.nutrition-table td:last-child {
-  text-align: right;
-  font-weight: 600;
-  color: var(--color-text);
-}
-
-/* Nota de rodapé da tabela, exibida apenas nos produtos sem valores
-   nutricionais confirmados (ver EB.data.PRODUCTS) — nunca inventamos
-   número, então avisamos explicitamente que o dado está pendente. */
-.nutrition-table__note {
-  display: block;
-  margin-top: var(--space-3);
-  font-size: var(--text-caption);
-  font-style: italic;
-  color: var(--color-text-muted);
-}
-
-/* --------------------------------------------------------------------------
    SELETOR DE QUANTIDADE
    Usado no modal "Monte seu combo", um por marmita da lista.
    -------------------------------------------------------------------- */
@@ -1367,12 +1334,49 @@ body.no-scroll {
     grid-template-columns: 1fr 1fr;
     row-gap: var(--space-7);
   }
+
+  /* Ao herdar as 3 colunas do desktop (ver home.css/cardapio.css), o
+     product-card cai para ~213px de largura no tablet — estreito demais
+     para "Ver mais" e "Pedir agora" lado a lado sem estourar o card.
+     Empilhar as ações resolve, no mesmo padrão já usado em
+     .combo-card__actions logo abaixo neste arquivo. */
+  .product-card__footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-3);
+  }
+  .product-card__actions {
+    flex-direction: column;
+  }
 }
 
 /* MOBILE (<768px) */
 @media (max-width: 767px) {
   .container {
     --container-padding: 1.25rem;
+  }
+
+  /* ESCALA TIPOGRÁFICA — títulos de página/seção ficam grandes demais em
+     telas pequenas usando os mesmos tamanhos do desktop; um degrau abaixo
+     na escala já definida em variables.css resolve sem valores novos. */
+  h1 {
+    font-size: var(--text-h2);
+  }
+  h2 {
+    font-size: var(--text-h3);
+  }
+
+  /* Sem este ajuste, toda .section mantém os 96px de padding vertical
+     pensados para telas grandes — em telas de celular isso faz a página
+     parecer excessivamente longa e "vazia" entre seções. Reduzido para o
+     mesmo valor já usado pelo hero nesta largura (--space-7), mantendo o
+     ritmo vertical do site consistente. */
+  .section {
+    padding-block: var(--space-7);
+  }
+
+  .section-header {
+    margin-bottom: var(--space-6);
   }
 
   .site-footer__grid {
@@ -1406,5 +1410,31 @@ body.no-scroll {
     width: 100%;
     white-space: normal;
     text-align: center;
+  }
+
+  /* Mesmo problema do .btn--lg acima, mas nos dois botões lado a lado do
+     combo-card: "Quero este combo" + "Ver itens" não cabem dividindo a
+     largura do card em telas de celular (cada .btn mantém white-space:
+     nowrap), fazendo o segundo botão vazar para fora do card. Empilhar
+     verticalmente resolve sem depender do texto de cada botão. */
+  .combo-card__actions {
+    flex-direction: column;
+  }
+
+  /* PRODUCT CARD — reduzido proporcionalmente para caber em 2 colunas
+     (ver .featured-products__grid/.products-grid). Os botões de ação já
+     ficam empilhados via a regra no bloco tablet acima; aqui só entra o
+     que é específico da largura ainda menor do mobile. */
+  .product-card__body {
+    padding: var(--space-4);
+  }
+  .product-card__name {
+    font-size: var(--text-small);
+  }
+  .product-card__description {
+    font-size: var(--text-caption);
+  }
+  .product-card .price__value {
+    font-size: var(--text-body);
   }
 }

@@ -12,7 +12,7 @@
     <link
       rel="icon"
       type="image/svg+xml"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%232F4438'/%3E%3Cpath d='M5 8.5l7-4 7 4-7 4-7-4Z' fill='none' stroke='%23F7F4EA' stroke-width='1.6' stroke-linejoin='round'/%3E%3Cpath d='M5 8.5v7l7 4 7-4v-7' fill='none' stroke='%23F7F4EA' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%237A3B44'/%3E%3Cpath d='M5 8.5l7-4 7 4-7 4-7-4Z' fill='none' stroke='%23F7F4EA' stroke-width='1.6' stroke-linejoin='round'/%3E%3Cpath d='M5 8.5v7l7 4 7-4v-7' fill='none' stroke='%23F7F4EA' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E"
     />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -150,12 +150,10 @@
                que estes botões formam um conjunto de filtros relacionados -->
           <div class="filter-bar" id="filterBar" role="group" aria-label="Filtrar cardápio por categoria">
             <button type="button" class="filter-chip" data-filter="todas" aria-pressed="true">Todas</button>
+            <button type="button" class="filter-chip" data-filter="massas" aria-pressed="false">Massas</button>
             <button type="button" class="filter-chip" data-filter="carnes" aria-pressed="false">Carnes</button>
             <button type="button" class="filter-chip" data-filter="frango" aria-pressed="false">Frango</button>
             <button type="button" class="filter-chip" data-filter="peixes" aria-pressed="false">Peixes</button>
-            <button type="button" class="filter-chip" data-filter="vegetarianas" aria-pressed="false">Vegetarianas</button>
-            <button type="button" class="filter-chip" data-filter="mais-vendidas" aria-pressed="false">Mais vendidas</button>
-            <button type="button" class="filter-chip" data-filter="novidades" aria-pressed="false">Novidades</button>
           </div>
 
           <!-- Cabeçalho invisível apenas para leitores de tela: o nome de
@@ -383,6 +381,12 @@
           <h2 class="modal__title" id="builderModalTitle">Monte seu Combo</h2>
           <p class="modal__subtitle">Escolha as unidades das suas marmitas e garanta descontos progressivos.</p>
         </div>
+
+        <!-- Faixas de desconto lidas de EB.data.DISCOUNT_TIERS e preenchidas
+             por cardapio.js (renderDiscountTiersInfo) — nunca escrever os
+             números aqui direto, para não haver risco de ficarem
+             dessincronizados caso a régua de desconto mude em data.js. -->
+        <ul class="builder__discount-tiers" id="builderDiscountTiers" aria-label="Descontos progressivos por quantidade de marmitas"></ul>
 
         <div class="builder">
           <!-- Coluna esquerda: uma linha por marmita disponível, com
