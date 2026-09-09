@@ -1,15 +1,6 @@
-/* ==========================================================================
-   MARMITAS.CSS
-   Estilos específicos da página Marmitas (marmitas.html): grid de
-   produtos, grid de combos e os 3 modais (detalhes da marmita, detalhes
-   do combo, monte seu combo). Componentes genéricos (.product-card,
-   .combo-card, .modal, .quantity-selector...) já vêm de global.css —
-   aqui só entra o layout específico desta página.
-   ========================================================================== */
+/* MARMITAS.CSS */
 
-/* --------------------------------------------------------------------------
-   CABEÇALHO + FILTROS + GRID DE PRODUTOS
-   -------------------------------------------------------------------- */
+/* CABEÇALHO + FILTROS + GRID DE PRODUTOS */
 
 .marmitas-catalog .section-header {
   margin-bottom: var(--space-6);
@@ -22,12 +13,7 @@
 /* .products-grid mora em global.css: é usada tanto aqui (grid de
    marmitas) quanto em frios-antepastos.html (grid dos 2 exemplos). */
 
-/* --------------------------------------------------------------------------
-   GRID DE COMBOS
-   2 colunas: os combos têm mais informação (lista de itens, desconto)
-   que um product-card comum, então cartões mais largos ficam mais
-   confortáveis de ler do que 3-4 por linha.
-   -------------------------------------------------------------------- */
+/* GRID DE COMBOS */
 
 .combos-grid {
   display: grid;
@@ -35,16 +21,9 @@
   gap: var(--space-6);
 }
 
-/* .product-modal__* (detalhes de UM produto: media, descrição, grid de
-   ingredientes/preparo, footer) mora em global.css — é gerado por
-   EB.components.buildProductModalBody (main.js), compartilhada com
-   frios.js, então não pode ficar num CSS só desta página. */
+/* .product-modal__* mora em global.css: é compartilhado com frios.js. */
 
-/* --------------------------------------------------------------------------
-   MODAL: DETALHES DO COMBO
-   Classes usadas dentro do template gerado por buildComboModalBody() em
-   marmitas.js.
-   -------------------------------------------------------------------- */
+/* MODAL: DETALHES DO COMBO */
 
 .combo-modal__items {
   display: flex;
@@ -53,41 +32,37 @@
   margin-block: var(--space-5);
 }
 
-/* Cada item é um <button> inteiro (não só um link de texto) para que
-   toda a linha — foto + nome + quantidade — seja clicável e receba foco
-   de teclado como uma única unidade. */
-.combo-modal__item-btn {
+/* Linha de UMA marmita do combo: foto + nome/quantidade + botão "Ver
+   mais" explícito (antes a linha inteira era um <button>, sem nenhum
+   texto avisando que dava pra clicar — trocado para deixar isso óbvio). */
+.combo-modal__item {
   display: flex;
   align-items: center;
   gap: var(--space-4);
-  width: 100%;
   padding: var(--space-2);
   border-radius: var(--radius-sm);
-  text-align: left;
-  transition: background-color var(--transition-fast);
-}
-.combo-modal__item-btn:hover {
-  background-color: var(--color-bg-alt);
 }
 
-/* Qualificado com "img." (não só ".combo-modal__item-media") de propósito:
-   img.media-placeholder já define height:100% em global.css com
-   especificidade elemento+classe — uma regra só de classe aqui perderia
-   esse empate e o height:56px seria ignorado (o tamanho real acabaria
-   dependendo de aspect-ratio "salvar" o cálculo, o que nem sempre
-   acontece — ver nota igual em .builder__row-media mais abaixo). */
+.combo-modal__item-btn {
+  flex-shrink: 0;
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-small);
+}
+
+/* Qualificado com "img." para vencer a especificidade de
+   img.media-placeholder (height:100%) em global.css. */
 img.combo-modal__item-media {
   width: 56px;
   height: 56px;
   flex-shrink: 0;
-  /* fundo/ícone herdados de .media-placeholder; aqui só o tamanho muda,
-     já que dentro do modal a miniatura é bem menor que num card */
 }
 
 .combo-modal__item-info {
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
+  flex: 1;
+  min-width: 0; /* permite truncar em vez de empurrar o botão "Ver mais" para fora */
 }
 
 .combo-modal__item-name {
@@ -123,19 +98,10 @@ img.combo-modal__item-media {
   flex-shrink: 0;
 }
 
-/* --------------------------------------------------------------------------
-   MODAL: MONTE SEU COMBO
-   Duas colunas: lista rolável de marmitas + resumo fixo (sticky).
-   -------------------------------------------------------------------- */
+/* MODAL: MONTE SEU COMBO */
 
-/* Total repetido logo abaixo do cabeçalho (ver nota em marmitas.html) —
-   position: sticky faz ele "grudar" no topo da área rolável do modal
-   (.modal tem overflow-y: auto em global.css) conforme o cliente rola a
-   lista de marmitas, então o preço se formando nunca sai da tela. Fundo
-   sólido + z-index: o conteúdo que rola por baixo (a lista de marmitas)
-   não pode aparecer por cima nem ficar ilegível atrás. padding-right
-   igual ao do .modal__header evita colidir com o botão de fechar (X),
-   que também fica "grudado" no canto por ser position: absolute. */
+/* Total fixo no topo da área rolável do modal, para o preço nunca sair
+   da tela. O padding-right extra evita colidir com o botão de fechar. */
 .builder__top-total {
   position: sticky;
   top: 0;
@@ -158,10 +124,23 @@ img.combo-modal__item-media {
   color: var(--color-accent);
 }
 
-/* Faixas de desconto (ex: "5 a 7 marmitas: 5% OFF"), preenchidas por
-   renderDiscountTiersInfo() em marmitas.js. Reaproveita o componente
-   .badge de global.css em vez de estilo próprio — só o container em
-   flex-wrap é específico daqui. */
+.builder__top-total-right {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+/* "economia de R$X" ao lado do total, no topo — cor de sucesso, no
+   mesmo padrão de .builder__summary-row--savings, para o cliente ver o
+   quanto está economizando sem precisar rolar até o resumo da direita. */
+.builder__top-total-savings {
+  font-size: var(--text-caption);
+  font-weight: 600;
+  color: var(--color-success);
+  white-space: nowrap;
+}
+
+/* Faixas de desconto, preenchidas por renderDiscountTiersInfo(). */
 .builder__discount-tiers {
   display: flex;
   flex-wrap: wrap;
@@ -169,13 +148,9 @@ img.combo-modal__item-media {
   margin-bottom: var(--space-6);
 }
 
-/* minmax(0, ...) em cada coluna, não "1.6fr 1fr" sozinho: um valor
-   "fr" isolado equivale a minmax(auto, <fr>), cujo mínimo "auto" ainda é
-   calculado a partir do conteúdo — e a lista de marmitas contém texto
-   com white-space: nowrap (a descrição truncada), então sem o "0"
-   explícito a 1ª coluna cresce para caber o texto inteiro e empurra a
-   coluna do resumo para fora do modal (min-width: 0 nos itens sozinho
-   não é suficiente para conter uma trilha "fr" nesse cenário). */
+/* minmax(0, ...) zera o mínimo automático das colunas; com "1.6fr 1fr"
+   sozinho a descrição (white-space: nowrap) empurraria o resumo para
+   fora do modal. */
 .builder {
   display: grid;
   grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
@@ -183,25 +158,15 @@ img.combo-modal__item-media {
   align-items: start;
 }
 
-/* min-width: 0 é essencial aqui: por padrão, um item de grid nunca
-   encolhe abaixo da largura "natural" do seu conteúdo (min-width: auto),
-   e .builder__row-description usa white-space: nowrap para o efeito de
-   reticências — sem este reset, o texto integral (bem mais largo que a
-   coluna) força a 1ª coluna do grid .builder a crescer muito além dos
-   1.6fr definidos, empurrando a coluna do resumo (.builder__summary)
-   para fora da área visível do modal. */
+/* min-width: 0 permite encolher abaixo da largura natural do conteúdo,
+   necessário porque a descrição usa white-space: nowrap. */
 .builder__list {
   display: flex;
   flex-direction: column;
   min-width: 0;
 }
 
-/* min-width: 0 de novo, pelo mesmo motivo do .builder__list acima: cada
-   .builder__row é um item flex dentro de .builder__list (que empilha as
-   linhas em coluna), e sem este reset a linha nunca encolhe abaixo da
-   largura "natural" da descrição com white-space: nowrap — em telas
-   bem estreitas isso faz a linha (e o texto dentro dela) vazar para
-   fora do modal em vez de truncar com reticências. */
+/* min-width: 0 pelo mesmo motivo do .builder__list acima. */
 .builder__row {
   display: flex;
   align-items: center;
@@ -215,12 +180,8 @@ img.combo-modal__item-media {
   padding-top: 0;
 }
 
-/* Qualificado com "img." — mesmo motivo do img.combo-modal__item-media
-   acima. Aqui o problema é visível de verdade: no mobile (ver media query
-   no fim do arquivo) esta foto vira item de grid ocupando 2 linhas
-   (grid-row: 1 / 3), e o alinhamento padrão do grid (stretch) vence o
-   aspect-ratio quando o height:56px "normal" perde a especificidade —
-   a foto esticava para ~127px de altura em vez de ficar quadrada. */
+/* Qualificado com "img." — mesmo motivo do img.combo-modal__item-media.
+   Sem isso a foto estica no grid do mobile em vez de ficar quadrada. */
 img.builder__row-media {
   width: 56px;
   height: 56px;
@@ -248,6 +209,16 @@ img.builder__row-media {
   margin-bottom: var(--space-1);
 }
 
+/* Preço + "Ver mais" na mesma linha, um em cada ponta — mantém o botão
+   perto do preço sem forçar uma linha inteira só para ele (a linha já
+   é curta, cada .builder__row tem pouca altura sobrando). */
+.builder__row-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
 .builder__row-price {
   font-family: var(--font-display);
   font-weight: 600;
@@ -255,10 +226,23 @@ img.builder__row-media {
   font-size: var(--text-small);
 }
 
-/* Coluna direita: "gruda" no topo do modal ao rolar a lista de
-   marmitas à esquerda, para o resumo do pedido estar sempre visível
-   enquanto o cliente escolhe as quantidades. Funciona porque o ancestral
-   com scroll é o próprio .modal (overflow-y: auto em global.css). */
+/* Link discreto em vez de .btn: a linha do builder já é apertada e
+   "Ver mais" é ação secundária. */
+.builder__row-details {
+  font-size: var(--text-caption);
+  font-weight: 600;
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  transition: color var(--transition-fast), text-decoration-color var(--transition-fast);
+  flex-shrink: 0;
+}
+.builder__row-details:hover {
+  color: var(--color-accent);
+  text-decoration-color: currentColor;
+}
+
+/* Resumo fixo no topo enquanto a lista de marmitas rola. */
 .builder__summary {
   position: sticky;
   top: 0;
@@ -286,11 +270,7 @@ img.builder__row-media {
   gap: var(--space-3);
 }
 
-/* "-6%"/"-10%" ao lado do nome da marmita, quando aquela linha se
-   qualificou para o desconto por sabor repetido (ver
-   result.lines[].flavorDiscountPercent em renderBuilderSummary,
-   marmitas.js). Cor de sucesso para não competir com a cor de destaque
-   já usada no preço da linha. */
+/* "-6%"/"-10%" ao lado do nome, quando a linha ganhou desconto. */
 .builder__summary-item-discount {
   color: var(--color-success);
   font-weight: 600;
@@ -317,22 +297,13 @@ img.builder__row-media {
   font-size: var(--text-small);
   padding-block: var(--space-1);
 }
-/* O atributo HTML "hidden" some do elemento graças a uma regra padrão do
-   navegador ([hidden] { display: none }) — mas como a regra acima já
-   define display: flex para esta mesma classe, ela venceria a regra
-   nativa do navegador e a linha de desconto ficaria visível mesmo
-   escondida. Esta regra reforça o display: none sempre que o atributo
-   hidden estiver presente (usado por marmitas.js para esconder a linha
-   de desconto quando a faixa de desconto atual é 0%). */
+/* Reforça o display:none do atributo hidden, que perderia para o
+   display:flex da regra acima. */
 .builder__summary-row[hidden] {
   display: none;
 }
 
-/* Linha "Você economiza" — cor de sucesso, no mesmo padrão já usado em
-   .combo-card__savings (global.css), para reforçar positivamente o
-   valor total economizado. O detalhamento de qual desconto se aplica a
-   cada grupo já aparece na lista de itens acima (.builder__summary-item-
-   discount), então aqui só sobrou esta linha de resumo. */
+/* Linha "Você economiza", na cor de sucesso. */
 .builder__summary-row--savings {
   color: var(--color-success);
   font-weight: 600;
@@ -352,9 +323,7 @@ img.builder__row-media {
   gap: var(--space-3);
 }
 
-/* --------------------------------------------------------------------------
-   RESPONSIVIDADE — TABLET (768–1199px)
-   -------------------------------------------------------------------- */
+/* RESPONSIVIDADE — TABLET (768–1199px) */
 
 @media (max-width: 1199px) {
   .builder {
@@ -367,13 +336,62 @@ img.builder__row-media {
   }
 }
 
-/* --------------------------------------------------------------------------
-   RESPONSIVIDADE — MOBILE (<768px)
-   -------------------------------------------------------------------- */
+/* RESPONSIVIDADE — MOBILE (<768px) */
 
 @media (max-width: 767px) {
+  /* 2 colunas a pedido do cliente; o card é reduzido abaixo para caber
+     em ~155px de largura. */
   .combos-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+
+  .combo-card__body {
+    padding: var(--space-4);
+  }
+  .combo-card__name {
+    font-size: var(--text-small);
+  }
+  .combo-card__description {
+    font-size: var(--text-caption);
+  }
+  .combo-card__count,
+  .combo-card__items,
+  .combo-card__savings {
+    font-size: var(--text-caption);
+  }
+  .combo-card--custom {
+    padding: var(--space-5) var(--space-4);
+  }
+  .combo-card--custom .combo-card__icon {
+    width: 48px;
+    height: 48px;
+  }
+  .combo-card--custom .combo-card__icon svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  /* O --text-h4 padrão do preço não cabe ao lado do valor riscado. */
+  .combo-card .price {
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-2);
+  }
+  .combo-card .price__old {
+    font-size: var(--text-caption);
+  }
+  .combo-card .price__value {
+    font-size: var(--text-body);
+  }
+
+  /* Sem isto, "Quero este combo" (nowrap) estoura a largura do card e é
+     cortado pelo overflow: hidden. */
+  .combo-card__actions .btn,
+  .combo-card--custom .btn {
+    padding: var(--space-3) var(--space-3);
+    font-size: var(--text-caption);
+    white-space: normal;
+    text-align: center;
   }
 
   .combo-modal__footer {
@@ -384,22 +402,12 @@ img.builder__row-media {
     width: 100%;
   }
 
-  /* No mobile, uma linha flex única (foto + texto + seletor de
-     quantidade) fica espremida demais para caber em ~320px de largura —
-     o nome quebra em 2 linhas, a descrição sobra quase ilegível e o
-     seletor de quantidade fica apertado contra a borda. Em vez disso,
-     cada linha vira um mini-grid de 2 colunas x 2 linhas: a foto ocupa
-     as duas linhas à esquerda, o texto fica em cima à direita e o
-     seletor de quantidade embaixo, alinhado com o texto — dando à
-     descrição a largura inteira da coluna direita para truncar melhor. */
+  /* No mobile a linha vira um grid 2x2: foto à esquerda ocupando as duas
+     linhas, texto em cima e seletor de quantidade embaixo. */
   .builder__row {
     display: grid;
-    /* minmax(0, 1fr), não "1fr" sozinho: "1fr" isolado equivale a
-       minmax(auto, 1fr), e o mínimo "auto" ainda se baseia na largura do
-       conteúdo (a descrição com white-space: nowrap) — o que reintroduz
-       o mesmo vazamento que min-width: 0 resolve para flex/bloco, só que
-       para uma trilha de grid. minmax(0, 1fr) é o jeito de zerar esse
-       mínimo automático diretamente na trilha. */
+    /* minmax(0, 1fr) zera o mínimo automático da trilha, como o
+       min-width: 0 faz para flex. */
     grid-template-columns: 48px minmax(0, 1fr);
     grid-template-rows: auto auto;
     column-gap: var(--space-4);

@@ -1,24 +1,19 @@
-/* ==========================================================================
-   DATA.JS
-   ========================================================================== */
+/* Fonte única de dados do site: contato, produtos, combos prontos e as
+   faixas de desconto. Lido pelos demais scripts via EB.data.* */
 
 window.EB = window.EB || {};
 
 (function () {
   "use strict";
 
-  /* ------------------------------------------------------------------
-     CONTATO
-     ------------------------------------------------------------------ */
-  const WHATSAPP_NUMBER = "5531992990564"; // formato internacional (DDI+DDD+número), exigido pelo link wa.me
-  const WHATSAPP_DISPLAY = "(31) 99299-0564"; // formato exibido para humanos nos cards/footer
+  /* CONTATO */
+  const WHATSAPP_NUMBER = "5531992990564"; // formato internacional, exigido pelo wa.me
+  const WHATSAPP_DISPLAY = "(31) 99299-0564";
   const INSTAGRAM_HANDLE = "@eboxcestas";
   const INSTAGRAM_URL =
     "https://www.instagram.com/eboxcestas?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==&igsi=ZDNlZDc0MzIxNw==";
 
-  /* ------------------------------------------------------------------
-     PRODUTOS
-     ------------------------------------------------------------------ */
+  /* PRODUTOS */
   const PRODUCTS = [
     {
       id: "nhoque-a-bolonhesa",
@@ -96,7 +91,7 @@ window.EB = window.EB || {};
       featured: true,
       description:
         "Suculento filé de peito de frango empanado, coberto com molho ao sugo artesanal, presunto e mussarela, acompanhado de um cremoso purê de batatas.",
-      weight: "450g",
+      weight: "500g",
       price: 26.99,
       image: "img/parmegiana_frango.jpg",
       imageLabel: "Foto: Parmegiana de Frango",
@@ -113,7 +108,7 @@ window.EB = window.EB || {};
       featured: true,
       description:
         "Panqueca de massa artesanal recheada com frango desfiado e requeijão, coberta com molho bechamel e mussarela ralada.",
-      weight: "450g",
+      weight: "500g",
       price: 26.99,
       image: "img/panqueca_frango.jpg",
       imageLabel: "Foto: Panqueca de Frango",
@@ -147,7 +142,7 @@ window.EB = window.EB || {};
       featured: true,
       description:
         "Panqueca de massa artesanal recheada com carne moída, azeitonas e requeijão, coberta com molho ao sugo caseiro e mussarela ralada.",
-      weight: "450g",
+      weight: "500g",
       price: 26.99,
       image: "img/panqueca_carne.jpg",
       imageLabel: "Foto: Panqueca de Carne",
@@ -156,21 +151,9 @@ window.EB = window.EB || {};
       preparo: "6 a 8 minutos no micro-ondas.",
       conservacao: "No freezer tem validade de 6 meses.",
     },
-    /* --------------------------------------------------------------
-       FRIOS E ANTEPASTOS
-       Categoria com página própria (frios-antepastos.html, ver
-       frios.js) — não é o foco principal do site, por isso só 2
-       exemplos, sem foto definitiva (campo "image" omitido de
-       propósito: main.js cai no placeholder tracejado enquanto o
-       cliente não envia as fotos reais) e sem preço fixo ("price: null"
-       é o sinal que toda a renderização usa para trocar o preço por
-       "Clique para fazer seu orçamento" e o botão de pedido por um de
-       orçamento — ver EB.components.createProductCard e
-       EB.components.buildProductModalBody em main.js). Por não terem
-       preço, estes itens também ficam de fora do "monte seu combo"
-       (marmitas.js filtra por product.price != null antes de montar a
-       lista do builder).
-       -------------------------------------------------------------- */
+    /* FRIOS E ANTEPASTOS — "price: null" é o sinal usado em todo o site
+       para trocar o preço por "sob consulta"; "image" omitido cai no
+       placeholder até chegarem as fotos reais. */
     {
       id: "tabua-de-frios-premium",
       name: "Tábua de Frios Premium",
@@ -205,22 +188,9 @@ window.EB = window.EB || {};
     },
   ];
 
-  /* ------------------------------------------------------------------
-     COMBOS PRONTOS
-     originalPrice/finalPrice/savingsLabel são a soma real dos itens
-     (qty x price de cada um, ver PRODUCTS acima) rodada por
-     calculateComboDiscount (marmitas.js) — nunca um valor "de
-     marketing" solto, para o cliente nunca montar manualmente no
-     builder o mesmo combo por um preço diferente do anunciado aqui.
-     Os 3 combos abaixo só têm 1-3 unidades de cada sabor, então nenhum
-     item vira "grupo de bulk" sozinho (precisa de 5+ do mesmo item) —
-     todo mundo cai no grupo variado, e como o grupo variado É o combo
-     inteiro nesses 3 casos, só o desconto de 4% (faixa 5-9 marmitas)
-     se aplica aos três. Se um dia um combo pronto for redesenhado com
-     5+ do mesmo item, os valores aqui precisam ser recalculados à mão
-     (não há build step que faça isso automaticamente) — e nesse caso o
-     item que virou bulk sai do grupo variado, o que muda a conta.
-     ------------------------------------------------------------------ */
+  /* COMBOS PRONTOS — os preços são a soma real dos itens já com o
+     desconto do "monte seu combo", para o builder nunca dar um valor
+     diferente do anunciado aqui. Mexeu nos itens? Recalcule à mão. */
   const COMBOS = [
     {
       id: "combo-carne-frango",
@@ -270,25 +240,10 @@ window.EB = window.EB || {};
     },
   ];
 
-  /* ------------------------------------------------------------------
-     DESCONTOS DO "MONTE SEU COMBO"
-     Duas regras que NUNCA se misturam na mesma marmita — cada item do
-     carrinho recebe UM dos dois descontos, nunca os dois, nunca nenhum
-     (ver calculateComboDiscount em marmitas.js, que é quem realmente
-     decide qual regra vale pra cada item):
-
-       1) FLAVOR_DISCOUNT_TIERS — "grupo de bulk": quando a quantidade
-          de UM sabor específico já bate uma faixa sozinha (5-9 = 6%;
-          10+ = 10%), aquele sabor vira seu próprio grupo, descontado
-          isoladamente sobre o subtotal só dele.
-       2) QUANTITY_DISCOUNT_TIERS — "grupo variado": todo sabor que não
-          teve unidades suficientes para virar grupo de bulk (menos de
-          5) cai junto num único grupo compartilhado. O desconto desse
-          grupo (5-9 = 4%; 10+ = 8%; menos de 5 = nenhum) depende da
-          quantidade TOTAL desse grupo variado — nunca da quantidade
-          total do carrinho inteiro, que pode incluir marmitas que já
-          foram descontadas no passo 1.
-     ------------------------------------------------------------------ */
+  /* DESCONTOS DO "MONTE SEU COMBO" — cada marmita recebe uma das duas
+     regras, nunca as duas: FLAVOR vale para 5+ do mesmo sabor; QUANTITY
+     vale para o grupo variado com todo o resto. Ver
+     calculateComboDiscount em marmitas.js. */
   const QUANTITY_DISCOUNT_TIERS = [
     { min: 1, max: 4, percent: 0 },
     { min: 5, max: 9, percent: 0.04 },
@@ -301,8 +256,6 @@ window.EB = window.EB || {};
     { min: 10, max: Infinity, percent: 0.1 },
   ];
 
-  // Publica os dados no namespace global para os demais arquivos .js
-  // (main.js, home.js, marmitas.js, frios.js) lerem via EB.data.*.
   window.EB.data = {
     WHATSAPP_NUMBER,
     WHATSAPP_DISPLAY,

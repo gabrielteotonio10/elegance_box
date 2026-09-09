@@ -1,15 +1,6 @@
-/* ==========================================================================
-   HOME.CSS
-   Estilos específicos das seções da página Home (index.html). Componentes
-   reaproveitáveis (botões, cards, badges, header, footer) já vêm de
-   global.css — aqui só entra o layout particular de cada seção da Home.
-   ========================================================================== */
+/* HOME.CSS */
 
-/* --------------------------------------------------------------------------
-   HERO
-   Duas colunas no desktop: texto à esquerda, foto grande à direita,
-   conforme briefing (seção 10).
-   -------------------------------------------------------------------- */
+/* HERO */
 
 .hero__inner {
   display: grid;
@@ -45,9 +36,7 @@
   gap: var(--space-4);
 }
 
-/* --------------------------------------------------------------------------
-   BENEFÍCIOS
-   -------------------------------------------------------------------- */
+/* BENEFÍCIOS */
 
 .benefits__grid {
   display: grid;
@@ -55,10 +44,7 @@
   gap: var(--space-5);
 }
 
-/* --------------------------------------------------------------------------
-   ONDE ATENDEMOS
-   Duas colunas: bloco ilustrativo (mapa decorativo) + conteúdo textual.
-   -------------------------------------------------------------------- */
+/* ONDE ATENDEMOS */
 
 .coverage__inner {
   display: grid;
@@ -67,11 +53,8 @@
   align-items: center;
 }
 
-/* Bloco "mapa": moldura quadrada e arredondada em volta do <iframe> do
-   Google Maps (ver index.html). position: relative é o que permite o
-   selo .coverage__pin flutuar por cima do mapa; overflow: hidden é o
-   que corta os cantos do iframe para acompanhar o border-radius, já que
-   um <iframe> não herda arredondamento do elemento pai sozinho. */
+/* Moldura arredondada em volta do iframe do Google Maps; overflow:hidden
+   corta os cantos, já que o iframe não herda o border-radius sozinho. */
 .coverage__map {
   position: relative;
   aspect-ratio: 1 / 1;
@@ -87,10 +70,7 @@
   border: 0;
 }
 
-/* Selo decorativo flutuando sobre o mapa, no canto inferior direito —
-   reforça a identidade visual da marca por cima do mapa "genérico" do
-   Google. aria-hidden porque é puramente decorativo: a região atendida
-   já está descrita em texto ao lado (.coverage__region). */
+/* Selo decorativo flutuando sobre o mapa; aria-hidden pois é puramente visual. */
 .coverage__pin {
   position: absolute;
   right: var(--space-4);
@@ -158,11 +138,7 @@
   font-size: var(--text-small);
 }
 
-/* --------------------------------------------------------------------------
-   GRID DE PASSOS
-   Reaproveitado por "Como funciona" e "Como preparar" — mesma grade de 4
-   colunas, ambas usando o componente .step-card definido em global.css.
-   -------------------------------------------------------------------- */
+/* GRID DE PASSOS */
 
 .steps-grid {
   display: grid;
@@ -170,9 +146,7 @@
   gap: var(--space-6);
 }
 
-/* --------------------------------------------------------------------------
-   SOBRE A MARCA
-   -------------------------------------------------------------------- */
+/* SOBRE A MARCA */
 
 .about__inner {
   display: grid;
@@ -204,12 +178,14 @@
   color: var(--color-text-muted);
 }
 
-/* --------------------------------------------------------------------------
-   DESTAQUE DO CARDÁPIO
-   Grid preenchido via JS (home.js): 2 marmitas + 1 frio/antepasto no
-   tablet/desktop, e uma 3ª marmita extra só no mobile (ver
-   .product-card--mobile-only mais abaixo e a nota em home.js).
-   -------------------------------------------------------------------- */
+/* 2 CTAs lado a lado; flex-wrap evita vazamento em telas médias. */
+.about__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+/* DESTAQUE DO CARDÁPIO */
 
 .featured-products__grid {
   display: grid;
@@ -217,26 +193,19 @@
   gap: var(--space-6);
 }
 
-/* Escondida por padrão (tablet + desktop); reaparece só no mobile (ver
-   media query no fim do arquivo). display:none remove o item do cálculo
-   do grid sem deixar buraco — os 3 cards restantes ocupam a linha inteira
-   normalmente, como se a marmita extra nunca tivesse sido inserida. */
+/* Escondida por padrão (tablet+desktop); reaparece só no mobile. */
 .featured-products__grid .product-card--mobile-only {
   display: none;
 }
 
-/* --------------------------------------------------------------------------
-   RESPONSIVIDADE — TABLET (768–1199px)
-   -------------------------------------------------------------------- */
+/* RESPONSIVIDADE — TABLET (768–1199px) */
 
 @media (max-width: 1199px) {
   .hero__inner {
     grid-template-columns: 1fr;
     padding-block: var(--space-7);
   }
-  /* Na versão empilhada, a foto sobe para cima do texto — decisão de
-     hierarquia visual (a comida aparece primeiro), conforme prioridade
-     visual pedida no briefing (seção 44). */
+  /* Na versão empilhada, a foto sobe para cima do texto. */
   .hero__media {
     order: -1;
   }
@@ -262,14 +231,10 @@
   }
 }
 
-/* --------------------------------------------------------------------------
-   RESPONSIVIDADE — MOBILE (<768px)
-   -------------------------------------------------------------------- */
+/* RESPONSIVIDADE — MOBILE (<768px) */
 
 @media (max-width: 767px) {
-  /* A foto do hero mantém a mesma proporção 4/5 do desktop (herdada de
-     .media-placeholder--hero em global.css) — sem recorte extra no
-     mobile, a pedido do cliente. */
+  /* A foto do hero mantém a mesma proporção 4/5 do desktop, sem recorte extra. */
   .hero__inner {
     padding-block: var(--space-6);
     gap: var(--space-5);
@@ -283,11 +248,7 @@
     align-items: stretch;
   }
 
-  /* 2 colunas (não 1fr): pedido explícito do cliente para "Diferenciais
-     Elegance Box", "Como funciona o pedido?" e "Como preparar sua
-     marmita?" ficarem em pares lado a lado no mobile em vez de uma longa
-     lista empilhada. Gap reduzido para os cards não ficarem espremidos
-     demais em ~155px de largura cada. */
+  /* 2 colunas no mobile em vez de lista empilhada; gap reduzido para caber. */
   .benefits__grid {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-4);
@@ -306,9 +267,7 @@
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-4);
   }
-  /* Reaparece só aqui: a regra "escondida por padrão" fica no bloco
-     desktop/tablet lá em cima. display:flex (não "block") porque
-     .product-card em si é display:flex — ver global.css. */
+  /* display:flex (não "block") porque .product-card é display:flex. */
   .featured-products__grid .product-card--mobile-only {
     display: flex;
   }

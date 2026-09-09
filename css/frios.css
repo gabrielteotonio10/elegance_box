@@ -1,16 +1,6 @@
-/* ==========================================================================
-   FRIOS.CSS
-   Estilos específicos da página Frios e Antepastos (frios-antepastos.html):
-   só a seção de abertura (foto + texto sobre qualidade). O grid de
-   exemplos (.products-grid) e o card de produto (.product-card) já vêm
-   de global.css, reaproveitados de Marmitas.
-   ========================================================================== */
+/* FRIOS.CSS */
 
-/* --------------------------------------------------------------------------
-   ABERTURA
-   Duas colunas: foto de um lado, texto + CTA do outro — mesmo padrão já
-   usado em "Fale com a gente" (contato.css) e "Sobre a Marca" (home.css).
-   -------------------------------------------------------------------- */
+/* ABERTURA */
 
 .frios-intro__inner {
   display: grid;
@@ -23,9 +13,7 @@
   margin-bottom: var(--space-6);
 }
 
-/* --------------------------------------------------------------------------
-   RESPONSIVIDADE — TABLET (768–1199px)
-   -------------------------------------------------------------------- */
+/* RESPONSIVIDADE — TABLET (768–1199px) */
 
 @media (max-width: 1199px) {
   .frios-intro__inner {

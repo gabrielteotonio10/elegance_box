@@ -1,48 +1,24 @@
-/* ==========================================================================
-   RESET.CSS
-   Reset moderno e minimalista.
-   Objetivo: remover inconsistências padrão dos navegadores (margens, fontes
-   herdadas, box-sizing) para que o restante do CSS do projeto comece sempre
-   do mesmo ponto de partida, em qualquer navegador.
-   ========================================================================== */
+/* Reset mínimo: remove as inconsistências padrão dos navegadores para que
+   o CSS do projeto comece sempre do mesmo ponto. */
 
-/* Aplica box-sizing: border-box a todos os elementos.
-   Por quê: com border-box, padding e border passam a ser contados DENTRO da
-   largura/altura definidas (width/height), o que torna o cálculo de layouts
-   com Grid/Flexbox muito mais previsível (evita "estourar" a largura de
-   cards e colunas ao adicionar padding). */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
-/* Zera margem e padding padrão de todos os elementos.
-   Por quê: cada navegador aplica margens padrão diferentes para
-   h1-h6/p/ul/etc. Zerando tudo, o espaçamento do site passa a ser 100%
-   controlado pela escala definida em variables.css, e não pelo navegador. */
 * {
   margin: 0;
   padding: 0;
 }
 
-/* Configura o elemento raiz do documento.
-   - scroll-behavior: suaviza a rolagem ao clicar em links âncora (ex: menu
-     mobile fechando e levando a uma seção da página).
-   - text-size-adjust: evita que navegadores mobile aumentem o tamanho da
-     fonte automaticamente ao rotacionar a tela. */
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
 
-/* Configura o body como base tipográfica e de layout do site.
-   - min-height: 100vh garante que o footer sempre fique no rodapé mesmo em
-     páginas com pouco conteúdo (combinado com display:flex + flex-direction
-     column no body, e flex: 1 no <main> de cada página).
-   - line-height 1.5 é um valor confortável de leitura para o texto corrido
-     do site inteiro (evita ter que repetir em cada seletor de texto). */
+/* flex column + min-height mantêm o footer no rodapé em páginas curtas. */
 body {
   min-height: 100vh;
   display: flex;
@@ -52,18 +28,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Faz o <main> de cada página ocupar todo o espaço vertical restante.
-   Por quê: em conjunto com o body em flex-column, isso "empurra" o footer
-   para o final da viewport em páginas curtas, sem precisar de position
-   absolute/fixed. */
 main {
   flex: 1 0 auto;
 }
 
-/* Elementos de mídia (imagens, vídeos, etc.) responsivos por padrão.
-   - max-width: 100% impede que a imagem "vaze" para fora do elemento pai.
-   - display: block remove o espaço fantasma abaixo da imagem que o
-     navegador cria por tratar <img> como elemento inline por padrão. */
 img,
 picture,
 video,
@@ -72,10 +40,7 @@ svg {
   max-width: 100%;
 }
 
-/* Elementos de formulário e botão herdam a fonte da página.
-   Por quê: por padrão, <button>, <input>, <select> e <textarea> usam a
-   fonte nativa do sistema operacional, não a fonte definida via CSS. Isso
-   força a herança para manter consistência visual. */
+/* Sem isto, os campos usariam a fonte nativa do sistema. */
 button,
 input,
 select,
@@ -84,10 +49,6 @@ textarea {
   color: inherit;
 }
 
-/* Remove a aparência nativa de botão do elemento <button>.
-   Por quê: assim podemos estilizar todos os botões do zero (bordas, fundo,
-   cursor) de forma consistente entre navegadores, sem herdar estilos do
-   sistema operacional do usuário. */
 button {
   background: none;
   border: none;
@@ -95,37 +56,21 @@ button {
   text-align: inherit;
 }
 
-/* Links sem sublinhado e sem cor azul padrão.
-   Por quê: cada componente do site (nav, botão, link de texto) define sua
-   própria cor/estado de hover em global.css; aqui só removemos o estilo
-   nativo do navegador para não conflitar. */
 a {
   color: inherit;
   text-decoration: none;
 }
 
-/* Listas (<ul>/<ol>) sem marcadores por padrão.
-   Por quê: a maior parte das listas do site (nav, footer, listas de
-   ingredientes/itens de combo) é usada como container de layout, não como
-   lista visual tradicional com bullets. */
+/* As listas do site são containers de layout, não listas com bullets. */
 ul,
 ol {
   list-style: none;
 }
 
-/* Elementos de texto de formulário não quebram o layout ao redimensionar.
-   Por quê: <textarea> permite redimensionamento manual por padrão, o que
-   pode quebrar grids/flex; nesse projeto não há textarea, mas mantemos a
-   regra por segurança/consistência caso um seja adicionado no futuro. */
 textarea {
   resize: vertical;
 }
 
-/* Tabelas (usadas na tabela nutricional do modal de produto) com bordas
-   colapsadas e largura total do container.
-   Por quê: border-collapse remove o espaçamento duplo entre bordas de
-   células adjacentes, dando um visual de tabela mais limpo e alinhado ao
-   restante do design system. */
 table {
   border-collapse: collapse;
   width: 100%;

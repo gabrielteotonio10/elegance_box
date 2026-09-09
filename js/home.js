@@ -1,19 +1,13 @@
-/* ==========================================================================
-   HOME.JS
-
-   ========================================================================== */
+/* Lógica da Home: sorteia os produtos exibidos na vitrine de destaques. */
 
 document.addEventListener("DOMContentLoaded", function () {
   const grid = document.getElementById("featuredProductsGrid");
 
-  // Se o elemento não existir, não há nada a fazer.
   if (!grid) {
     return;
   }
 
-  /**
-   * Embaralha uma CÓPIA do array recebido (algoritmo Fisher-Yates) sem alterar o array original 
-   */
+  // Fisher-Yates sobre uma cópia, sem alterar o array original.
   function shuffle(array) {
     const shuffled = array.slice();
     for (let i = shuffled.length - 1; i > 0; i--) {
@@ -25,10 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
     return shuffled;
   }
 
-  // Dois "pools" separados: marmitas normais e Frios/Antepastos (sob
-  // consulta). Sorteados independentemente para garantir que a vitrine
-  // sempre tenha pelo menos 1 frio/antepasto — um sorteio único misturando
-  // os dois grupos poderia, por azar, nunca sortear nenhum.
+  // Sorteios separados para a vitrine sempre ter ao menos 1 frio/antepasto.
   const eligibleMarmitas = EB.data.PRODUCTS.filter(function (product) {
     return product.featured && product.category.indexOf("frios-antepastos") === -1;
   });
@@ -36,11 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
     return product.featured && product.category.indexOf("frios-antepastos") !== -1;
   });
 
-  // 3 marmitas no total, mas a 3ª só aparece no mobile (via
-  // .product-card--mobile-only, escondida em telas >=768px por CSS — ver
-  // home.css). No tablet/desktop isso deixa 2 marmitas + 1 frio = 3
-  // cards, preenchendo a linha inteira do grid de 3 colunas; no mobile,
-  // as 4 aparecem em um grid 2x2.
+  // A 3ª marmita só aparece no mobile, completando o grid 2x2.
   const marmitas = shuffle(eligibleMarmitas).slice(0, 3);
   const frio = shuffle(eligibleFrios).slice(0, 1);
 

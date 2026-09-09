@@ -8,6 +8,23 @@
   <meta name="description"
     content="Conheça o cardápio completo de marmitas congeladas da Elegance Box, monte combos prontos ou personalize o seu." />
 
+  <!-- Open Graph / Twitter Card: ver comentário completo em index.html. -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Elegance Box" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:url" content="https://elegance-box.vercel.app/marmitas.html" />
+  <meta property="og:title" content="Marmitas Congeladas | Elegance Box" />
+  <meta property="og:description"
+    content="Conheça o cardápio completo de marmitas congeladas da Elegance Box, monte combos prontos ou personalize o seu." />
+  <meta property="og:image" content="https://elegance-box.vercel.app/img/logo_completa.jpg" />
+  <meta property="og:image:width" content="2172" />
+  <meta property="og:image:height" content="1952" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Marmitas Congeladas | Elegance Box" />
+  <meta name="twitter:description"
+    content="Conheça o cardápio completo de marmitas congeladas da Elegance Box, monte combos prontos ou personalize o seu." />
+  <meta name="twitter:image" content="https://elegance-box.vercel.app/img/logo_completa.jpg" />
+
   <link rel="icon" type="image/svg+xml"
     href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%237A3B44'/%3E%3Cpath d='M5 8.5l7-4 7 4-7 4-7-4Z' fill='none' stroke='%23F7F4EA' stroke-width='1.6' stroke-linejoin='round'/%3E%3Cpath d='M5 8.5v7l7 4 7-4v-7' fill='none' stroke='%23F7F4EA' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E" />
 
@@ -354,8 +371,13 @@
              preço se formando. Atualizado por renderBuilderSummary() em
              marmitas.js. -->
       <div class="builder__top-total">
-        <span>Total </span>
-        <strong id="builderTopTotalValue">R$ 0,00</strong>
+        <span>Total</span>
+        <span class="builder__top-total-right">
+          <!-- Escondido enquanto totalSavings for R$ 0,00 (carrinho vazio
+               ou nenhum item se qualificou pra nenhum desconto ainda). -->
+          <span class="builder__top-total-savings" id="builderTopTotalSavings" hidden></span>
+          <strong id="builderTopTotalValue">R$ 0,00</strong>
+        </span>
       </div>
 
       <!-- Faixas de desconto lidas de EB.data.QUANTITY_DISCOUNT_TIERS e

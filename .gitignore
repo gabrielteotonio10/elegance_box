@@ -1,0 +1,17 @@
+# Vercel
+.vercel
+
+# Dependências (caso alguma ferramenta de build venha a ser usada no futuro)
+node_modules/
+package-lock.json
+
+# Arquivos de sistema operacional
+.DS_Store
+Thumbs.db
+
+# Editores
+.vscode/
+.idea/
+
+# Logs
+*.log

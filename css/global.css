@@ -1,20 +1,6 @@
-/* ==========================================================================
-   GLOBAL.CSS
-   Estilos e componentes compartilhados por TODAS as páginas do site:
-   tipografia base, layout (container/seções), header, footer, menu mobile,
-   botões, badges, cards de produto/combo, modal base, tabela nutricional,
-   seletor de quantidade e utilitários de acessibilidade.
+/* GLOBAL.CSS */
 
-   Estilos que só existem em UMA página (ex: hero da Home) ficam nos
-   arquivos home.css / marmitas.css / frios.css / contato.css — aqui só
-   entra o que é reaproveitado em 2 ou mais lugares.
-   ========================================================================== */
-
-/* --------------------------------------------------------------------------
-   TIPOGRAFIA BASE
-   Define a aparência padrão de texto do site inteiro. Cada página só
-   precisa sobrescrever o que for realmente diferente.
-   -------------------------------------------------------------------- */
+/* TIPOGRAFIA BASE */
 
 /* Fundo e cor de texto padrão do site + fonte de corpo (Inter). */
 body {
@@ -24,9 +10,7 @@ body {
   font-size: var(--text-body);
 }
 
-/* Todos os títulos usam a fonte serifada de destaque (Fraunces) e um
-   line-height mais apertado, já que textos grandes com line-height normal
-   ficam com espaçamento visualmente exagerado entre linhas. */
+/* Títulos usam a fonte serifada de destaque e line-height mais apertado. */
 h1,
 h2,
 h3,
@@ -50,30 +34,22 @@ h4 {
   font-size: var(--text-h4);
 }
 
-/* Parágrafos usam a cor secundária de texto por padrão (mais suave que
-   títulos), já que a maior parte dos parágrafos do site é texto de apoio,
-   não conteúdo principal. */
+/* Parágrafos usam a cor secundária por padrão (texto de apoio). */
 p {
   color: var(--color-text-muted);
   line-height: var(--leading-normal);
 }
 
-/* --------------------------------------------------------------------------
-   ACESSIBILIDADE — FOCO E SKIP LINK
-   -------------------------------------------------------------------- */
+/* ACESSIBILIDADE — FOCO E SKIP LINK */
 
-/* Estado de foco visível e consistente em qualquer elemento navegável por
-   teclado. Usamos :focus-visible (em vez de :focus) para o contorno só
-   aparecer quando a navegação é por teclado (Tab), não em cliques de
-   mouse — evita o "anel" de foco aparecer em cliques comuns. */
+/* :focus-visible em vez de :focus: o contorno só aparece na navegação
+   por teclado, não em cliques de mouse. */
 :focus-visible {
   outline: 3px solid var(--color-accent);
   outline-offset: 2px;
 }
 
-/* Esconde visualmente um elemento mas mantém acessível a leitores de tela.
-   Usado em textos de apoio que só existem para contexto (ex: labels de
-   ícones que já têm aria-label, mas quando queremos reforçar com texto). */
+/* Esconde visualmente um elemento mas mantém acessível a leitores de tela. */
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -86,9 +62,7 @@ p {
   border: 0;
 }
 
-/* Link "pular para o conteúdo": fica invisível até receber foco via Tab,
-   permitindo que usuários de teclado pulem o header/nav repetido em toda
-   página e vão direto para o <main>. */
+/* Link "pular para o conteúdo": invisível até receber foco via Tab. */
 .skip-link {
   position: absolute;
   top: -48px;
@@ -105,13 +79,9 @@ p {
   top: var(--space-4);
 }
 
-/* --------------------------------------------------------------------------
-   LAYOUT — CONTAINER E SEÇÕES
-   Componentes de estrutura reaproveitados por toda seção de toda página.
-   -------------------------------------------------------------------- */
+/* LAYOUT — CONTAINER E SEÇÕES */
 
-/* Container centralizado com largura máxima, conforme briefing (seção 5):
-   o conteúdo nunca deve esticar 100% da tela em telas grandes. */
+/* Container centralizado com largura máxima. */
 .container {
   width: 100%;
   max-width: var(--container-width);
@@ -124,15 +94,12 @@ p {
   padding-block: var(--space-9);
 }
 
-/* Modificador para seções com fundo alternado (dá "respiro" visual entre
-   seções consecutivas, evitando que tudo pareça um bloco único). */
+/* Fundo alternado, para dar respiro visual entre seções consecutivas. */
 .section--alt {
   background-color: var(--color-bg-alt);
 }
 
-/* Modificador para seções com fundo escuro (ex: CTA final da Home/Contato):
-   troca a cor de texto padrão para a versão clara, já que --color-text
-   (escuro) ficaria ilegível sobre --color-primary. */
+/* Fundo escuro (ex: CTA final): troca o texto para a versão clara. */
 .section--dark {
   background-color: var(--color-primary);
   color: var(--color-text-on-dark);
@@ -147,24 +114,20 @@ p {
   color: var(--color-text-on-dark-muted);
 }
 
-/* Cabeçalho de seção: pequeno rótulo (eyebrow) + título + subtítulo.
-   Reaproveitado em praticamente toda seção do site (Benefícios, Como
-   Funciona, Sobre, Destaque do Cardápio, etc.) — por isso vive aqui e não
-   em home.css. */
+/* Cabeçalho de seção: eyebrow + título + subtítulo, usado em quase toda
+   seção do site. */
 .section-header {
   max-width: 640px;
   margin-bottom: var(--space-7);
 }
 
-/* Variante centralizada, usada em seções sem conteúdo lateral (ex:
-   Benefícios, Como Funciona). */
+/* Variante centralizada, para seções sem conteúdo lateral. */
 .section-header--center {
   margin-inline: auto;
   text-align: center;
 }
 
-/* Variante com ação: título à esquerda e um botão à direita, na mesma
-   linha (ex: "Conheça algumas opções" + botão "Ver cardápio completo"). */
+/* Variante com ação: título à esquerda, botão à direita, mesma linha. */
 .section-header--with-action {
   max-width: none;
   display: flex;
@@ -173,9 +136,7 @@ p {
   gap: var(--space-5);
 }
 
-/* Rótulo pequeno acima do título (ex: "Diferenciais Elegance Box"): usa a
-   cor de destaque e letras espaçadas para funcionar como um "olho" que
-   guia a leitura antes do título grande. */
+/* Rótulo pequeno acima do título, guiando a leitura antes dele. */
 .section-header__eyebrow {
   display: block;
   font-family: var(--font-body);
@@ -196,13 +157,7 @@ p {
   color: var(--color-text-muted);
 }
 
-/* --------------------------------------------------------------------------
-   BOTÕES
-   Componente .btn reaproveitado em CTAs de header, hero, cards, modais e
-   footer. Variantes de cor via modificador de classe; estado desabilitado
-   via o atributo HTML nativo [disabled], não uma classe — assim o
-   navegador já trata teclado/leitor de tela corretamente sem JS extra.
-   -------------------------------------------------------------------- */
+/* BOTÕES */
 
 .btn {
   display: inline-flex;
@@ -220,14 +175,12 @@ p {
   white-space: nowrap;
 }
 
-/* Leve efeito de "afundar" ao clicar (estado active) — feedback tátil sem
-   depender de animação exagerada. */
+/* Leve efeito de "afundar" ao clicar. */
 .btn:active {
   transform: scale(0.97);
 }
 
-/* Botão primário (cor de destaque sólida): usado em toda ação de conversão
-   (Peça agora, Pedir agora, Enviar pedido pelo WhatsApp). */
+/* Botão primário: usado em toda ação de conversão (Peça agora, etc.). */
 .btn--primary {
   background-color: var(--color-accent);
   color: var(--color-text-on-dark);
@@ -236,9 +189,7 @@ p {
   background-color: var(--color-accent-dark);
 }
 
-/* Botão outline (contorno, fundo transparente): usado em ações
-   secundárias (Ver mais, Ver Instagram, Continuar escolhendo). A cor de
-   contorno se adapta ao fundo escuro/claro via .section--dark abaixo. */
+/* Botão outline: ações secundárias. Adapta a cor via .section--dark abaixo. */
 .btn--outline {
   background-color: transparent;
   border-color: currentColor;
@@ -262,15 +213,12 @@ p {
   font-size: var(--text-lead);
 }
 
-/* Botão que ocupa 100% da largura do container pai (usado dentro dos
-   modais, onde os botões ficam empilhados verticalmente). */
+/* Botão de largura total, usado dentro dos modais. */
 .btn--block {
   width: 100%;
 }
 
-/* Estado desabilitado: aparência "apagada" e cursor de bloqueio, para
-   deixar claro que a ação não pode ser executada agora (ex: enviar pedido
-   com o combo personalizado vazio). */
+/* Estado desabilitado: aparência apagada e cursor de bloqueio. */
 .btn:disabled {
   opacity: 0.45;
   cursor: not-allowed;
@@ -280,24 +228,16 @@ p {
   transform: none;
 }
 
-/* Equivalente ao :disabled acima, mas para o botão "Enviar pedido" do
-   combo personalizado, que é um link <a> (não um <button>) — precisa
-   permanecer <a> para funcionar com "abrir em nova guia" nativamente, e
-   por isso usa aria-disabled em vez do atributo disabled (que só existe
-   em elementos de formulário). O bloqueio real do clique é feito em
-   marmitas.js. */
+/* Equivalente ao :disabled acima para links <a>, que não aceitam o
+   atributo disabled. O bloqueio do clique fica em marmitas.js. */
 .btn[aria-disabled="true"] {
   opacity: 0.45;
   cursor: not-allowed;
   pointer-events: none;
 }
 
-/* Botão circular só com ícone (WhatsApp/Instagram do header, fechar do
-   modal, +/- do seletor de quantidade herdam a base mas redefinem
-   formato). 44x44px é o mínimo recomendado de área de toque (Apple HIG /
-   Material Design) — importante aqui porque não há texto visível para
-   "compensar" um alvo pequeno, só o ícone. aria-label é usado no HTML já
-   que não há texto visível. */
+/* Botão circular só com ícone. 44x44px é o mínimo recomendado de área
+   de toque; o rótulo acessível vem do aria-label no HTML. */
 .icon-btn {
   display: inline-flex;
   align-items: center;
@@ -320,11 +260,7 @@ p {
   border-color: var(--color-primary);
 }
 
-/* --------------------------------------------------------------------------
-   BADGES
-   Selo pequeno usado sobre a foto de produtos/combos (ex: "Mais vendida")
-   e sobre o preço riscado de um combo (ex: "12% OFF").
-   -------------------------------------------------------------------- */
+/* BADGES */
 
 .badge {
   display: inline-flex;
@@ -337,32 +273,25 @@ p {
   letter-spacing: 0.03em;
 }
 
-/* Variante sólida (cor de destaque): usada para o selo mais "forte" de
-   cada card, o primeiro que o olho deve notar (ex: Mais vendida, % OFF). */
+/* Variante sólida: o selo mais forte de cada card (ex: % OFF). */
 .badge--accent {
   background-color: var(--color-accent);
   color: var(--color-text-on-dark);
 }
 
-/* Variante em verde: usada para selos informativos, um degrau abaixo do
-   selo de destaque (ex: Novidade, Premium). */
+/* Variante em verde: selos informativos, um degrau abaixo do destaque. */
 .badge--primary {
   background-color: var(--color-primary);
   color: var(--color-text-on-dark);
 }
 
-/* Variante clara: usada para selos mais discretos, que não devem competir
-   visualmente com o selo principal do card (ex: Baixo Carbo). */
+/* Variante clara: selos discretos, sem competir com o selo principal. */
 .badge--soft {
   background-color: var(--color-surface);
   color: var(--color-primary);
 }
 
-/* --------------------------------------------------------------------------
-   HEADER GLOBAL
-   Fixo no topo (position: sticky) para o CTA "Peça agora" e a navegação
-   ficarem sempre acessíveis, mesmo com o usuário tendo rolado a página.
-   -------------------------------------------------------------------- */
+/* HEADER GLOBAL */
 
 .site-header {
   position: sticky;
@@ -388,9 +317,7 @@ p {
   flex-shrink: 0;
 }
 
-/* Ícone da marca: fundo verde primário circular com o glifo em creme,
-   tamanho suficiente para ser reconhecido sem dominar o header (pedido
-   explícito do briefing, seção 6). */
+/* Ícone da marca: fundo circular com o glifo em creme. */
 .logo__icon {
   display: inline-flex;
   align-items: center;
@@ -433,10 +360,7 @@ p {
   color: var(--color-accent);
 }
 
-/* Estado "página atual", aplicado via JS em main.js (comparando a URL
-   atual com o href de cada link) — ver EB.nav.highlightActiveLink(). Usa
-   cor de destaque + um traço embaixo, replicando o estado visto no menu
-   mobile do Figma. */
+/* Estado "página atual", aplicado por EB.nav.highlightActiveLink() (main.js). */
 .nav-link.is-active {
   color: var(--color-accent);
 }
@@ -458,8 +382,7 @@ p {
   gap: var(--space-3);
 }
 
-/* Botão hambúrguer: escondido no desktop, exibido apenas em telas
-   menores (ver media query no fim do arquivo). */
+/* Botão hambúrguer: escondido no desktop, exibido no mobile. */
 .mobile-menu-toggle {
   display: none;
   align-items: center;
@@ -473,12 +396,7 @@ p {
   height: 24px;
 }
 
-/* --------------------------------------------------------------------------
-   MENU MOBILE
-   Painel fullscreen que substitui a navegação horizontal em telas
-   estreitas. Fica fora do fluxo normal (position: fixed) e é
-   mostrado/escondido via a classe .is-open, controlada por main.js.
-   -------------------------------------------------------------------- */
+/* MENU MOBILE */
 
 .mobile-menu {
   position: fixed;
@@ -487,8 +405,7 @@ p {
   background-color: var(--color-bg);
   display: flex;
   flex-direction: column;
-  /* Começa invisível e levemente deslocado; a transição de opacidade só
-     dá a sensação de "aparecer suavemente" quando .is-open é aplicada. */
+  /* Começa invisível e levemente deslocado; .is-open faz aparecer suavemente. */
   opacity: 0;
   visibility: hidden;
   transition: opacity var(--transition-base), visibility var(--transition-base);
@@ -507,8 +424,7 @@ p {
   border-bottom: 1px solid var(--color-border);
 }
 
-/* Botão de fechar com fundo suave em tom de destaque, conforme visto no
-   protótipo do Figma (círculo rosado com X). */
+/* Botão de fechar com fundo suave em tom de destaque. */
 .mobile-menu__close {
   background-color: var(--color-accent-soft);
   color: var(--color-accent-dark);
@@ -519,8 +435,7 @@ p {
   color: var(--color-text-on-dark);
 }
 
-/* Corpo do menu: navegação centralizada vertical e horizontalmente,
-   ocupando o espaço restante da tela. */
+/* Corpo do menu: navegação centralizada, ocupando o espaço restante. */
 .mobile-menu__body {
   flex: 1;
   display: flex;
@@ -529,9 +444,7 @@ p {
   justify-content: center;
   gap: var(--space-6);
   padding: var(--space-6) var(--container-padding);
-  /* Em telas baixas (ex: celular em modo paisagem), a navegação + divisor
-     + ações podem ultrapassar a altura disponível — sem overflow-y, o
-     conteúdo centralizado ficaria cortado e inacessível. */
+  /* Sem overflow-y, o conteúdo cortaria em telas baixas (celular em paisagem). */
   overflow-y: auto;
 }
 
@@ -568,15 +481,12 @@ p {
   gap: var(--space-3);
 }
 
-/* Impede a rolagem da página por trás quando o menu mobile (ou um modal)
-   está aberto — aplicada/removida em document.body via JS. */
+/* Impede a rolagem por trás com o menu mobile/modal aberto (via JS). */
 body.no-scroll {
   overflow: hidden;
 }
 
-/* --------------------------------------------------------------------------
-   FOOTER GLOBAL
-   -------------------------------------------------------------------- */
+/* FOOTER GLOBAL */
 
 .site-footer {
   background-color: var(--color-primary);
@@ -629,11 +539,8 @@ body.no-scroll {
 .footer-block__text {
   font-size: var(--text-small);
   margin-bottom: var(--space-4);
-  /* Sem isso, a regra genérica "p { color: var(--color-text-muted) }"
-     (pensada para texto sobre fundo claro) vence por especificidade e
-     este parágrafo fica quase ilegível sobre o fundo verde escuro do
-     footer — precisa do mesmo tom claro usado nos elementos vizinhos
-     (.footer-block__description, .footer-block__list a). */
+  /* Sem isto, herdaria a cor muted padrão e ficaria ilegível sobre o
+     fundo escuro do footer. */
   color: var(--color-text-on-dark-muted);
 }
 
@@ -653,14 +560,7 @@ body.no-scroll {
   color: var(--color-text-on-dark);
 }
 
-/* --------------------------------------------------------------------------
-   MEDIA PLACEHOLDER
-   Substitui fotos reais enquanto o cliente não envia o material definitivo
-   (briefing, seção 42). Mostra um ícone neutro + legenda descritiva, para
-   deixar claro que ali entrará uma fotografia real do prato/ambiente —
-   troque este <div> por uma tag <img src="images/..." alt="..."> quando a
-   foto estiver disponível.
-   -------------------------------------------------------------------- */
+/* MEDIA PLACEHOLDER */
 
 .media-placeholder {
   display: flex;
@@ -670,8 +570,7 @@ body.no-scroll {
   background-color: var(--color-bg-alt);
   border: 1px dashed var(--color-border);
   border-radius: var(--radius-md);
-  /* Ícone de imagem em SVG embutido via data-URI, centralizado — evita
-     depender de um arquivo de imagem externo só para exibir o placeholder. */
+  /* SVG embutido via data-URI, sem depender de arquivo externo. */
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a9a68f' stroke-width='1.5'%3E%3Crect x='3' y='4' width='18' height='16' rx='2'/%3E%3Ccircle cx='8.5' cy='9.5' r='1.5'/%3E%3Cpath d='M21 16l-5.5-5.5a2 2 0 0 0-2.8 0L3 20'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: center 38%;
@@ -688,8 +587,7 @@ body.no-scroll {
   text-align: center;
 }
 
-/* Quando o placeholder é substituído por uma <img> real, a imagem deve
-   preencher a mesma caixa (aspect-ratio + border-radius definidos abaixo). */
+/* A <img> real preenche a mesma caixa do placeholder. */
 img.media-placeholder {
   display: block;
   height: 100%;
@@ -697,8 +595,7 @@ img.media-placeholder {
   background-image: none;
 }
 
-/* Modificadores de proporção — cada contexto de uso define a altura
-   necessária (hero grande, card de produto, foto quadrada, etc.). */
+/* Modificadores de proporção por contexto (hero, card, foto quadrada). */
 .media-placeholder--hero {
   aspect-ratio: 4 / 5;
   border-radius: var(--radius-lg);
@@ -713,13 +610,7 @@ img.media-placeholder {
   aspect-ratio: 1 / 1;
 }
 
-/* --------------------------------------------------------------------------
-   GRID DE PRODUTOS
-   Grade de .product-card, usada no grid de Marmitas (marmitas.html) e no
-   grid de exemplos de Frios e Antepastos (frios-antepastos.html) — por
-   isso mora aqui e não em marmitas.css. Responsividade tratada junto com
-   a do product-card, no fim deste arquivo.
-   -------------------------------------------------------------------- */
+/* GRID DE PRODUTOS */
 
 .products-grid {
   display: grid;
@@ -727,13 +618,7 @@ img.media-placeholder {
   gap: var(--space-6);
 }
 
-/* --------------------------------------------------------------------------
-   PRODUCT CARD
-   Componente principal de Marmitas, reaproveitado na Home (seção de
-   destaques) e em Frios e Antepastos — por isso mora em global.css.
-   Estrutura: mídia (com badge sobreposto) + corpo (nome, descrição,
-   metadados, preço, ações).
-   -------------------------------------------------------------------- */
+/* PRODUCT CARD */
 
 .product-card {
   display: flex;
@@ -746,8 +631,7 @@ img.media-placeholder {
   height: 100%;
 }
 
-/* Pequena elevação ao passar o mouse — o único "movimento" do card,
-   conforme pedido no briefing (nada de animações exageradas). */
+/* Pequena elevação ao passar o mouse. */
 .product-card:hover {
   box-shadow: var(--shadow-md);
   transform: translateY(-4px);
@@ -808,25 +692,19 @@ img.media-placeholder {
   gap: var(--space-2);
 }
 
-/* Nos cards, os botões de ação são menores que o padrão global (fonte
-   reduzida, para não competir visualmente com o preço), mas o padding
-   vertical usa --space-3 (não --space-2) para a altura final não cair
-   abaixo dos 44px de área de toque recomendados. */
+/* Botões menores que o padrão global, mas com padding vertical suficiente
+   para não cair abaixo dos 44px de área de toque. */
 .product-card__actions .btn {
   padding: var(--space-3) var(--space-4);
   font-size: var(--text-small);
 }
 
-/* Variante "featured": usada nos 3 cards de destaque da Home. Recebe uma
-   borda sutil na cor de destaque para se diferenciar levemente dos cards
-   padrão do Cardápio. */
+/* Variante "featured": cards de destaque da Home, sombra mais forte. */
 .product-card--featured {
   box-shadow: var(--shadow-md);
 }
 
-/* --------------------------------------------------------------------------
-   PREÇO
-   -------------------------------------------------------------------- */
+/* PREÇO */
 
 .price {
   display: flex;
@@ -841,15 +719,22 @@ img.media-placeholder {
   color: var(--color-accent);
 }
 
-/* Usado no lugar do preço para itens sem valor fixo (ex: Frios e
-   Antepastos, "sob consulta" — ver createProductCard em main.js). É uma
-   frase, não um número curto, então usa a fonte de corpo em vez da
-   serifada de destaque e um tamanho menor, para não ocupar 2-3 linhas no
-   espaço estreito de um product-card. */
+/* Usado no lugar do preço para itens "sob consulta" (sem valor fixo). */
 .price__value--quote {
   font-family: var(--font-body);
   font-size: var(--text-small);
   font-weight: 600;
+}
+
+/* O texto "sob consulta" é bem mais longo que um preço em R$ e, em
+   telas largas, empurrava os botões para fora do card (cortados pelo
+   overflow: hidden). Empilhar resolve em qualquer largura. */
+.product-card--quote .product-card__footer {
+  flex-direction: column;
+  align-items: stretch;
+}
+.product-card--quote .product-card__actions {
+  flex-direction: column;
 }
 
 /* Preço "de", riscado — exibido apenas quando existe promoção (combos). */
@@ -859,11 +744,7 @@ img.media-placeholder {
   text-decoration: line-through;
 }
 
-/* --------------------------------------------------------------------------
-   COMBO CARD
-   Visualmente mais chamativo que o product-card (mais alto contraste),
-   já que os combos são o principal ponto de conversão do site.
-   -------------------------------------------------------------------- */
+/* COMBO CARD */
 
 .combo-card {
   display: flex;
@@ -875,10 +756,7 @@ img.media-placeholder {
   height: 100%;
 }
 
-/* O selo de desconto do combo é o primeiro elemento do card — um dos
-   elementos visuais mais importantes (briefing, seção 23) — por isso fica
-   destacado acima do título, sem "esticar" na largura do card (o
-   combo-card__body é flex column, que por padrão esticaria o badge). */
+/* align-self evita que o flex column do card estique o badge na largura. */
 .combo-card__badge {
   align-self: flex-start;
   margin-bottom: var(--space-3);
@@ -930,8 +808,7 @@ img.media-placeholder {
   border-top: 1px solid var(--color-border);
 }
 
-/* Texto de economia (ex: "Você economiza R$ 14,60") — usa a cor de
-   sucesso para reforçar positivamente a vantagem financeira do combo. */
+/* Texto de economia (ex: "Você economiza R$ 14,60"), cor de sucesso. */
 .combo-card__savings {
   font-size: var(--text-small);
   font-weight: 600;
@@ -947,9 +824,7 @@ img.media-placeholder {
   flex: 1;
 }
 
-/* Variante do card "Monte seu combo": sem foto, com borda tracejada para
-   comunicar visualmente que é uma ação "diferente" das demais (montar, não
-   apenas comprar pronto), conforme briefing seção 25. */
+/* Variante "Monte seu combo": sem foto, borda tracejada. */
 .combo-card--custom {
   align-items: center;
   justify-content: center;
@@ -976,10 +851,7 @@ img.media-placeholder {
   height: 28px;
 }
 
-/* --------------------------------------------------------------------------
-   STEP CARD
-   Passo numerado, usado em "Como funciona" e "Como preparar" (Home).
-   -------------------------------------------------------------------- */
+/* STEP CARD */
 
 .step-card {
   display: flex;
@@ -1017,11 +889,7 @@ img.media-placeholder {
   font-size: var(--text-small);
 }
 
-/* --------------------------------------------------------------------------
-   BENEFIT CARD
-   Usado na seção "Benefícios" da Home — mais simples que o step-card
-   (sem numeração), focado no ícone + texto curto.
-   -------------------------------------------------------------------- */
+/* BENEFIT CARD */
 
 .benefit-card {
   display: flex;
@@ -1057,10 +925,7 @@ img.media-placeholder {
   font-size: var(--text-small);
 }
 
-/* --------------------------------------------------------------------------
-   CONTACT CARD
-   Usado na página Contato (WhatsApp / Instagram).
-   -------------------------------------------------------------------- */
+/* CONTACT CARD */
 
 .contact-card {
   display: flex;
@@ -1098,9 +963,7 @@ img.media-placeholder {
   font-size: var(--text-small);
 }
 
-/* Valor de destaque do card (número de telefone / @usuário), em texto
-   maior e com peso forte para ser o segundo elemento mais notado depois
-   do ícone. */
+/* Valor de destaque do card (telefone / @usuário). */
 .contact-card__value {
   font-family: var(--font-display);
   font-size: var(--text-h4);
@@ -1113,13 +976,7 @@ img.media-placeholder {
   width: 100%;
 }
 
-/* --------------------------------------------------------------------------
-   MODAL (base)
-   Estrutura compartilhada pelos 3 modais do Cardápio (produto, combo,
-   monte-seu-combo). O overlay cobre a tela inteira; o modal em si fica
-   centralizado dentro dele. Aberto/fechado via a classe .is-open,
-   controlada pelo helper genérico EB.modal em main.js.
-   -------------------------------------------------------------------- */
+/* MODAL (base) */
 
 .modal-overlay {
   position: fixed;
@@ -1140,10 +997,8 @@ img.media-placeholder {
   visibility: visible;
 }
 
-/* Usada por EB.modal.closeInstantly() (main.js) para trocar de um modal
-   para outro sem o fade-out de ~250ms — sem isso, o modal que está
-   fechando e o que está abrindo ficam visíveis ao mesmo tempo por um
-   instante, sobrepondo os dois conteúdos na tela. */
+/* Usada por EB.modal.closeInstantly() (main.js) para trocar de modal
+   sem o fade-out normal sobrepor os dois conteúdos. */
 .modal-overlay.is-closing-instant {
   transition: none;
 }
@@ -1158,9 +1013,7 @@ img.media-placeholder {
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
   padding: var(--space-6);
-  /* Pequeno deslocamento vertical que "assenta" suavemente ao abrir,
-     controlado pela mesma classe .is-open do overlay (transição de
-     transform sincronizada com a opacidade do fundo). */
+  /* Pequeno deslocamento vertical que "assenta" suavemente ao abrir. */
   transform: translateY(12px);
   transition: transform var(--transition-base);
 }
@@ -1168,8 +1021,7 @@ img.media-placeholder {
   transform: translateY(0);
 }
 
-/* Modal do "Monte seu combo": mais largo, pois tem duas colunas
-   (lista de produtos + resumo do pedido). */
+/* Modal "Monte seu combo": mais largo, tem duas colunas. */
 .modal--builder {
   max-width: 960px;
 }
@@ -1194,8 +1046,7 @@ img.media-placeholder {
   font-size: var(--text-small);
 }
 
-/* Botão "Voltar", exibido apenas quando o modal de produto foi aberto a
-   partir de dentro de um modal de combo (briefing, seção 24). */
+/* Botão "Voltar", exibido só quando aberto a partir de outro modal. */
 .modal__back {
   display: inline-flex;
   align-items: center;
@@ -1213,13 +1064,7 @@ img.media-placeholder {
   color: var(--color-accent);
 }
 
-/* --------------------------------------------------------------------------
-   MODAL: DETALHES DO PRODUTO
-   Classes usadas dentro do template gerado por
-   EB.components.buildProductModalBody() (main.js) — compartilhada pelo
-   modal de marmita (marmitas.html) e pelo modal de Frios e Antepastos
-   (frios-antepastos.html), por isso mora aqui e não em marmitas.css.
-   -------------------------------------------------------------------- */
+/* MODAL: DETALHES DO PRODUTO */
 
 .product-modal__media {
   margin-block: var(--space-5);
@@ -1261,10 +1106,7 @@ img.media-placeholder {
   border-top: 1px solid var(--color-border);
 }
 
-/* --------------------------------------------------------------------------
-   SELETOR DE QUANTIDADE
-   Usado no modal "Monte seu combo", um por marmita da lista.
-   -------------------------------------------------------------------- */
+/* SELETOR DE QUANTIDADE */
 
 .quantity-selector {
   display: inline-flex;
@@ -1273,10 +1115,7 @@ img.media-placeholder {
   flex-shrink: 0;
 }
 
-/* 44x44px (não os 32px originais): este é o botão que o usuário mais
-   toca repetidamente em todo o site, ao montar o combo personalizado —
-   um alvo pequeno demais aqui é o tipo de detalhe que mais prejudica a
-   experiência mobile, mesmo que passe despercebido no desktop. */
+/* 44x44px: botão mais tocado do site (montar o combo personalizado). */
 .quantity-selector__btn {
   display: inline-flex;
   align-items: center;
@@ -1307,10 +1146,7 @@ img.media-placeholder {
   font-weight: 600;
 }
 
-/* --------------------------------------------------------------------------
-   FILTER BAR
-   Chips de categoria usados no topo do grid do Cardápio.
-   -------------------------------------------------------------------- */
+/* FILTER BAR */
 
 .filter-bar {
   display: flex;
@@ -1334,22 +1170,14 @@ img.media-placeholder {
   color: var(--color-text);
 }
 
-/* Estado ativo controlado via aria-pressed (refletindo o estado
-   semântico do botão) em vez de uma classe solta — assim o estilo visual
-   nunca desalinha do estado real exposto a leitores de tela. */
+/* Estado ativo via aria-pressed, não uma classe solta. */
 .filter-chip[aria-pressed="true"] {
   background-color: var(--color-primary);
   border-color: var(--color-primary);
   color: var(--color-text-on-dark);
 }
 
-/* --------------------------------------------------------------------------
-   CTA FINAL
-   Seção de conversão de alto contraste (fundo escuro via .section--dark)
-   usada tanto na Home quanto no Contato — por isso vive aqui e não em
-   home.css/contato.css. Conteúdo estreito e centralizado, para funcionar
-   como um "ponto final" de alto impacto visual antes do footer.
-   -------------------------------------------------------------------- */
+/* CTA FINAL */
 
 .final-cta__inner {
   max-width: 640px;
@@ -1361,10 +1189,8 @@ img.media-placeholder {
   gap: var(--space-4);
 }
 
-/* O círculo em volta do ícone tem tamanho fixo (56px) e o SVG dentro
-   dele é limitado a 26px — sem essas duas regras, o <svg> (sem width
-   e height definidos no HTML) cairia no tamanho "replaced element"
-   padrão do navegador, ocupando várias vezes o espaço pretendido. */
+/* Tamanho do SVG explícito: sem isto o navegador usa seu tamanho padrão
+   de "replaced element", bem maior que o pretendido. */
 .final-cta__icon {
   display: inline-flex;
   align-items: center;
@@ -1385,17 +1211,9 @@ img.media-placeholder {
   margin-top: var(--space-3);
 }
 
-/* --------------------------------------------------------------------------
-   RESPONSIVIDADE — COMPONENTES GLOBAIS
-   Regras de tablet/mobile dos componentes definidos neste arquivo
-   (header, footer, product-card, modal de produto). Cada arquivo de
-   página (home.css/marmitas.css/frios.css/contato.css) cuida da própria
-   responsividade de seção.
-   -------------------------------------------------------------------- */
+/* RESPONSIVIDADE — COMPONENTES GLOBAIS */
 
-/* TABLET (768–1199px): a navegação horizontal completa não cabe de forma
-   confortável ao lado da logo + ícones + CTA (ver nota no plano de
-   implementação), então o header já assume o formato mobile a partir daqui. */
+/* TABLET (768–1199px): a nav completa não cabe ao lado da logo/ícones/CTA. */
 @media (max-width: 1199px) {
   .site-nav,
   .site-header__actions {
@@ -1410,18 +1228,13 @@ img.media-placeholder {
     row-gap: var(--space-7);
   }
 
-  /* Sem a 2ª coluna, o grid de ingredientes/preparo do modal de produto
-     vira 1 coluna só — a largura do modal (max-width: 640px) fica
-     apertada demais para 2 colunas de texto lado a lado nesta faixa. */
+  /* O modal (max-width: 640px) fica apertado demais para 2 colunas aqui. */
   .product-modal__grid {
     grid-template-columns: 1fr;
   }
 
-  /* Ao herdar as 3 colunas do desktop (ver home.css/global.css .products-grid), o
-     product-card cai para ~213px de largura no tablet — estreito demais
-     para "Ver mais" e "Pedir agora" lado a lado sem estourar o card.
-     Empilhar as ações resolve, no mesmo padrão já usado em
-     .combo-card__actions logo abaixo neste arquivo. */
+  /* No tablet o card cai para ~213px, estreito demais para os 2 botões
+     lado a lado — empilha, como em .combo-card__actions abaixo. */
   .product-card__footer {
     flex-direction: column;
     align-items: stretch;
@@ -1438,9 +1251,7 @@ img.media-placeholder {
     --container-padding: 1.25rem;
   }
 
-  /* ESCALA TIPOGRÁFICA — títulos de página/seção ficam grandes demais em
-     telas pequenas usando os mesmos tamanhos do desktop; um degrau abaixo
-     na escala já definida em variables.css resolve sem valores novos. */
+  /* ESCALA TIPOGRÁFICA: um degrau abaixo no mobile, sem valores novos. */
   h1 {
     font-size: var(--text-h2);
   }
@@ -1448,11 +1259,7 @@ img.media-placeholder {
     font-size: var(--text-h3);
   }
 
-  /* Sem este ajuste, toda .section mantém os 96px de padding vertical
-     pensados para telas grandes — em telas de celular isso faz a página
-     parecer excessivamente longa e "vazia" entre seções. Reduzido para o
-     mesmo valor já usado pelo hero nesta largura (--space-7), mantendo o
-     ritmo vertical do site consistente. */
+  /* Reduz o padding de 96px, que deixaria a página longa demais no mobile. */
   .section {
     padding-block: var(--space-7);
   }
@@ -1461,13 +1268,8 @@ img.media-placeholder {
     margin-bottom: var(--space-6);
   }
 
-  /* Footer mais compacto no mobile: em vez dos 4 blocos empilhados em
-     largura total (o que deixa o footer bem alto), "Navegação" e
-     "Contato" — os 2 blocos mais curtos, ambos listas de links — dividem
-     uma linha lado a lado. "Marca" (tem um parágrafo inteiro) e "Pedido
-     Prático" (tem um botão de largura total) continuam sozinhos em cada
-     linha, via :first-child/:last-child (são sempre o 1º e o 4º
-     .footer-block dentro do grid, nessa ordem fixa nas 3 páginas). */
+  /* Footer mais compacto: "Navegação" e "Contato" dividem uma linha;
+     "Marca" e "Pedido Prático" (1º e 4º bloco) continuam sozinhos. */
   .site-footer {
     padding-block: var(--space-6) var(--space-5);
   }
@@ -1498,24 +1300,16 @@ img.media-placeholder {
     padding: var(--space-5);
   }
 
-  /* .btn--lg some vezes carrega textos longos (ex: "Fazer pedido pelo
-     WhatsApp"), e a base de .btn usa white-space: nowrap — em telas
-     estreitas, texto + o padding generoso de --space-7 de cada lado
-     ultrapassa a largura da tela (overflow horizontal). Permitir quebra
-     de linha aqui, com o botão ocupando 100% da largura disponível, é
-     mais robusto do que só reduzir o padding: continua funcionando se o
-     texto do botão mudar para algo ainda maior. */
+  /* .btn--lg com texto longo (ex: "Fazer pedido pelo WhatsApp") mais o
+     white-space: nowrap da base estoura a largura da tela no mobile. */
   .btn--lg {
     width: 100%;
     white-space: normal;
     text-align: center;
   }
 
-  /* Mesmo problema do .btn--lg acima, mas nos dois botões lado a lado do
-     combo-card: "Quero este combo" + "Ver itens" não cabem dividindo a
-     largura do card em telas de celular (cada .btn mantém white-space:
-     nowrap), fazendo o segundo botão vazar para fora do card. Empilhar
-     verticalmente resolve sem depender do texto de cada botão. */
+  /* Mesmo problema do .btn--lg acima, nos 2 botões lado a lado do
+     combo-card — empilhar resolve sem depender do texto de cada botão. */
   .combo-card__actions {
     flex-direction: column;
   }
@@ -1525,10 +1319,7 @@ img.media-placeholder {
     gap: var(--space-4);
   }
 
-  /* PRODUCT CARD — reduzido proporcionalmente para caber em 2 colunas
-     (ver .featured-products__grid/.products-grid). Os botões de ação já
-     ficam empilhados via a regra no bloco tablet acima; aqui só entra o
-     que é específico da largura ainda menor do mobile. */
+  /* PRODUCT CARD reduzido para caber em 2 colunas no mobile. */
   .product-card__body {
     padding: var(--space-4);
   }

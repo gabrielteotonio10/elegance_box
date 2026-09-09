@@ -1,15 +1,6 @@
-/* ==========================================================================
-   CONTATO.CSS
-   Estilos específicos da página Contato (contato.html). O componente
-   .contact-card já vem pronto de global.css — aqui só entra o layout das
-   seções (hero, grid dos 2 cards, bloco "fale com a gente").
-   ========================================================================== */
+/* CONTATO.CSS */
 
-/* --------------------------------------------------------------------------
-   HERO
-   Mais enxuto que o da Home — texto centralizado, sem imagem, já que
-   esta página deve permanecer simples e objetiva (briefing, seção 30).
-   -------------------------------------------------------------------- */
+/* HERO */
 
 .contact-hero__inner {
   max-width: 640px;
@@ -23,9 +14,7 @@
   margin-top: var(--space-4);
 }
 
-/* --------------------------------------------------------------------------
-   CARDS DE CONTATO
-   -------------------------------------------------------------------- */
+/* CARDS DE CONTATO */
 
 .contact-cards {
   padding-bottom: var(--space-9);
@@ -37,10 +26,7 @@
   gap: var(--space-6);
 }
 
-/* --------------------------------------------------------------------------
-   FALE COM A GENTE
-   Duas colunas: foto ilustrativa + texto/horário de atendimento.
-   -------------------------------------------------------------------- */
+/* FALE COM A GENTE */
 
 .about-support__inner {
   display: grid;
@@ -85,9 +71,7 @@
   font-size: var(--text-small);
 }
 
-/* --------------------------------------------------------------------------
-   RESPONSIVIDADE — TABLET (768–1199px)
-   -------------------------------------------------------------------- */
+/* RESPONSIVIDADE — TABLET (768–1199px) */
 
 @media (max-width: 1199px) {
   .about-support__inner {
@@ -95,17 +79,10 @@
   }
 }
 
-/* --------------------------------------------------------------------------
-   RESPONSIVIDADE — MOBILE (<768px)
-   -------------------------------------------------------------------- */
+/* RESPONSIVIDADE — MOBILE (<768px) */
 
 @media (max-width: 767px) {
-  /* Mesmo ajuste do hero da Home: a foto quadrada (aspect-ratio 1/1
-     herdado de .media-placeholder--square) ocupa a largura inteira da
-     tela no mobile, o que já a deixa alta. object-fit: cover (herdado de
-     img.media-placeholder) faz o corte sem distorcer — testado com a foto
-     atual (entrega_marmita.png), o conteúdo relevante fica visível no
-     corte central padrão. */
+  /* Mesmo ajuste do hero da Home: object-fit:cover corta sem distorcer. */
   .about-support__media .media-placeholder {
     aspect-ratio: 4 / 3;
   }
